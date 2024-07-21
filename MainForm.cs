@@ -27,7 +27,7 @@ namespace NewspaperBatchAssemblyTool
                 string selectedLccn = lccnComboBox.SelectedItem.ToString().Substring(0, 10);
                 LCCN_PROPERTIES lccnProperties;
                 LCCN.LCCN_ITEMS.TryGetValue(selectedLccn, out lccnProperties);
-                batchNumber_BatchNameTextBox.Text = lccnProperties.BATCH_PREFIX;
+                batchNamePrefixTextBox.Text = lccnProperties.BATCH_PREFIX;
             }
         }
 
@@ -67,21 +67,6 @@ namespace NewspaperBatchAssemblyTool
                 }
 
                 statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
-            }
-        }
-
-        private void browseMetadataFileButton_Click(object sender, EventArgs e)
-        {
-
-
-            if (browseMetadataFile_openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                metadataFilePathTextBox.Text = browseMetadataFile_openFileDialog.FileName;
-                loadMetadataFileButton.Enabled = true;
-            }
-            else
-            {
-                metadataFilePathTextBox.Text = String.Empty;
             }
         }
 
@@ -131,6 +116,9 @@ namespace NewspaperBatchAssemblyTool
             this.Close();
         }
 
-
+        private void importMetadataButton_Click(object sender, EventArgs e)
+        {
+            importMetadataForm.Show();
+        }
     }
 }

@@ -12,10 +12,12 @@ namespace NewspaperBatchAssemblyTool
 {
     public partial class LogForm : Form
     {
-        public LogForm(MainForm mainForm)
+        public LogForm(MainForm mainFormRef)
         {
             InitializeComponent();
             CustomInitialization();
+
+            mainForm = mainFormRef;
         }
 
         #region Custom Methods

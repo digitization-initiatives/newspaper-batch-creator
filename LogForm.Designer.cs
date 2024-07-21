@@ -95,7 +95,8 @@
 
         #region Custom Initialization
 
-        public MainForm mainForm;
+        private MainForm mainForm;
+
         public string LOG_TYPE_INFO, LOG_TYPE_WARN, LOG_TYPE_ERROR;
         private string LOG_TIMESTAMP;
 
