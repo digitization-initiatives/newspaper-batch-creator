@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperBatchAssemblyTool.src
 {
-    internal class DestinationFilesStructure
+    public class DestinationFilesStructure
     {
     }
 }

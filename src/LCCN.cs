@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperBatchAssemblyTool.src
 {
-    internal class LCCN
+    public class LCCN
     {
         public static readonly Dictionary<string, LCCN_PROPERTIES> LCCN_ITEMS = new Dictionary<string, LCCN_PROPERTIES>
         {

@@ -72,7 +72,7 @@ namespace NewspaperBatchAssemblyTool
 
         private void loadMetadataFileButton_Click(object sender, EventArgs e)
         {
-
+            
         }
 
         private void setBatchNumberButton_Click(object sender, EventArgs e)

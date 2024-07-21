@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperBatchAssemblyTool.src
 {
-    internal class ColumnMappingSampleData
+    public class ColumnMappingSampleData
     {
         public int ColumnNumber { get; set; }
         public string ColumnHeader { get; set; }

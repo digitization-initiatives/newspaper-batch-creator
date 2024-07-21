@@ -1,4 +1,6 @@
-﻿namespace NewspaperBatchAssemblyTool
+﻿using NewspaperBatchAssemblyTool.src;
+
+namespace NewspaperBatchAssemblyTool
 {
     partial class ImportMetadataForm
     {
@@ -28,10 +30,10 @@
         /// </summary>
         private void InitializeComponent()
         {
-            saveAndCloseButton = new Button();
+            importAndCloseButton = new Button();
             startOverButton = new Button();
             selectMetadataFile_openFileDialog = new OpenFileDialog();
-            selectmetadataFileTextBox = new TextBox();
+            selectMetadataFileTextBox = new TextBox();
             selectMetadataFileLabel = new Label();
             selectMetadataFileButton = new Button();
             columnMappingDataGridView = new DataGridView();
@@ -43,39 +45,40 @@
             ((System.ComponentModel.ISupportInitialize)columnMappingDataGridView).BeginInit();
             SuspendLayout();
             // 
-            // saveAndCloseButton
+            // importAndCloseButton
             // 
-            saveAndCloseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            saveAndCloseButton.Location = new Point(1070, 632);
-            saveAndCloseButton.Name = "saveAndCloseButton";
-            saveAndCloseButton.Size = new Size(180, 29);
-            saveAndCloseButton.TabIndex = 0;
-            saveAndCloseButton.Text = "Save and Close";
-            saveAndCloseButton.UseVisualStyleBackColor = true;
-            saveAndCloseButton.Click += exitButton_Click;
+            importAndCloseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            importAndCloseButton.Location = new Point(1000, 632);
+            importAndCloseButton.Name = "importAndCloseButton";
+            importAndCloseButton.Size = new Size(250, 29);
+            importAndCloseButton.TabIndex = 0;
+            importAndCloseButton.Text = "Import Metadata and Close";
+            importAndCloseButton.UseVisualStyleBackColor = true;
+            importAndCloseButton.Click += exitButton_Click;
             // 
             // startOverButton
             // 
             startOverButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            startOverButton.Location = new Point(884, 632);
+            startOverButton.Location = new Point(814, 632);
             startOverButton.Name = "startOverButton";
             startOverButton.Size = new Size(180, 29);
             startOverButton.TabIndex = 1;
             startOverButton.Text = "Start Over";
             startOverButton.UseVisualStyleBackColor = true;
+            startOverButton.Click += startOverButton_Click;
             // 
             // selectMetadataFile_openFileDialog
             // 
             selectMetadataFile_openFileDialog.FileName = "openFileDialog1";
             // 
-            // selectmetadataFileTextBox
+            // selectMetadataFileTextBox
             // 
-            selectmetadataFileTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            selectmetadataFileTextBox.Location = new Point(12, 32);
-            selectmetadataFileTextBox.Name = "selectmetadataFileTextBox";
-            selectmetadataFileTextBox.ReadOnly = true;
-            selectmetadataFileTextBox.Size = new Size(1052, 27);
-            selectmetadataFileTextBox.TabIndex = 2;
+            selectMetadataFileTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
+            selectMetadataFileTextBox.Location = new Point(12, 32);
+            selectMetadataFileTextBox.Name = "selectMetadataFileTextBox";
+            selectMetadataFileTextBox.ReadOnly = true;
+            selectMetadataFileTextBox.Size = new Size(1052, 27);
+            selectMetadataFileTextBox.TabIndex = 2;
             // 
             // selectMetadataFileLabel
             // 
@@ -99,9 +102,12 @@
             // 
             // columnMappingDataGridView
             // 
+            columnMappingDataGridView.AllowUserToAddRows = false;
+            columnMappingDataGridView.AllowUserToDeleteRows = false;
             columnMappingDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
             columnMappingDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             columnMappingDataGridView.Columns.AddRange(new DataGridViewColumn[] { columnNumberCol, columnHeaderCol, sampleDataCol, mapToCol });
+            columnMappingDataGridView.EditMode = DataGridViewEditMode.EditOnEnter;
             columnMappingDataGridView.Location = new Point(12, 102);
             columnMappingDataGridView.Name = "columnMappingDataGridView";
             columnMappingDataGridView.RowHeadersWidth = 51;
@@ -132,6 +138,7 @@
             // mapToCol
             // 
             mapToCol.HeaderText = "Map To:";
+            mapToCol.Items.AddRange(new object[] { "ISSUE_NUMBER", "TITLE", "DESCRIPTION", "DATE", "VOLUME", "FREQUENCY", "NUMBER_OF_PAGES", "DC_SUBJECT_INSTITUTION", "DC_SUBJECT_COLLEGE", "DC_SUBJECT_LOCATION", "DC_CONTRIBUTOR_COLLEGE", "DC_CONTRIBUTOR_INSTITUTION", "DC_COVERAGE", "DC_PUBLISHER", "DC_LANGUAGE", "DC_FORMAT", "DC_TYPE", "DC_RIGHTS" });
             mapToCol.MinimumWidth = 6;
             mapToCol.Name = "mapToCol";
             mapToCol.Width = 125;
@@ -154,9 +161,9 @@
             Controls.Add(columnMappingDataGridView);
             Controls.Add(selectMetadataFileButton);
             Controls.Add(selectMetadataFileLabel);
-            Controls.Add(selectmetadataFileTextBox);
+            Controls.Add(selectMetadataFileTextBox);
             Controls.Add(startOverButton);
-            Controls.Add(saveAndCloseButton);
+            Controls.Add(importAndCloseButton);
             MinimumSize = new Size(1280, 720);
             Name = "ImportMetadataForm";
             Text = "Import Metadata";
@@ -172,18 +179,30 @@
         private MainForm mainForm;
         public LogForm logForm;
 
+        public Dictionary<string, string> mappedColumnsDict;
+
+        public List<IssueMetadata> issueMetadata;
+
         private void CustomInitialization()
         {
-            selectmetadataFileTextBox.Text = String.Empty;
+            selectMetadataFileTextBox.Text = String.Empty;
             selectMetadataFile_openFileDialog.Filter = "Excel Files|*.xls;*.xlsx|All files (*.*)|*.*";
+
+            columnMappingDataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            columnMappingDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
+            columnMappingDataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
+            columnMappingDataGridView.Columns[3].Width = 250;
+
+            mappedColumnsDict = new Dictionary<string, string>();
+            issueMetadata = new List<IssueMetadata>();
         }
 
         #endregion Custom Initialization
 
-        private Button saveAndCloseButton;
+        private Button importAndCloseButton;
         private Button startOverButton;
         private OpenFileDialog selectMetadataFile_openFileDialog;
-        private TextBox selectmetadataFileTextBox;
+        private TextBox selectMetadataFileTextBox;
         private Label selectMetadataFileLabel;
         private Button selectMetadataFileButton;
         private DataGridView columnMappingDataGridView;
