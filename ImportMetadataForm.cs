@@ -111,10 +111,16 @@ namespace NewspaperBatchAssemblyTool
                     {
                         var worksheet = workbook.Worksheet(1);
                         var headerRow = worksheet.FirstRowUsed();
+                        int issueNumber;
+                        int issueNumberLength = 2;
 
                         foreach (var row in worksheet.RowsUsed().Skip(1))
                         {
                             IssueMetadata issue = new IssueMetadata();
+
+                            issueNumber = 1;
+
+                            string issue_key = String.Empty;
 
                             foreach (var cell in row.CellsUsed())
                             {
@@ -183,11 +189,24 @@ namespace NewspaperBatchAssemblyTool
                                 }
                             }
 
-                            issue.ISSUE_ID = issue.DATE.Replace("-", "") + "01";
+                            issue_key = issue.DATE.Replace("-", "") + issueNumber.ToString("D" + issueNumberLength);
 
-                            issueMetadata.Add(issue);
+                            while (issueMetadata.ContainsKey(issue_key))
+                            {
+                                issueNumber += 1;
+                                issue_key = issue.DATE.Replace("-", "") + issueNumber.ToString("D" + issueNumberLength);
+                            }
+
+                            try
+                            {
+                                issueMetadata.Add(issue_key, issue);
+                            }
+                            catch (ArgumentException e)
+                            {
+                                logForm.appendTextsToLog($"Duplicate metadata entry for {issue_key}, please review your metadata file to resolve the duplicates.", logForm.LOG_TYPE_ERROR);
+                            }
+
                         }
-
                     }
 
                     logForm.appendTextsToLog($"Finished loading metadata from {selectMetadataFile_openFileDialog.FileName} .", logForm.LOG_TYPE_INFO);
@@ -214,27 +233,27 @@ namespace NewspaperBatchAssemblyTool
                 }
             }
 
-            foreach (IssueMetadata item in issueMetadata)
+            foreach (var item in issueMetadata)
             {
-                logForm.appendTextsToLog($"{item.ISSUE_ID} - " +
-                    $"{item.ISSUE_NUMBER}, " +
-                    $"{item.TITLE}, " +
-                    $"{item.DESCRIPTION}, " +
-                    $"{item.DATE}, " +
-                    $"{item.VOLUME}, " +
-                    $"{item.FREQUENCY}, " +
-                    $"{item.NUMBER_OF_PAGES}, " +
-                    $"{item.DC_SUBJECT_INSTITUTION}, " +
-                    $"{item.DC_SUBJECT_COLLEGE}, " +
-                    $"{item.DC_SUBJECT_LOCATION}, " +
-                    $"{item.DC_CONTRIBUTOR_COLLEGE}, " +
-                    $"{item.DC_CONTRIBUTOR_INSTITUTION}, " +
-                    $"{item.DC_COVERAGE}, " +
-                    $"{item.DC_PUBLISHER}, " +
-                    $"{item.DC_LANGUAGE}, " +
-                    $"{item.DC_FORMAT}, " +
-                    $"{item.DC_TYPE}, " +
-                    $"{item.DC_RIGHTS}", logForm.LOG_TYPE_INFO);
+                logForm.appendTextsToLog($"{item.Key} - " +
+                    $"{item.Value.ISSUE_NUMBER}, " +
+                    $"{item.Value.TITLE}, " +
+                    $"{item.Value.DESCRIPTION}, " +
+                    $"{item.Value.DATE}, " +
+                    $"{item.Value.VOLUME}, " +
+                    $"{item.Value.FREQUENCY}, " +
+                    $"{item.Value.NUMBER_OF_PAGES}, " +
+                    $"{item.Value.DC_SUBJECT_INSTITUTION}, " +
+                    $"{item.Value.DC_SUBJECT_COLLEGE}, " +
+                    $"{item.Value.DC_SUBJECT_LOCATION}, " +
+                    $"{item.Value.DC_CONTRIBUTOR_COLLEGE}, " +
+                    $"{item.Value.DC_CONTRIBUTOR_INSTITUTION}, " +
+                    $"{item.Value.DC_COVERAGE}, " +
+                    $"{item.Value.DC_PUBLISHER}, " +
+                    $"{item.Value.DC_LANGUAGE}, " +
+                    $"{item.Value.DC_FORMAT}, " +
+                    $"{item.Value.DC_TYPE}, " +
+                    $"{item.Value.DC_RIGHTS}", logForm.LOG_TYPE_INFO);
             }
         }
 

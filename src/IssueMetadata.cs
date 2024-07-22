@@ -27,8 +27,5 @@ namespace NewspaperBatchAssemblyTool.src
         public string DC_FORMAT { get; set; }
         public string DC_TYPE { get; set; }
         public string DC_RIGHTS { get; set; }
-
-        //Properties for batch assembly (normalized or transformed):
-        public string ISSUE_ID { get; set; }
     }
 }

@@ -1,4 +1,5 @@
 ﻿using NewspaperBatchAssemblyTool.src;
+using System.Collections.Generic;
 
 namespace NewspaperBatchAssemblyTool
 {
@@ -181,7 +182,7 @@ namespace NewspaperBatchAssemblyTool
 
         public Dictionary<string, string> mappedColumnsDict;
 
-        public List<IssueMetadata> issueMetadata;
+        public Dictionary<string, IssueMetadata> issueMetadata;
 
         private void CustomInitialization()
         {
@@ -194,7 +195,7 @@ namespace NewspaperBatchAssemblyTool
             columnMappingDataGridView.Columns[3].Width = 250;
 
             mappedColumnsDict = new Dictionary<string, string>();
-            issueMetadata = new List<IssueMetadata>();
+            issueMetadata = new Dictionary<string, IssueMetadata>();
         }
 
         #endregion Custom Initialization
