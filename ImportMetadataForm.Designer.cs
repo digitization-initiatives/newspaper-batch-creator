@@ -165,6 +165,7 @@ namespace NewspaperBatchAssemblyTool
             Controls.Add(selectMetadataFileTextBox);
             Controls.Add(startOverButton);
             Controls.Add(importAndCloseButton);
+            MaximumSize = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
             Name = "ImportMetadataForm";
             Text = "Import Metadata";

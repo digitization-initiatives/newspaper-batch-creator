@@ -84,6 +84,7 @@
             Controls.Add(clearLogsButton);
             Controls.Add(hideLogsButton);
             Controls.Add(logsTextBox);
+            MaximumSize = new Size(800, 900);
             MinimumSize = new Size(800, 900);
             Name = "LogForm";
             Text = "LogForm";

@@ -119,6 +119,7 @@ namespace NewspaperBatchAssemblyTool
             Controls.Add(selectOutputFolderLabel);
             Controls.Add(browseOutputFolderButton);
             Controls.Add(outputFolderTextBox);
+            MaximumSize = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
             Name = "OptionsForm";
             Text = "Options";

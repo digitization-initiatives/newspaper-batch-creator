@@ -2,6 +2,7 @@ using DocumentFormat.OpenXml.Wordprocessing;
 using NewspaperBatchAssemblyTool.src;
 using System.Collections.Specialized;
 using System.Text.RegularExpressions;
+using System.Xml;
 
 namespace NewspaperBatchAssemblyTool
 {
@@ -82,10 +83,14 @@ namespace NewspaperBatchAssemblyTool
                 destItem.BATCH_XML_FILE_PATH = Path.Combine(destItem.OUTPUT_FOLDER_PATH, destItem.BATCH_FOLDER_NAME, destItem.DATA_FOLDER_NAME, "batch.xml");
 
                 destItem.LCCN_FOLDER_NAME = Properties.Settings.Default.SeletedLccn;
+                destItem.LCCN = Properties.Settings.Default.SeletedLccn;
                 destItem.PRINT_FOLDER_NAME = "print";
 
                 string sourceFileIssueFolderName = Directory.GetParent(destItem.SOURCE_FILE_PATH).Name;
-                destItem.ISSUE_FOLDER_NAME = sourceFileIssueFolderName.Substring(sourceFileIssueFolderName.Length - 10).Replace("-", "") + Properties.Settings.Default.EditionOrder;
+                destItem.ISSUE_DATE = sourceFileIssueFolderName.Substring(sourceFileIssueFolderName.Length - 10);
+                destItem.ISSUE_FOLDER_NAME = destItem.ISSUE_DATE.Replace("-", "") + Properties.Settings.Default.EditionOrder;
+                destItem.ISSUE_NUMBER = destItem.ISSUE_FOLDER_NAME;
+                destItem.ISSUE_EDITION_ORDER = Properties.Settings.Default.EditionOrder;
 
                 destItem.DESTINATION_FILE_PATH = Path.Combine(
                     destItem.OUTPUT_FOLDER_PATH, destItem.BATCH_FOLDER_NAME, destItem.DATA_FOLDER_NAME,
@@ -93,11 +98,13 @@ namespace NewspaperBatchAssemblyTool
                     destItem.ISSUE_FOLDER_NAME, Path.GetFileName(destItem.SOURCE_FILE_PATH)
                     );
 
-                destItem.ISSUE_XML_FILE_PATH = Path.Combine(
+                destItem.ISSUE_XML_FILE_FULL_PATH = Path.Combine(
                     destItem.OUTPUT_FOLDER_PATH, destItem.BATCH_FOLDER_NAME, destItem.DATA_FOLDER_NAME,
                     destItem.LCCN_FOLDER_NAME, destItem.PRINT_FOLDER_NAME,
-                    destItem.ISSUE_FOLDER_NAME, destItem.ISSUE_FOLDER_NAME + ".xml"
+                    destItem.ISSUE_FOLDER_NAME, destItem.ISSUE_NUMBER + ".xml"
                     );
+
+                destItem.ISSUE_XML_FILE_RELATIVE_PATH = destItem.LCCN_FOLDER_NAME + "/" + destItem.PRINT_FOLDER_NAME + "/" + destItem.ISSUE_FOLDER_NAME + "/" + destItem.ISSUE_NUMBER + ".xml";
 
                 destinationFileStructure.Add( destItem );
             }
@@ -130,6 +137,104 @@ namespace NewspaperBatchAssemblyTool
                 {
                     logForm.appendTextsToLog($"An error occurred: {ex.Message}", logForm.LOG_TYPE_ERROR);
                 }
+            }
+        }
+
+        private void assembleBatch_CreateBatchXMLFile()
+        {
+            //Set batch.xml attributes:
+            Batch_XML_Attributes batch_XML_Attributes = new Batch_XML_Attributes();
+            batch_XML_Attributes.BATCH_NAME = batchNamePrefixTextBox.Text + batchNumberTextBox.Text;
+            batch_XML_Attributes.AWARDEE = Properties.Settings.Default.Awardee;
+            batch_XML_Attributes.AWARD_YEAR = Properties.Settings.Default.AwardYear;
+            batch_XML_Attributes.BATCH_XML_FILE_PATH = Path.Combine(Properties.Settings.Default.OutputFolder, batch_XML_Attributes.BATCH_NAME, "data", "batch.xml");
+
+            //Construct batch.xml file:
+            XmlWriterSettings settings = new XmlWriterSettings
+            {
+                Indent = true,
+                NewLineOnAttributes = true,
+                Encoding = System.Text.Encoding.UTF8,
+                OmitXmlDeclaration = false
+            };
+
+            using (XmlWriter writer = XmlWriter.Create(batch_XML_Attributes.BATCH_XML_FILE_PATH, settings))
+            {
+                writer.WriteStartDocument();
+
+                writer.WriteStartElement("ndnp", "batch", "http://www.loc.gov/ndnp");
+
+                writer.WriteAttributeString("xmlns", "ndnp", null, "http://www.loc.gov/ndnp");
+                writer.WriteAttributeString("xmlns", "xsi", null, "http://www.w3.org/2001/XMLSchema-instance");
+                writer.WriteAttributeString("xmlns", null, "http://www.loc.gov/ndnp");
+                writer.WriteAttributeString("name", batch_XML_Attributes.BATCH_NAME);
+                writer.WriteAttributeString("awardee", batch_XML_Attributes.AWARDEE);
+                writer.WriteAttributeString("awardYear", batch_XML_Attributes.AWARD_YEAR);
+
+                writer.WriteWhitespace(Environment.NewLine);
+                writer.WriteFullEndElement();
+
+                writer.WriteEndDocument();
+            }
+        }
+
+        private void assembleBatch_ConstructBatchXMLIssueElements()
+        {
+            foreach (DestinationFilesStructure item in destinationFileStructure)
+            {
+                if (!batch_XML_Issue_Elements.ContainsKey(item.ISSUE_NUMBER))
+                {
+                    Batch_XML_Issue_Element batchXmlIssueItem = new Batch_XML_Issue_Element();
+                    batchXmlIssueItem.BATCH_XML_FILE_PATH = item.BATCH_XML_FILE_PATH;
+                    batchXmlIssueItem.LCCN = item.LCCN;
+                    batchXmlIssueItem.ISSUE_DATE = item.ISSUE_DATE;
+                    batchXmlIssueItem.EDITION_ORDER = item.ISSUE_EDITION_ORDER;
+                    batchXmlIssueItem.ISSUE_XML_RELATIVE_PATH = item.ISSUE_XML_FILE_RELATIVE_PATH;
+
+                    batch_XML_Issue_Elements.Add(item.ISSUE_NUMBER, batchXmlIssueItem);
+                }
+            }
+
+            //foreach (KeyValuePair<string, Batch_XML_Issue_Element> item in batch_XML_Issue_Elements)
+            //{
+            //    string logText = item.Key + ":" + item.Value.LCCN + ":" + item.Value.ISSUE_DATE + ":" + item.Value.EDITION_ORDER + ":" + item.Value.ISSUE_XML_RELATIVE_PATH;
+            //    logForm.appendTextsToLog($"\"{logText}\"", logForm.LOG_TYPE_INFO);
+            //}
+
+            //logForm.appendTextsToLog($"{batch_XML_Issue_Elements.Count} issues are in this batch.", logForm.LOG_TYPE_INFO);
+
+        }
+
+        private void assembleBatch_AddIssueElementsToBatchXMLFile()
+        {
+            XmlDocument batchXmlDoc = new XmlDocument();
+            batchXmlDoc.Load(batchXmlFileFullPath);
+
+            XmlNamespaceManager nsmgr = new XmlNamespaceManager(batchXmlDoc.NameTable);
+            nsmgr.AddNamespace("ndnp", "http://www.loc.gov/ndnp");
+            XmlNode batchNode = batchXmlDoc.SelectSingleNode("//ndnp:batch", nsmgr);
+
+            if (batchNode != null)
+            {
+                foreach (KeyValuePair<string, Batch_XML_Issue_Element> issueDictElement in batch_XML_Issue_Elements)
+                {
+                    //XmlElement issueXmlElement = batchXmlDoc.CreateElement("ndnp", "issue", "http://www.loc.gov/ndnp");
+                    XmlElement issueXmlElement = batchXmlDoc.CreateElement("issue", "http://www.loc.gov/ndnp");
+                    issueXmlElement.SetAttribute("lccn", issueDictElement.Value.LCCN);
+                    issueXmlElement.SetAttribute("issueDate", issueDictElement.Value.ISSUE_DATE);
+                    issueXmlElement.SetAttribute("editionOrder", issueDictElement.Value.EDITION_ORDER);
+
+                    issueXmlElement.InnerText = issueDictElement.Value.ISSUE_XML_RELATIVE_PATH;
+
+                    batchNode.AppendChild(issueXmlElement);
+                }
+
+                batchXmlDoc.Save(batchXmlFileFullPath);
+                logForm.appendTextsToLog($"\"issue\" elements have been added to {batchXmlFileFullPath}", logForm.LOG_TYPE_ERROR);
+            }
+            else
+            {
+                logForm.appendTextsToLog($"{batchXmlFileFullPath} doesn't contain the \"ndnp:batch\" node", logForm.LOG_TYPE_ERROR);
             }
         }
 
@@ -207,17 +312,33 @@ namespace NewspaperBatchAssemblyTool
             }
             else
             {
+                batchXmlFileFullPath = Path.Combine(
+                    Properties.Settings.Default.OutputFolder,
+                    batchNamePrefixTextBox.Text + batchNumberTextBox.Text,
+                    "data", "batch.xml"
+                    );
+                logForm.appendTextsToLog($"batch.xml for {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} is located at: {batchXmlFileFullPath}.", logForm.LOG_TYPE_INFO);
+
                 constructDestinationFileStructure();
                 logForm.appendTextsToLog($"Destination file structure has been constructed.", logForm.LOG_TYPE_INFO);
 
                 assembleBatch_CopyFiles();
                 logForm.appendTextsToLog($"Batch files have been copied.", logForm.LOG_TYPE_INFO);
+
+                assembleBatch_CreateBatchXMLFile();
+                logForm.appendTextsToLog($"batch.xml has been created.", logForm.LOG_TYPE_INFO);
+
+                assembleBatch_ConstructBatchXMLIssueElements();
+                logForm.appendTextsToLog($"{batch_XML_Issue_Elements.Count} issue elements have been constructed.", logForm.LOG_TYPE_INFO);
+
+                assembleBatch_AddIssueElementsToBatchXMLFile();
+                logForm.appendTextsToLog($"{batch_XML_Issue_Elements.Count} issue elements have been added to {batchXmlFileFullPath} .", logForm.LOG_TYPE_INFO);
             }
         }
 
         private void startOverButton_Click(object sender, EventArgs e)
         {
-
+            batchXmlFileFullPath = String.Empty;
         }
 
         private void viewLogsButton_Click(object sender, EventArgs e)

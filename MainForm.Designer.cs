@@ -300,6 +300,7 @@ namespace NewspaperBatchAssemblyTool
             Controls.Add(browseSourceFilesButton);
             Controls.Add(loadSourceFilesButton);
             Controls.Add(sourceFilesPathTextBox);
+            MaximumSize = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
             Name = "MainForm";
             Text = "Newspaper Batch Assembly Tool";
@@ -322,6 +323,8 @@ namespace NewspaperBatchAssemblyTool
         OptionsForm optionsForm;
 
         List<DestinationFilesStructure> destinationFileStructure;
+        Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
+        string batchXmlFileFullPath = String.Empty;
 
         private void CustomInitialization()
         {
@@ -352,6 +355,7 @@ namespace NewspaperBatchAssemblyTool
 
             //Initialize other resources:
             destinationFileStructure = new List<DestinationFilesStructure>();
+            batch_XML_Issue_Elements = new Dictionary<string, Batch_XML_Issue_Element>();
 
             InitializeSettings();
         }
