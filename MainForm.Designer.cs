@@ -1,4 +1,6 @@
-﻿using NewspaperBatchAssemblyTool.src;
+﻿using DocumentFormat.OpenXml.Vml.Spreadsheet;
+using NewspaperBatchAssemblyTool.src;
+using System.DirectoryServices;
 
 namespace NewspaperBatchAssemblyTool
 {
@@ -35,7 +37,7 @@ namespace NewspaperBatchAssemblyTool
             browseSourceFilesButton = new Button();
             selectLccnLabel = new Label();
             batchNumberLabel = new Label();
-            lccnComboBox = new ComboBox();
+            selectLccnComboBox = new ComboBox();
             statusBar = new StatusStrip();
             statusBarNumberOfSourceFilesLabel = new ToolStripStatusLabel();
             statusBarMetadataFileLoadedLabel = new ToolStripStatusLabel();
@@ -55,6 +57,7 @@ namespace NewspaperBatchAssemblyTool
             setBatchNumberButton = new Button();
             importMetadataButton = new Button();
             batchNamePrefixLabel = new Label();
+            browseOutputFolder_folderBrowserDialog = new FolderBrowserDialog();
             statusBar.SuspendLayout();
             SuspendLayout();
             // 
@@ -89,7 +92,7 @@ namespace NewspaperBatchAssemblyTool
             // selectLccnLabel
             // 
             selectLccnLabel.AutoSize = true;
-            selectLccnLabel.Location = new Point(12, 77);
+            selectLccnLabel.Location = new Point(12, 69);
             selectLccnLabel.Name = "selectLccnLabel";
             selectLccnLabel.Size = new Size(91, 20);
             selectLccnLabel.TabIndex = 3;
@@ -98,20 +101,20 @@ namespace NewspaperBatchAssemblyTool
             // batchNumberLabel
             // 
             batchNumberLabel.AutoSize = true;
-            batchNumberLabel.Location = new Point(944, 77);
+            batchNumberLabel.Location = new Point(944, 69);
             batchNumberLabel.Name = "batchNumberLabel";
             batchNumberLabel.Size = new Size(210, 20);
             batchNumberLabel.TabIndex = 4;
             batchNumberLabel.Text = "Batch Number (numbers only):";
             // 
-            // lccnComboBox
+            // selectLccnComboBox
             // 
-            lccnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            lccnComboBox.FormattingEnabled = true;
-            lccnComboBox.Location = new Point(12, 100);
-            lccnComboBox.Name = "lccnComboBox";
-            lccnComboBox.Size = new Size(480, 28);
-            lccnComboBox.TabIndex = 6;
+            selectLccnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            selectLccnComboBox.FormattingEnabled = true;
+            selectLccnComboBox.Location = new Point(12, 92);
+            selectLccnComboBox.Name = "selectLccnComboBox";
+            selectLccnComboBox.Size = new Size(480, 28);
+            selectLccnComboBox.TabIndex = 6;
             // 
             // statusBar
             // 
@@ -146,7 +149,7 @@ namespace NewspaperBatchAssemblyTool
             // 
             // batchNamePrefixTextBox
             // 
-            batchNamePrefixTextBox.Location = new Point(498, 101);
+            batchNamePrefixTextBox.Location = new Point(498, 93);
             batchNamePrefixTextBox.Name = "batchNamePrefixTextBox";
             batchNamePrefixTextBox.ReadOnly = true;
             batchNamePrefixTextBox.Size = new Size(440, 27);
@@ -155,7 +158,7 @@ namespace NewspaperBatchAssemblyTool
             // 
             // batchNumberTextBox
             // 
-            batchNumberTextBox.Location = new Point(944, 101);
+            batchNumberTextBox.Location = new Point(944, 93);
             batchNumberTextBox.Name = "batchNumberTextBox";
             batchNumberTextBox.Size = new Size(306, 27);
             batchNumberTextBox.TabIndex = 9;
@@ -217,9 +220,9 @@ namespace NewspaperBatchAssemblyTool
             // sourceFilesListView
             // 
             sourceFilesListView.Columns.AddRange(new ColumnHeader[] { sourceFilesListFilenameCol, sourceFilesListStatusCol });
-            sourceFilesListView.Location = new Point(12, 153);
+            sourceFilesListView.Location = new Point(12, 126);
             sourceFilesListView.Name = "sourceFilesListView";
-            sourceFilesListView.Size = new Size(1238, 439);
+            sourceFilesListView.Size = new Size(1238, 466);
             sourceFilesListView.TabIndex = 23;
             sourceFilesListView.UseCompatibleStateImageBehavior = false;
             sourceFilesListView.View = View.Details;
@@ -246,7 +249,7 @@ namespace NewspaperBatchAssemblyTool
             // setBatchNumberButton
             // 
             setBatchNumberButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            setBatchNumberButton.Location = new Point(800, 93);
+            setBatchNumberButton.Location = new Point(800, 165);
             setBatchNumberButton.Name = "setBatchNumberButton";
             setBatchNumberButton.Size = new Size(0, 29);
             setBatchNumberButton.TabIndex = 23;
@@ -267,7 +270,7 @@ namespace NewspaperBatchAssemblyTool
             // batchNamePrefixLabel
             // 
             batchNamePrefixLabel.AutoSize = true;
-            batchNamePrefixLabel.Location = new Point(498, 77);
+            batchNamePrefixLabel.Location = new Point(498, 69);
             batchNamePrefixLabel.Name = "batchNamePrefixLabel";
             batchNamePrefixLabel.Size = new Size(134, 20);
             batchNamePrefixLabel.TabIndex = 25;
@@ -291,7 +294,7 @@ namespace NewspaperBatchAssemblyTool
             Controls.Add(batchNumberTextBox);
             Controls.Add(batchNamePrefixTextBox);
             Controls.Add(statusBar);
-            Controls.Add(lccnComboBox);
+            Controls.Add(selectLccnComboBox);
             Controls.Add(batchNumberLabel);
             Controls.Add(selectLccnLabel);
             Controls.Add(browseSourceFilesButton);
@@ -316,20 +319,66 @@ namespace NewspaperBatchAssemblyTool
 
         LogForm logForm;
         ImportMetadataForm importMetadataForm;
+        OptionsForm optionsForm;
+
+        List<DestinationFilesStructure> destinationFileStructure;
 
         private void CustomInitialization()
         {
+            //Custom form start location:
+            this.StartPosition = FormStartPosition.Manual;
+            this.Location = new Point(200, (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2 - 50);
+
+            //Initialize forms:
             logForm = new LogForm(this);
             importMetadataForm = new ImportMetadataForm(this);
+            optionsForm = new OptionsForm(this);
+
+            //Pass along the logForm instance:
             importMetadataForm.logForm = logForm;
+            optionsForm.logForm = logForm;
 
+            //Disable buttons upon application startup:
             loadSourceFilesButton.Enabled = false;
+            assembleBatchButton.Enabled = false;
 
+            //Load LCCN selection ComboBox items:
             loadLccnComboBoxItems();
-            lccnComboBox.SelectedIndexChanged += lccnComboBox_SelectedIndexChanged;
+            selectLccnComboBox.SelectedIndexChanged += lccnComboBox_SelectedIndexChanged;
 
+            //Set ListView properties:
             sourceFilesListFilenameCol.Width = sourceFilesListView.Width - 150;
             sourceFilesListStatusCol.Width = 100;
+
+            //Initialize other resources:
+            destinationFileStructure = new List<DestinationFilesStructure>();
+
+            InitializeSettings();
+        }
+
+        private void InitializeSettings()
+        {
+            Properties.Settings.Default.SeletedLccn = String.Empty;
+            Properties.Settings.Default.OutputFolder = Environment.CurrentDirectory;
+            Properties.Settings.Default.SourceFolder = String.Empty;
+            Properties.Settings.Default.Awardee = "txa";
+            Properties.Settings.Default.AwardYear = String.Empty;
+
+            optionsForm.editionOrderComboBox.SelectedIndex = 0;
+            Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
+            
+            optionsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
+            optionsForm.browseOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
+
+            Properties.Settings.Default.Save();
+
+            //Print current default settings to logs:
+            logForm.appendTextsToLog($"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}", logForm.LOG_TYPE_INFO);
         }
 
         #endregion
@@ -341,7 +390,7 @@ namespace NewspaperBatchAssemblyTool
         private Label selectLccnLabel;
         private Label batchNumberLabel;
         private Label label3;
-        private ComboBox lccnComboBox;
+        private ComboBox selectLccnComboBox;
         private StatusStrip statusBar;
         private TextBox batchNumberTextBox;
         private TextBox batchNamePrefixTextBox;
@@ -361,5 +410,6 @@ namespace NewspaperBatchAssemblyTool
         private Button importMetadataButton;
         private ToolStripStatusLabel statusBarMetadataFileLoadedLabel;
         private Label batchNamePrefixLabel;
+        private FolderBrowserDialog browseOutputFolder_folderBrowserDialog;
     }
 }

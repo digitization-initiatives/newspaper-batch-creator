@@ -102,6 +102,10 @@
 
         private void CustomInitialization()
         {
+            //Custom form start location:
+            this.StartPosition = FormStartPosition.Manual;
+
+            //Initialize log types and timestamp:
             LOG_TYPE_INFO = " - [INFO] - ";
             LOG_TYPE_WARN = " - [WARN] - ";
             LOG_TYPE_ERROR = " - [ERROR] - ";

@@ -186,6 +186,11 @@ namespace NewspaperBatchAssemblyTool
 
         private void CustomInitialization()
         {
+            //Custom form start location:
+            this.StartPosition = FormStartPosition.Manual;
+
+
+
             selectMetadataFileTextBox.Text = String.Empty;
             selectMetadataFile_openFileDialog.Filter = "Excel Files|*.xls;*.xlsx|All files (*.*)|*.*";
 
