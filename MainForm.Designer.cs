@@ -299,6 +299,7 @@ namespace NewspaperBatchAssemblyTool
         #endregion
 
         #region Custom Initializations
+        public Button browseSourceFilesButton;
         public Button assembleBatchButton;
         public ToolStripStatusLabel statusBarMetadataFileLoadedLabel;
         public ToolStripStatusLabel statusBarNumberOfAssembledFilesLabel;
@@ -333,6 +334,7 @@ namespace NewspaperBatchAssemblyTool
             optionsForm.logForm = logForm;
 
             //Disable buttons upon application startup:
+            browseSourceFilesButton.Enabled = false;
             loadSourceFilesButton.Enabled = false;
             assembleBatchButton.Enabled = false;
 
@@ -384,7 +386,6 @@ namespace NewspaperBatchAssemblyTool
 
         private TextBox sourceFilesPathTextBox;
         private Button loadSourceFilesButton;
-        private Button browseSourceFilesButton;
         private Label selectLccnLabel;
         private Label batchNumberLabel;
         private Label label3;

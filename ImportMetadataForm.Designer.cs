@@ -181,6 +181,10 @@ namespace NewspaperBatchAssemblyTool
         private MainForm mainForm;
         public LogForm logForm;
 
+        public DataGridView columnMappingDataGridView;
+        public OpenFileDialog selectMetadataFile_openFileDialog;
+        public TextBox selectMetadataFileTextBox;
+
         public Dictionary<string, string> mappedColumnsDict;
 
         public Dictionary<string, IssueMetadata> issueMetadata;
@@ -208,11 +212,8 @@ namespace NewspaperBatchAssemblyTool
 
         private Button importAndCloseButton;
         private Button startOverButton;
-        private OpenFileDialog selectMetadataFile_openFileDialog;
-        private TextBox selectMetadataFileTextBox;
         private Label selectMetadataFileLabel;
         private Button selectMetadataFileButton;
-        private DataGridView columnMappingDataGridView;
         private Label columnMappingLabel;
         private DataGridViewTextBoxColumn columnNumberCol;
         private DataGridViewTextBoxColumn columnHeaderCol;

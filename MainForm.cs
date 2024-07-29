@@ -433,14 +433,8 @@ namespace NewspaperBatchAssemblyTool
 
                 statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
 
-                Properties.Settings.Default.SourceFilesLoaded = true;
-                Properties.Settings.Default.Save();
-
                 //Enable Assemble Batch button:
-                if (Properties.Settings.Default.SourceFilesLoaded && Properties.Settings.Default.MetadataLoaded)
-                {
-                    assembleBatchButton.Enabled = true;
-                }
+                assembleBatchButton.Enabled = true;
             }
         }
 
@@ -516,17 +510,25 @@ namespace NewspaperBatchAssemblyTool
             logForm.appendTextsToLog($"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}", logForm.LOG_TYPE_INFO);
             logForm.appendTextsToLog($"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}", logForm.LOG_TYPE_INFO);
 
-            //Reset UI:
+            //Reset MainForm UI:
             sourceFilesPathTextBox.Text = String.Empty;
             browseSourceFiles_folderBrowserDialog.SelectedPath = String.Empty;
-            loadSourceFilesButton.Enabled = false;
             selectLccnComboBox.SelectedIndex = -1;
             batchNamePrefixTextBox.Text = String.Empty;
             batchNumberTextBox.Text = String.Empty;
-            sourceFilesListView.Clear();
+            sourceFilesListView.Items.Clear();
+            browseSourceFilesButton.Enabled = false;
+            loadSourceFilesButton.Enabled = false;
             assembleBatchButton.Enabled = false;
             statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
             statusBarMetadataFileLoadedLabel.Text = $"Metadata not loaded.";
+
+            //Reset ImportMetadataForm:
+            importMetadataForm.issueMetadata.Clear();
+            importMetadataForm.mappedColumnsDict.Clear();
+            importMetadataForm.selectMetadataFileTextBox.Text = String.Empty;
+            importMetadataForm.selectMetadataFile_openFileDialog.FileName = String.Empty;
+            importMetadataForm.columnMappingDataGridView.Rows.Clear();
 
             //Reset variables and data structures:
             batchXmlFileFullPath = String.Empty;

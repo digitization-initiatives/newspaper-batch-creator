@@ -189,13 +189,7 @@ namespace NewspaperBatchAssemblyTool
                                 }
                             }
 
-                            issue_key = issue.DATE.Replace("-", "") + issueNumber.ToString("D" + issueNumberLength);
-
-                            while (issueMetadata.ContainsKey(issue_key))
-                            {
-                                issueNumber += 1;
-                                issue_key = issue.DATE.Replace("-", "") + issueNumber.ToString("D" + issueNumberLength);
-                            }
+                            issue_key = issue.DATE.Replace("-", "") + Properties.Settings.Default.EditionOrder;
 
                             try
                             {
@@ -255,6 +249,9 @@ namespace NewspaperBatchAssemblyTool
                     $"{item.Value.DC_TYPE}, " +
                     $"{item.Value.DC_RIGHTS}", logForm.LOG_TYPE_INFO);
             }
+
+            logForm.appendTextsToLog($"{issueMetadata.Count} metadata entries have been loaded.", logForm.LOG_TYPE_INFO);
+
         }
 
         #endregion
@@ -269,11 +266,8 @@ namespace NewspaperBatchAssemblyTool
 
             mainForm.statusBarMetadataFileLoadedLabel.Text = $"Metadata loaded.";
 
-            //Enable Assemble Batch button:
-            if (Properties.Settings.Default.SourceFilesLoaded && Properties.Settings.Default.MetadataLoaded)
-            {
-                mainForm.assembleBatchButton.Enabled = true;
-            }
+            //Enable load source files function:
+            mainForm.browseSourceFilesButton.Enabled = true;
 
             this.Hide();
         }
