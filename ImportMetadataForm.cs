@@ -264,6 +264,17 @@ namespace NewspaperBatchAssemblyTool
             saveColumnMappings();
             loadIssueMetadata();
 
+            Properties.Settings.Default.MetadataLoaded = true;
+            Properties.Settings.Default.Save();
+
+            mainForm.statusBarMetadataFileLoadedLabel.Text = $"Metadata loaded.";
+
+            //Enable Assemble Batch button:
+            if (Properties.Settings.Default.SourceFilesLoaded && Properties.Settings.Default.MetadataLoaded)
+            {
+                mainForm.assembleBatchButton.Enabled = true;
+            }
+
             this.Hide();
         }
 

@@ -1,3 +1,4 @@
+using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using NewspaperBatchAssemblyTool.src;
 using System.Collections.Specialized;
@@ -68,6 +69,57 @@ namespace NewspaperBatchAssemblyTool
             return Regex.IsMatch(batchNumberTextBox.Text, @"^\d+$");
         }
 
+        private void relocateFilesWithNoMetadata()
+        {
+            string issuesWithNoMetadataFolderPath = Path.Combine(Properties.Settings.Default.OutputFolder, "IssuesWithNoMetadata");
+            if (!Directory.Exists(issuesWithNoMetadataFolderPath))
+            {
+                Directory.CreateDirectory(issuesWithNoMetadataFolderPath);
+            }
+
+            List<ListViewItem> itemsToRemove = new List<ListViewItem>();
+
+            foreach (ListViewItem sourceFileItem in sourceFilesListView.Items)
+            {
+                string sourceFilePath = sourceFileItem.SubItems[0].Text;
+
+                string sourceFileParentFolderName = Directory.GetParent(sourceFilePath).Name;
+                string sourceFileIssueNumber = sourceFileParentFolderName.Substring(sourceFileParentFolderName.Length - 10).Replace("-", "") + Properties.Settings.Default.EditionOrder;
+
+                if (!importMetadataForm.issueMetadata.ContainsKey(sourceFileIssueNumber))
+                {
+                    string sourceFileName = Path.GetFileName(sourceFilePath);
+
+                    string destinationFilePath = Path.Combine(issuesWithNoMetadataFolderPath, sourceFileParentFolderName, sourceFileName);
+                    string destinationFolderPath = Path.GetDirectoryName(destinationFilePath);
+
+                    try
+                    {
+                        if (!Directory.Exists(destinationFolderPath))
+                        {
+                            Directory.CreateDirectory(destinationFolderPath);
+                        }
+
+                        File.Move(sourceFilePath, destinationFilePath);
+                        itemsToRemove.Add(sourceFileItem);
+
+                        logForm.appendTextsToLog($"Issue {sourceFileIssueNumber} has no metadata, relocating {sourceFilePath} to {destinationFilePath}.", logForm.LOG_TYPE_INFO);
+                    }
+                    catch (IOException ex)
+                    {
+                        logForm.appendTextsToLog($"Relocating {sourceFilePath} to {destinationFilePath} encountered the following error: \"{ex.Message}\".", logForm.LOG_TYPE_ERROR);
+                    }
+                }
+            }
+            logForm.appendTextsToLog($"{itemsToRemove.Count} files will be removed from list.", logForm.LOG_TYPE_INFO);
+
+            foreach (ListViewItem itemToRemove in itemsToRemove)
+            {
+                sourceFilesListView.Items.Remove(itemToRemove);
+            }
+            logForm.appendTextsToLog($"{itemsToRemove.Count} files have been removed from source file list.", logForm.LOG_TYPE_INFO);
+        }
+
         private void constructDestinationFileStructure()
         {
             foreach (ListViewItem sourceFileItem in sourceFilesListView.Items)
@@ -106,7 +158,7 @@ namespace NewspaperBatchAssemblyTool
 
                 destItem.ISSUE_XML_FILE_RELATIVE_PATH = destItem.LCCN_FOLDER_NAME + "/" + destItem.PRINT_FOLDER_NAME + "/" + destItem.ISSUE_FOLDER_NAME + "/" + destItem.ISSUE_NUMBER + ".xml";
 
-                destinationFileStructure.Add( destItem );
+                destinationFileStructure.Add(destItem);
             }
 
             //foreach ( DestinationFilesStructure item in destinationFileStructure )
@@ -218,7 +270,6 @@ namespace NewspaperBatchAssemblyTool
             {
                 foreach (KeyValuePair<string, Batch_XML_Issue_Element> issueDictElement in batch_XML_Issue_Elements)
                 {
-                    //XmlElement issueXmlElement = batchXmlDoc.CreateElement("ndnp", "issue", "http://www.loc.gov/ndnp");
                     XmlElement issueXmlElement = batchXmlDoc.CreateElement("issue", "http://www.loc.gov/ndnp");
                     issueXmlElement.SetAttribute("lccn", issueDictElement.Value.LCCN);
                     issueXmlElement.SetAttribute("issueDate", issueDictElement.Value.ISSUE_DATE);
@@ -230,11 +281,119 @@ namespace NewspaperBatchAssemblyTool
                 }
 
                 batchXmlDoc.Save(batchXmlFileFullPath);
-                logForm.appendTextsToLog($"\"issue\" elements have been added to {batchXmlFileFullPath}", logForm.LOG_TYPE_ERROR);
+                logForm.appendTextsToLog($"\"issue\" elements have been added to {batchXmlFileFullPath}", logForm.LOG_TYPE_INFO);
             }
             else
             {
                 logForm.appendTextsToLog($"{batchXmlFileFullPath} doesn't contain the \"ndnp:batch\" node", logForm.LOG_TYPE_ERROR);
+            }
+        }
+
+        private void assembleBatch_ConstructIssueFilesInformation()
+        {
+            foreach (DestinationFilesStructure destFileItem in destinationFileStructure)
+            {
+                if (!issueFilesInformation.ContainsKey(destFileItem.ISSUE_NUMBER))
+                {
+                    IssueFilesInformation newIssueFilesInfoItem = new IssueFilesInformation();
+                    newIssueFilesInfoItem.JP2_FILES = new List<Jp2FileProperties>();
+                    newIssueFilesInfoItem.PDF_FILES = new List<string>();
+                    newIssueFilesInfoItem.XML_FILES = new List<string>();
+                    newIssueFilesInfoItem.NUMBER_OF_PAGES = 0;
+
+                    switch (Path.GetExtension(destFileItem.DESTINATION_FILE_PATH))
+                    {
+                        case ".jp2":
+                            Jp2FileProperties newJp2FilePropertyItem = new Jp2FileProperties();
+                            newJp2FilePropertyItem.JP2_FILE_PATH = destFileItem.DESTINATION_FILE_PATH;
+                            newIssueFilesInfoItem.JP2_FILES.Add(newJp2FilePropertyItem);
+                            break;
+                        case ".pdf":
+                            newIssueFilesInfoItem.PDF_FILES.Add(destFileItem.DESTINATION_FILE_PATH);
+                            break;
+                        case ".xml":
+                            newIssueFilesInfoItem.XML_FILES.Add(destFileItem.DESTINATION_FILE_PATH);
+                            break;
+                    }
+
+                    newIssueFilesInfoItem.ISSUE_NUMBER = destFileItem.ISSUE_NUMBER;
+                    newIssueFilesInfoItem.ISSUE_XML_FILE_PATH = Path.Combine(
+                        Path.GetDirectoryName(destFileItem.DESTINATION_FILE_PATH),
+                        destFileItem.ISSUE_NUMBER,
+                        ".xml"
+                        );
+                    newIssueFilesInfoItem.NUMBER_OF_PAGES += 1;
+
+                    LCCN.LCCN_ITEMS.TryGetValue(destFileItem.LCCN, out LCCN_PROPERTIES lccnPropertiesValue);
+                    newIssueFilesInfoItem.ISSUE_METS_LABEL = lccnPropertiesValue.TITLE + ", " + destFileItem.ISSUE_DATE;
+
+                    newIssueFilesInfoItem.ISSUE_CREATEDATE = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
+                    newIssueFilesInfoItem.LCCN = destFileItem.LCCN;
+
+                    newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW = importMetadataForm.issueMetadata[newIssueFilesInfoItem.ISSUE_NUMBER].VOLUME;
+                    newIssueFilesInfoItem.ISSUE_VOLUME = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+")[0].Value;
+                    newIssueFilesInfoItem.ISSUE_VOLUME_NUMBER = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+")[1].Value;
+
+                    newIssueFilesInfoItem.ISSUE_EDITION_ORDER = destFileItem.ISSUE_EDITION_ORDER;
+                    newIssueFilesInfoItem.ISSUE_DATE = destFileItem.ISSUE_DATE;
+
+                    issueFilesInformation.Add(destFileItem.ISSUE_NUMBER, newIssueFilesInfoItem);
+                }
+                else
+                {
+                    switch (Path.GetExtension(destFileItem.DESTINATION_FILE_PATH))
+                    {
+                        case ".jp2":
+                            Jp2FileProperties newJp2FilePropertyItem = new Jp2FileProperties();
+                            newJp2FilePropertyItem.JP2_FILE_PATH = destFileItem.DESTINATION_FILE_PATH;
+                            issueFilesInformation[destFileItem.ISSUE_NUMBER].JP2_FILES.Add(newJp2FilePropertyItem);
+                            break;
+                        case ".pdf":
+                            issueFilesInformation[destFileItem.ISSUE_NUMBER].PDF_FILES.Add(destFileItem.DESTINATION_FILE_PATH);
+                            break;
+                        case ".xml":
+                            issueFilesInformation[destFileItem.ISSUE_NUMBER].XML_FILES.Add(destFileItem.DESTINATION_FILE_PATH);
+                            break;
+                    }
+
+                    issueFilesInformation[destFileItem.ISSUE_NUMBER].NUMBER_OF_PAGES += 1;
+                }
+            }
+
+            foreach (var issueFileInfoItem in issueFilesInformation)
+            {
+                issueFileInfoItem.Value.NUMBER_OF_PAGES /= 3;
+            }
+
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                string issueLogText = $"Issue {issueFileInfoItem.Key} has {issueFileInfoItem.Value.NUMBER_OF_PAGES} pages.";
+                logForm.appendTextsToLog(issueLogText, logForm.LOG_TYPE_INFO);
+                issueLogText = String.Empty;
+                issueLogText = $"Issue {issueFileInfoItem.Key} metadata: " +
+                    $"{issueFileInfoItem.Value.ISSUE_NUMBER} - {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH} - " +
+                    $"{issueFileInfoItem.Value.ISSUE_METS_LABEL} - {issueFileInfoItem.Value.ISSUE_CREATEDATE} - {issueFileInfoItem.Value.LCCN} - " +
+                    $"{issueFileInfoItem.Value.ISSUE_VOLUME_METADATA_RAW} - {issueFileInfoItem.Value.ISSUE_VOLUME} - {issueFileInfoItem.Value.ISSUE_VOLUME_NUMBER} - " +
+                    $"{issueFileInfoItem.Value.ISSUE_EDITION_ORDER} - {issueFileInfoItem.Value.ISSUE_DATE}";
+                logForm.appendTextsToLog(issueLogText, logForm.LOG_TYPE_INFO);
+
+                foreach (Jp2FileProperties jp2File in issueFileInfoItem.Value.JP2_FILES)
+                {
+                    string jp2LogText = $"{issueFileInfoItem.Key} - {jp2File.JP2_FILE_PATH} .";
+                    logForm.appendTextsToLog(jp2LogText, logForm.LOG_TYPE_INFO);
+                }
+
+                foreach (string pdfFile in issueFileInfoItem.Value.PDF_FILES)
+                {
+                    string pdfLogText = $"{issueFileInfoItem.Key} - {pdfFile} .";
+                    logForm.appendTextsToLog(pdfLogText, logForm.LOG_TYPE_INFO);
+                }
+
+                foreach (string xmlFile in issueFileInfoItem.Value.XML_FILES)
+                {
+                    string xmlLogText = $"{issueFileInfoItem.Key} - {xmlFile} .";
+                    logForm.appendTextsToLog(xmlLogText, logForm.LOG_TYPE_INFO);
+                }
             }
         }
 
@@ -270,31 +429,18 @@ namespace NewspaperBatchAssemblyTool
                     sourceFilesListView.Items.Add(item);
                 }
 
+                relocateFilesWithNoMetadata();
+
                 statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
 
+                Properties.Settings.Default.SourceFilesLoaded = true;
+                Properties.Settings.Default.Save();
+
                 //Enable Assemble Batch button:
-                assembleBatchButton.Enabled = true;
-            }
-        }
-
-        private void loadMetadataFileButton_Click(object sender, EventArgs e)
-        {
-
-        }
-
-        private void setBatchNumberButton_Click(object sender, EventArgs e)
-        {
-
-
-            if (batchNumberTextBox.Enabled)
-            {
-                setBatchNumberButton.Text = "Unset";
-                batchNumberTextBox.Enabled = false;
-            }
-            else
-            {
-                setBatchNumberButton.Text = "Set";
-                batchNumberTextBox.Enabled = true;
+                if (Properties.Settings.Default.SourceFilesLoaded && Properties.Settings.Default.MetadataLoaded)
+                {
+                    assembleBatchButton.Enabled = true;
+                }
             }
         }
 
@@ -325,6 +471,7 @@ namespace NewspaperBatchAssemblyTool
                 assembleBatch_CopyFiles();
                 logForm.appendTextsToLog($"Batch files have been copied.", logForm.LOG_TYPE_INFO);
 
+                //Create batch.xml file:
                 assembleBatch_CreateBatchXMLFile();
                 logForm.appendTextsToLog($"batch.xml has been created.", logForm.LOG_TYPE_INFO);
 
@@ -333,12 +480,59 @@ namespace NewspaperBatchAssemblyTool
 
                 assembleBatch_AddIssueElementsToBatchXMLFile();
                 logForm.appendTextsToLog($"{batch_XML_Issue_Elements.Count} issue elements have been added to {batchXmlFileFullPath} .", logForm.LOG_TYPE_INFO);
+
+                //Create issue xml files for each issue:
+
+                //assembleBatch_ConstructIssueFilesInformation();
+                //logForm.appendTextsToLog($"issueFilesInformation has been constructed.", logForm.LOG_TYPE_INFO);
             }
         }
 
         private void startOverButton_Click(object sender, EventArgs e)
         {
+
+            //Reset settings:
+            Properties.Settings.Default.SeletedLccn = String.Empty;
+            Properties.Settings.Default.SourceFolder = String.Empty;
+            Properties.Settings.Default.OutputFolder = optionsForm.browseOutputFolder_folderBrowserDialog.SelectedPath;
+            Properties.Settings.Default.Awardee = "txa";
+            Properties.Settings.Default.AwardYear = String.Empty;
+            Properties.Settings.Default.MetadataLoaded = false;
+            Properties.Settings.Default.SourceFilesLoaded = false;
+
+            optionsForm.editionOrderComboBox.SelectedIndex = 0;
+            Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
+
+            optionsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
+            optionsForm.browseOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
+
+            Properties.Settings.Default.Save();
+
+            //Print current default settings to logs:
+            logForm.appendTextsToLog($"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}", logForm.LOG_TYPE_INFO);
+            logForm.appendTextsToLog($"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}", logForm.LOG_TYPE_INFO);
+
+            //Reset UI:
+            sourceFilesPathTextBox.Text = String.Empty;
+            browseSourceFiles_folderBrowserDialog.SelectedPath = String.Empty;
+            loadSourceFilesButton.Enabled = false;
+            selectLccnComboBox.SelectedIndex = -1;
+            batchNamePrefixTextBox.Text = String.Empty;
+            batchNumberTextBox.Text = String.Empty;
+            sourceFilesListView.Clear();
+            assembleBatchButton.Enabled = false;
+            statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
+            statusBarMetadataFileLoadedLabel.Text = $"Metadata not loaded.";
+
+            //Reset variables and data structures:
             batchXmlFileFullPath = String.Empty;
+            destinationFileStructure.Clear();
+            batch_XML_Issue_Elements.Clear();
+            issueFilesInformation.Clear();
         }
 
         private void viewLogsButton_Click(object sender, EventArgs e)

@@ -54,10 +54,8 @@ namespace NewspaperBatchAssemblyTool
             sourceFilesListFilenameCol = new ColumnHeader();
             sourceFilesListStatusCol = new ColumnHeader();
             optionsButton = new Button();
-            setBatchNumberButton = new Button();
             importMetadataButton = new Button();
             batchNamePrefixLabel = new Label();
-            browseOutputFolder_folderBrowserDialog = new FolderBrowserDialog();
             statusBar.SuspendLayout();
             SuspendLayout();
             // 
@@ -246,17 +244,6 @@ namespace NewspaperBatchAssemblyTool
             optionsButton.UseVisualStyleBackColor = true;
             optionsButton.Click += optionsButton_Click;
             // 
-            // setBatchNumberButton
-            // 
-            setBatchNumberButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            setBatchNumberButton.Location = new Point(800, 165);
-            setBatchNumberButton.Name = "setBatchNumberButton";
-            setBatchNumberButton.Size = new Size(0, 29);
-            setBatchNumberButton.TabIndex = 23;
-            setBatchNumberButton.Text = "Set";
-            setBatchNumberButton.UseVisualStyleBackColor = true;
-            setBatchNumberButton.Click += setBatchNumberButton_Click;
-            // 
             // importMetadataButton
             // 
             importMetadataButton.Location = new Point(12, 608);
@@ -284,7 +271,6 @@ namespace NewspaperBatchAssemblyTool
             Controls.Add(batchNamePrefixLabel);
             Controls.Add(importMetadataButton);
             Controls.Add(sourceFilesListView);
-            Controls.Add(setBatchNumberButton);
             Controls.Add(optionsButton);
             Controls.Add(viewLogsButton);
             Controls.Add(browseSourceFilesLabel);
@@ -313,6 +299,9 @@ namespace NewspaperBatchAssemblyTool
         #endregion
 
         #region Custom Initializations
+        public Button assembleBatchButton;
+        public ToolStripStatusLabel statusBarMetadataFileLoadedLabel;
+        public ToolStripStatusLabel statusBarNumberOfAssembledFilesLabel;
 
         public string STATUS_LOADED = "Loaded";
         public string STATUS_ASSEMBLED = "Assembled";
@@ -325,6 +314,8 @@ namespace NewspaperBatchAssemblyTool
         List<DestinationFilesStructure> destinationFileStructure;
         Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
         string batchXmlFileFullPath = String.Empty;
+
+        Dictionary<string, IssueFilesInformation> issueFilesInformation;
 
         private void CustomInitialization()
         {
@@ -356,6 +347,7 @@ namespace NewspaperBatchAssemblyTool
             //Initialize other resources:
             destinationFileStructure = new List<DestinationFilesStructure>();
             batch_XML_Issue_Elements = new Dictionary<string, Batch_XML_Issue_Element>();
+            issueFilesInformation = new Dictionary<string, IssueFilesInformation>();
 
             InitializeSettings();
         }
@@ -367,6 +359,8 @@ namespace NewspaperBatchAssemblyTool
             Properties.Settings.Default.SourceFolder = String.Empty;
             Properties.Settings.Default.Awardee = "txa";
             Properties.Settings.Default.AwardYear = String.Empty;
+            Properties.Settings.Default.MetadataLoaded = false;
+            Properties.Settings.Default.SourceFilesLoaded = false;
 
             optionsForm.editionOrderComboBox.SelectedIndex = 0;
             Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
@@ -400,7 +394,6 @@ namespace NewspaperBatchAssemblyTool
         private TextBox batchNamePrefixTextBox;
         private Button exitButton;
         private Button startOverButton;
-        private Button assembleBatchButton;
         private Label browseSourceFilesLabel;
         private FolderBrowserDialog browseSourceFiles_folderBrowserDialog;
         private Button viewLogsButton;
@@ -409,11 +402,7 @@ namespace NewspaperBatchAssemblyTool
         private ColumnHeader sourceFilesListFilenameCol;
         private ColumnHeader sourceFilesListStatusCol;
         private ToolStripStatusLabel statusBarNumberOfSourceFilesLabel;
-        private ToolStripStatusLabel statusBarNumberOfAssembledFilesLabel;
-        private Button setBatchNumberButton;
         private Button importMetadataButton;
-        private ToolStripStatusLabel statusBarMetadataFileLoadedLabel;
         private Label batchNamePrefixLabel;
-        private FolderBrowserDialog browseOutputFolder_folderBrowserDialog;
     }
 }
