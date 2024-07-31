@@ -434,7 +434,7 @@ namespace NewspaperBatchAssemblyTool
                 initialSection.AppendLine($"\tPROFILE=\"urn:library-of-congress:mets:profiles:ndnp:issue:v1.5\"");
                 initialSection.AppendLine($"\tTYPE=\"urn:library-of-congress:ndnp:mets:newspaper:issue\"");
                 initialSection.AppendLine($"\txsi:schemaLocation=\"http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version17/mets.v1-7.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd\">");
-                initialSection.AppendLine($"{Environment.NewLine}");
+                initialSection.AppendLine($""); // Insert a line break.
                 initialSection.AppendLine($"METSHDR_SECTION_PLACEHOLDER");
                 initialSection.AppendLine($"DMDSEC_PLACEHOLDER");
                 initialSection.AppendLine($"AMDSEC_PLACEHOLDER");
@@ -540,15 +540,124 @@ namespace NewspaperBatchAssemblyTool
         }
         private void assembleBatch_UpdateIssueXMLFile_AddAmdSec()
         {
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                StringBuilder amdSec = new StringBuilder();
 
+                amdSec.AppendLine($"\t<amdSec>");
+
+                for (int i = 0; i < issueFileInfoItem.Value.NUMBER_OF_PAGES; i++)
+                {
+                    amdSec.AppendLine($"\t\t<techMD ID=\"mixserviceFile{i + 1}\">");
+                    amdSec.AppendLine($"\t\t\t<mdWrap MDTYPE=\"NISOIMG\" LABEL=\"NISO still image metadata\">");
+                    amdSec.AppendLine($"\t\t\t\t<xmlData>");
+                    amdSec.AppendLine($"\t\t\t\t\t<mix:mix>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t<mix:BasicImageParameters>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t<mix:Format>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:Compression>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t\t<mix:CompressionScheme>7</mix:CompressionScheme>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t</mix:Compression>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:PhotometricInterpretation> ");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t\t<mix:ColorSpace></mix:ColorSpace>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t</mix:PhotometricInterpretation>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t</mix:Format>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t</mix:BasicImageParameters>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t<mix:ImagingPerformanceAssessment>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t<mix:SpatialMetrics>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:SamplingFrequencyUnit>2</mix:SamplingFrequencyUnit>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:XSamplingFrequency>400</mix:XSamplingFrequency>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:YSamplingFrequency>400</mix:YSamplingFrequency>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:ImageWidth>{issueFileInfoItem.Value.JP2_FILES[i].IMAGE_WIDTH}</mix:ImageWidth>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:ImageLength>{issueFileInfoItem.Value.JP2_FILES[i].IMAGE_LENGTH}</mix:ImageLength>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t</mix:SpatialMetrics>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t<mix:Energetics>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t\t<mix:BitsPerSample></mix:BitsPerSample>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t\t</mix:Energetics>");
+                    amdSec.AppendLine($"\t\t\t\t\t\t</mix:ImagingPerformanceAssessment>");
+                    amdSec.AppendLine($"\t\t\t\t\t</mix:mix>");
+                    amdSec.AppendLine($"\t\t\t\t</xmlData>");
+                    amdSec.AppendLine($"\t\t\t</mdWrap>");
+                    amdSec.AppendLine($"\t\t</techMD>");
+                }
+
+                amdSec.AppendLine($"\t</amdSec>");
+
+                string issueXmlFileContent = File.ReadAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH);
+
+                issueXmlFileContent = issueXmlFileContent.Replace("AMDSEC_PLACEHOLDER", amdSec.ToString());
+
+                File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
+
+                logForm.appendTextsToLog($"amdSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}", logForm.LOG_TYPE_INFO);
+            }
         }
         private void assembleBatch_UpdateIssueXMLFile_AddFileSec()
         {
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                StringBuilder fileSec = new StringBuilder();
 
+                fileSec.AppendLine($"\t<fileSec>");
+
+                for (int i = 0; i < issueFileInfoItem.Value.NUMBER_OF_PAGES; i++)
+                {
+                    fileSec.AppendLine($"\t\t<fileGrp ID=\"pageFileGrp{i + 1}\">");
+                    fileSec.AppendLine($"\t\t\t<file ID=\"masterFile{i + 1}\" USE=\"master\">");
+                    fileSec.AppendLine($"\t\t\t\t<FLocat LOCTYPE=\"OTHER\" OTHERLOCTYPE=\"file\" xlink:href=\"{Path.GetFileNameWithoutExtension(issueFileInfoItem.Value.JP2_FILES[i].JP2_FILE_PATH)}.tif\" />");
+                    fileSec.AppendLine($"\t\t\t</file>");
+                    fileSec.AppendLine($"\t\t\t<file ID=\"serviceFile{i + 1}\" USE=\"service\" ADMID=\"mixserviceFile{i + 1}\">");
+                    fileSec.AppendLine($"\t\t\t\t<FLocat LOCTYPE=\"OTHER\" OTHERLOCTYPE=\"file\" xlink:href=\"{Path.GetFileName(issueFileInfoItem.Value.JP2_FILES[i].JP2_FILE_PATH)}\" />");
+                    fileSec.AppendLine($"\t\t\t</file>");
+                    fileSec.AppendLine($"\t\t\t<file ID=\"otherDerivativeFile{i + 1}\" USE=\"derivative\">");
+                    fileSec.AppendLine($"\t\t\t\t<FLocat LOCTYPE=\"OTHER\" OTHERLOCTYPE=\"file\" xlink:href=\"{Path.GetFileName(issueFileInfoItem.Value.PDF_FILES[i])}\" />");
+                    fileSec.AppendLine($"\t\t\t</file>");
+                    fileSec.AppendLine($"\t\t\t<file ID=\"ocrFile{i + 1}\" USE=\"ocr\">");
+                    fileSec.AppendLine($"\t\t\t\t<FLocat LOCTYPE=\"OTHER\" OTHERLOCTYPE=\"file\" xlink:href=\"{Path.GetFileName(issueFileInfoItem.Value.XML_FILES[i])}\" />");
+                    fileSec.AppendLine($"\t\t\t</file>");
+                    fileSec.AppendLine($"\t\t</fileGrp>");
+                }
+
+                fileSec.AppendLine($"\t</fileSec>");
+
+                string issueXmlFileContent = File.ReadAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH);
+
+                issueXmlFileContent = issueXmlFileContent.Replace("FILESEC_PLACEHOLDER", fileSec.ToString());
+
+                File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
+
+                logForm.appendTextsToLog($"fileSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}", logForm.LOG_TYPE_INFO);
+            }
         }
         private void assembleBatch_UpdateIssueXMLFile_AddStructMap()
         {
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                StringBuilder structMap = new StringBuilder();
 
+                structMap.AppendLine($"\t<structMap>");
+                structMap.AppendLine($"\t\t<div DMDID=\"issueModsBib\" TYPE=\"np:issue\">");
+
+                for (int i = 0; i < issueFileInfoItem.Value.NUMBER_OF_PAGES; i++)
+                {
+                    structMap.AppendLine($"\t\t\t<div TYPE=\"np:page\" DMDID=\"pageModsBib{i + 1}\">");
+                    structMap.AppendLine($"\t\t\t\t<fptr FILEID=\"masterFile{i + 1}\" />");
+                    structMap.AppendLine($"\t\t\t\t<fptr FILEID=\"serviceFile{i + 1}\" />");
+                    structMap.AppendLine($"\t\t\t\t<fptr FILEID=\"otherDerivativeFile{i + 1}\" />");
+                    structMap.AppendLine($"\t\t\t\t<fptr FILEID=\"ocrFile{i + 1}\" />");
+                    structMap.AppendLine($"\t\t\t</div>");
+                }
+
+                structMap.AppendLine($"\t\t</div>");
+                structMap.AppendLine($"\t</structMap>");
+
+                string issueXmlFileContent = File.ReadAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH);
+
+                issueXmlFileContent = issueXmlFileContent.Replace("STRUCTMAP_PLACEHOLDER", structMap.ToString());
+
+                File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
+
+                logForm.appendTextsToLog($"structMap section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}", logForm.LOG_TYPE_INFO);
+            }
         }
 
         #endregion Custom Methods
@@ -644,6 +753,9 @@ namespace NewspaperBatchAssemblyTool
                 assembleBatch_UpdateIssueXMLFile_AddAmdSec();
                 assembleBatch_UpdateIssueXMLFile_AddFileSec();
                 assembleBatch_UpdateIssueXMLFile_AddStructMap();
+
+                //Prompt batch assembly completion message:
+                logForm.appendTextsToLog($"Assembly of batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} has completed.", logForm.LOG_TYPE_INFO);
             }
         }
 
@@ -707,11 +819,13 @@ namespace NewspaperBatchAssemblyTool
             if (logForm.Visible)
             {
                 logForm.BringToFront();
+                logForm.logsTextBox.ScrollToCaret();
             }
             else
             {
                 logForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
                 logForm.Show();
+                logForm.logsTextBox.ScrollToCaret();
             }
 
         }

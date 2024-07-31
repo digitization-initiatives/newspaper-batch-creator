@@ -98,6 +98,7 @@
 
         private MainForm mainForm;
 
+        public TextBox logsTextBox;
         public string LOG_TYPE_INFO, LOG_TYPE_WARN, LOG_TYPE_ERROR;
         private string LOG_TIMESTAMP;
 
@@ -116,7 +117,6 @@
 
         #endregion
 
-        private TextBox logsTextBox;
         private Button hideLogsButton;
         private Button clearLogsButton;
         private Button saveLogsButton;
