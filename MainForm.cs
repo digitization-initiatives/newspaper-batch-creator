@@ -1,7 +1,10 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
+using ImageMagick;
 using NewspaperBatchAssemblyTool.src;
 using System.Collections.Specialized;
+using System.Drawing.Imaging;
+using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
@@ -319,8 +322,7 @@ namespace NewspaperBatchAssemblyTool
                     newIssueFilesInfoItem.ISSUE_NUMBER = destFileItem.ISSUE_NUMBER;
                     newIssueFilesInfoItem.ISSUE_XML_FILE_PATH = Path.Combine(
                         Path.GetDirectoryName(destFileItem.DESTINATION_FILE_PATH),
-                        destFileItem.ISSUE_NUMBER,
-                        ".xml"
+                        destFileItem.ISSUE_NUMBER + ".xml"
                         );
                     newIssueFilesInfoItem.NUMBER_OF_PAGES += 1;
 
@@ -395,6 +397,158 @@ namespace NewspaperBatchAssemblyTool
                     logForm.appendTextsToLog(xmlLogText, logForm.LOG_TYPE_INFO);
                 }
             }
+        }
+
+        private void getJp2FileAttributes()
+        {
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                foreach (Jp2FileProperties jp2File in issueFileInfoItem.Value.JP2_FILES)
+                {
+                    using (var image = new MagickImage(jp2File.JP2_FILE_PATH))
+                    {
+                        jp2File.IMAGE_WIDTH = image.Width.ToString();
+                        jp2File.IMAGE_LENGTH = image.Height.ToString();
+                    }
+                    
+                    string jp2LogText = $"{issueFileInfoItem.Key} - {jp2File.JP2_FILE_PATH} - Width: {jp2File.IMAGE_WIDTH} - Length: {jp2File.IMAGE_LENGTH}.";
+                    logForm.appendTextsToLog(jp2LogText, logForm.LOG_TYPE_INFO);
+                }
+            }
+        }
+        private void assembleBatch_CreateIssueXMLFile_InitializeFile()
+        {
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                StringBuilder initialSection = new StringBuilder();
+
+                initialSection.AppendLine($"<?xml version=\"1.0\" encoding=\"utf-8\"?>");
+                initialSection.AppendLine($"<mets xmlns=\"http://www.loc.gov/METS/\"");
+                initialSection.AppendLine($"\txmlns:mods=\"http://www.loc.gov/mods/v3\"");
+                initialSection.AppendLine($"\txmlns:xsi=\"http://www.w3.org/2001/XMLSchema-instance\"");
+                initialSection.AppendLine($"\txmlns:mix=\"http://www.loc.gov/mix/\"");
+                initialSection.AppendLine($"\txmlns:ndnp=\"http://www.loc.gov/ndnp\"");
+                initialSection.AppendLine($"\txmlns:premis=\"http://www.oclc.org/premis\"");
+                initialSection.AppendLine($"\txmlns:xlink=\"http://www.w3.org/1999/xlink\"");
+                initialSection.AppendLine($"\tLABEL=\"{issueFileInfoItem.Value.ISSUE_METS_LABEL}\"");
+                initialSection.AppendLine($"\tPROFILE=\"urn:library-of-congress:mets:profiles:ndnp:issue:v1.5\"");
+                initialSection.AppendLine($"\tTYPE=\"urn:library-of-congress:ndnp:mets:newspaper:issue\"");
+                initialSection.AppendLine($"\txsi:schemaLocation=\"http://www.loc.gov/METS/ http://www.loc.gov/standards/mets/version17/mets.v1-7.xsd http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd\">");
+                initialSection.AppendLine($"{Environment.NewLine}");
+                initialSection.AppendLine($"METSHDR_SECTION_PLACEHOLDER");
+                initialSection.AppendLine($"DMDSEC_PLACEHOLDER");
+                initialSection.AppendLine($"AMDSEC_PLACEHOLDER");
+                initialSection.AppendLine($"FILESEC_PLACEHOLDER");
+                initialSection.AppendLine($"STRUCTMAP_PLACEHOLDER");
+                initialSection.AppendLine($"</mets>");
+
+                File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, initialSection.ToString());
+
+                logForm.appendTextsToLog($"{issueFileInfoItem.Value.ISSUE_XML_FILE_PATH} has been initialized.", logForm.LOG_TYPE_INFO);
+            }
+        }
+        private void assembleBatch_UpdateIssueXMLFile_AddMetsHdrSection()
+        {
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                StringBuilder metsHdrSection = new StringBuilder();
+
+                metsHdrSection.AppendLine($"\t<metsHdr CREATEDATE=\"{issueFileInfoItem.Value.ISSUE_CREATEDATE}\">");
+                metsHdrSection.AppendLine($"\t\t<agent ROLE=\"CREATOR\" TYPE=\"ORGANIZATION\">");
+                metsHdrSection.AppendLine($"\t\t\t<name>Texas A &amp; M University</name>");
+                metsHdrSection.AppendLine($"\t\t</agent>");
+                metsHdrSection.AppendLine($"\t</metsHdr>");
+
+                string issueXmlFileContent = File.ReadAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH);
+
+                issueXmlFileContent = issueXmlFileContent.Replace("METSHDR_SECTION_PLACEHOLDER", metsHdrSection.ToString());
+
+                File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
+
+                logForm.appendTextsToLog($"metsHdr section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}", logForm.LOG_TYPE_INFO);
+            }
+        }
+        private void assembleBatch_UpdateIssueXMLFile_AddDmdSec()
+        {
+            foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
+            {
+                StringBuilder dmdSec = new StringBuilder();
+
+                dmdSec.AppendLine($"\t<dmdSec ID=\"issueModsBib\">");
+                dmdSec.AppendLine($"\t\t<mdWrap LABEL=\"Issue metadata\" MDTYPE=\"MODS\">");
+                dmdSec.AppendLine($"\t\t\t<xmlData>");
+                dmdSec.AppendLine($"\t\t\t\t<mods:mods>");
+                dmdSec.AppendLine($"\t\t\t\t\t<mods:relatedItem type=\"host\">");
+                dmdSec.AppendLine($"\t\t\t\t\t<mods:identifier type=\"lccn\">{issueFileInfoItem.Value.LCCN}</mods:identifier>");
+                dmdSec.AppendLine($"\t\t\t\t\t<mods:part>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:detail type=\"volume\">");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:number>{issueFileInfoItem.Value.ISSUE_VOLUME}</mods:number>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t</mods:detail>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:detail type=\"issue\">");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:number>{issueFileInfoItem.Value.ISSUE_VOLUME_NUMBER}</mods:number>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t</mods:detail>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:detail type=\"edition\">");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:number>{issueFileInfoItem.Value.ISSUE_EDITION_ORDER.Replace("0","")}</mods:number>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:caption></mods:caption>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t</mods:detail>");
+                dmdSec.AppendLine($"\t\t\t\t\t</mods:part>");
+                dmdSec.AppendLine($"\t\t\t\t\t</mods:relatedItem>");
+                dmdSec.AppendLine($"\t\t\t\t\t<mods:originInfo>");
+                dmdSec.AppendLine($"\t\t\t\t\t<mods:dateIssued encoding=\"iso8601\">{issueFileInfoItem.Value.ISSUE_DATE}</mods:dateIssued>");
+                dmdSec.AppendLine($"\t\t\t\t\t</mods:originInfo>");
+                dmdSec.AppendLine($"\t\t\t\t\t<mods:note type=\"noteAboutReproduction\">Present</mods:note>");
+                dmdSec.AppendLine($"\t\t\t\t</mods:mods>");
+                dmdSec.AppendLine($"\t\t\t</xmlData>");
+                dmdSec.AppendLine($"\t\t</mdWrap>");
+                dmdSec.AppendLine($"\t</dmdSec>");
+
+                for (int i = 0; i < issueFileInfoItem.Value.NUMBER_OF_PAGES; i++)
+                {
+                    dmdSec.AppendLine($"\t<dmdSec ID=\"pageModsBib{i + 1}\">");
+                    dmdSec.AppendLine($"\t\t<mdWrap MDTYPE=\"MODS\" LABEL=\"Page metadata\">");
+                    dmdSec.AppendLine($"\t\t\t<xmlData>");
+                    dmdSec.AppendLine($"\t\t\t\t<mods:mods>");
+                    dmdSec.AppendLine($"\t\t\t\t\t<mods:part>");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t<mods:extent unit=\"pages\">");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t\t<mods:start>{i + 1}</mods:start>");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t</mods:extent>");
+                    dmdSec.AppendLine($"\t\t\t\t\t</mods:part>");
+                    dmdSec.AppendLine($"\t\t\t\t\t<mods:relatedItem type=\"original\">");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t<mods:physicalDescription>");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t\t<mods:form type=\"print\" />");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t</mods:physicalDescription>");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t<mods:location> ");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t\t<mods:physicalLocation authority=\"marcorg\" displayLabel=\"Texas A &amp; M University; College Station, TX\">TxCM</mods:physicalLocation>");
+                    dmdSec.AppendLine($"\t\t\t\t\t\t</mods:location>");
+                    dmdSec.AppendLine($"\t\t\t\t\t</mods:relatedItem>");
+                    dmdSec.AppendLine($"\t\t\t\t\t<mods:note displayLabel=\"Texas A &amp; M University Libraries; College Station, TX\" type=\"agencyResponsibleForReproduction\">txa</mods:note>");
+                    dmdSec.AppendLine($"\t\t\t\t\t<mods:note type=\"noteAboutReproduction\">Present</mods:note>");
+                    dmdSec.AppendLine($"\t\t\t\t</mods:mods>");
+                    dmdSec.AppendLine($"\t\t\t</xmlData>");
+                    dmdSec.AppendLine($"\t\t</mdWrap>");
+                    dmdSec.AppendLine($"\t</dmdSec>");
+                }
+
+                string issueXmlFileContent = File.ReadAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH);
+
+                issueXmlFileContent = issueXmlFileContent.Replace("DMDSEC_PLACEHOLDER", dmdSec.ToString());
+
+                File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
+
+                logForm.appendTextsToLog($"dmdSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}", logForm.LOG_TYPE_INFO);
+            }
+        }
+        private void assembleBatch_UpdateIssueXMLFile_AddAmdSec()
+        {
+
+        }
+        private void assembleBatch_UpdateIssueXMLFile_AddFileSec()
+        {
+
+        }
+        private void assembleBatch_UpdateIssueXMLFile_AddStructMap()
+        {
+
         }
 
         #endregion Custom Methods
@@ -476,9 +630,20 @@ namespace NewspaperBatchAssemblyTool
                 logForm.appendTextsToLog($"{batch_XML_Issue_Elements.Count} issue elements have been added to {batchXmlFileFullPath} .", logForm.LOG_TYPE_INFO);
 
                 //Create issue xml files for each issue:
+                assembleBatch_ConstructIssueFilesInformation();
+                logForm.appendTextsToLog($"issueFilesInformation has been constructed and contains {issueFilesInformation.Count} issues.", logForm.LOG_TYPE_INFO);
 
-                //assembleBatch_ConstructIssueFilesInformation();
-                //logForm.appendTextsToLog($"issueFilesInformation has been constructed.", logForm.LOG_TYPE_INFO);
+                //Retrieve jp2 file attributes:
+                getJp2FileAttributes();
+                logForm.appendTextsToLog($"Jp2 file attributes have been added to issueFilesInformation.", logForm.LOG_TYPE_INFO);
+
+                //Create the issue xml file section by section:
+                assembleBatch_CreateIssueXMLFile_InitializeFile();
+                assembleBatch_UpdateIssueXMLFile_AddMetsHdrSection();
+                assembleBatch_UpdateIssueXMLFile_AddDmdSec();
+                assembleBatch_UpdateIssueXMLFile_AddAmdSec();
+                assembleBatch_UpdateIssueXMLFile_AddFileSec();
+                assembleBatch_UpdateIssueXMLFile_AddStructMap();
             }
         }
 
@@ -517,18 +682,18 @@ namespace NewspaperBatchAssemblyTool
             batchNamePrefixTextBox.Text = String.Empty;
             batchNumberTextBox.Text = String.Empty;
             sourceFilesListView.Items.Clear();
-            browseSourceFilesButton.Enabled = false;
-            loadSourceFilesButton.Enabled = false;
+            //browseSourceFilesButton.Enabled = false;
+            //loadSourceFilesButton.Enabled = false;
             assembleBatchButton.Enabled = false;
             statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
-            statusBarMetadataFileLoadedLabel.Text = $"Metadata not loaded.";
+            //statusBarMetadataFileLoadedLabel.Text = $"Metadata not loaded.";
 
             //Reset ImportMetadataForm:
-            importMetadataForm.issueMetadata.Clear();
-            importMetadataForm.mappedColumnsDict.Clear();
-            importMetadataForm.selectMetadataFileTextBox.Text = String.Empty;
-            importMetadataForm.selectMetadataFile_openFileDialog.FileName = String.Empty;
-            importMetadataForm.columnMappingDataGridView.Rows.Clear();
+            //importMetadataForm.issueMetadata.Clear();
+            //importMetadataForm.mappedColumnsDict.Clear();
+            //importMetadataForm.selectMetadataFileTextBox.Text = String.Empty;
+            //importMetadataForm.selectMetadataFile_openFileDialog.FileName = String.Empty;
+            //importMetadataForm.columnMappingDataGridView.Rows.Clear();
 
             //Reset variables and data structures:
             batchXmlFileFullPath = String.Empty;
@@ -548,7 +713,7 @@ namespace NewspaperBatchAssemblyTool
                 logForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
                 logForm.Show();
             }
-            
+
         }
 
         private void optionsButton_Click(object sender, EventArgs e)
