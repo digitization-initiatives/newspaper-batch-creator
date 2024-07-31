@@ -401,6 +401,8 @@ namespace NewspaperBatchAssemblyTool
 
         private void getJp2FileAttributes()
         {
+            int count = 0;
+
             foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
             {
                 foreach (Jp2FileProperties jp2File in issueFileInfoItem.Value.JP2_FILES)
@@ -414,6 +416,9 @@ namespace NewspaperBatchAssemblyTool
                     string jp2LogText = $"{issueFileInfoItem.Key} - {jp2File.JP2_FILE_PATH} - Width: {jp2File.IMAGE_WIDTH} - Length: {jp2File.IMAGE_LENGTH}.";
                     logForm.appendTextsToLog(jp2LogText, logForm.LOG_TYPE_INFO);
                 }
+
+                count++;
+                logForm.appendTextsToLog($"{count} / {issueFilesInformation.Count} issues' image files have been processed.", logForm.LOG_TYPE_INFO);
             }
         }
         private void assembleBatch_CreateIssueXMLFile_InitializeFile()
