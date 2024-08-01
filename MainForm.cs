@@ -855,6 +855,7 @@ namespace NewspaperBatchAssemblyTool
 
         private void importMetadataButton_Click(object sender, EventArgs e)
         {
+            importMetadataForm.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
             importMetadataForm.Show();
         }
 

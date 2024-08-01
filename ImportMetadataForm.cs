@@ -27,11 +27,19 @@ namespace NewspaperBatchAssemblyTool
 
         private void loadColumnMappingSampleData()
         {
-            if (selectMetadataFile_openFileDialog.FileName != null)
+            string selectedMetadataFile = selectMetadataFile_openFileDialog.FileName;
+
+            if (selectedMetadataFile == String.Empty || selectedMetadataFile == "")
+            {
+                logForm.appendTextsToLog($"No metadata file selected. Please select an metadata file to continue.", logForm.LOG_TYPE_WARN);
+                MessageBox.Show($"No metadata file selected. Please select an metadata file to continue.", "No Metadata File Selected");
+            }
+            else
             {
                 try
                 {
                     logForm.appendTextsToLog($"Begin loading {selectMetadataFile_openFileDialog.FileName}, please wait ... ", logForm.LOG_TYPE_INFO);
+                    statusText.Text = "Loading sample metadata for column mapping, please wait ... ";
 
                     using (var workbook = new XLWorkbook(selectMetadataFile_openFileDialog.FileName))
                     {
@@ -52,6 +60,7 @@ namespace NewspaperBatchAssemblyTool
                     }
 
                     logForm.appendTextsToLog($"Finished loading {selectMetadataFile_openFileDialog.FileName} .", logForm.LOG_TYPE_INFO);
+                    statusText.Text = "Sample metadata loaded.";
                 }
                 catch (IOException e)
                 {
@@ -61,16 +70,19 @@ namespace NewspaperBatchAssemblyTool
                     if (isFileLocked)
                     {
                         logForm.appendTextsToLog($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.", logForm.LOG_TYPE_ERROR);
-
                         MessageBox.Show($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.",
                                         "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        selectMetadataFileTextBox.Text = String.Empty;
+                        selectMetadataFile_openFileDialog.FileName = String.Empty;
                     }
                     else
                     {
                         logForm.appendTextsToLog($"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.", logForm.LOG_TYPE_ERROR);
+                        MessageBox.Show("An I/O error occurred: " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                        MessageBox.Show("An I/O error occurred: " + e.Message,
-                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        selectMetadataFileTextBox.Text = String.Empty;
+                        selectMetadataFile_openFileDialog.FileName = String.Empty;
                     }
                 }
 
@@ -101,7 +113,14 @@ namespace NewspaperBatchAssemblyTool
 
         private void loadIssueMetadata()
         {
-            if (selectMetadataFile_openFileDialog.FileName != null)
+            string selectedFileName = selectMetadataFile_openFileDialog.FileName;
+
+            if (selectedFileName == String.Empty || selectedFileName == "")
+            {
+                logForm.appendTextsToLog($"No metadata file selected. Please select metadata file.", logForm.LOG_TYPE_WARN);
+                MessageBox.Show($"No metadata file selected. Please select metadata file.", "No Metadata File Selected");
+            }
+            else
             {
                 try
                 {
@@ -213,16 +232,20 @@ namespace NewspaperBatchAssemblyTool
                     if (isFileLocked)
                     {
                         logForm.appendTextsToLog($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.", logForm.LOG_TYPE_ERROR);
-
                         MessageBox.Show($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.",
                                         "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+                        selectMetadataFile_openFileDialog.FileName = String.Empty;
+                        //selectMetadataFileTextBox.Text = "Sanity Test";
+                        MessageBox.Show("Does this not execute?");
                     }
                     else
                     {
                         logForm.appendTextsToLog($"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.", logForm.LOG_TYPE_ERROR);
+                        MessageBox.Show("An I/O error occurred: " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-                        MessageBox.Show("An I/O error occurred: " + e.Message,
-                                        "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
+                        selectMetadataFile_openFileDialog.FileName = String.Empty;
+                        selectMetadataFileTextBox.Text = String.Empty;
                     }
                 }
             }
@@ -256,7 +279,7 @@ namespace NewspaperBatchAssemblyTool
 
         #endregion
 
-        private void exitButton_Click(object sender, EventArgs e)
+        private void importAndCloseButton_Click(object sender, EventArgs e)
         {
             saveColumnMappings();
             loadIssueMetadata();
@@ -288,8 +311,13 @@ namespace NewspaperBatchAssemblyTool
         private void startOverButton_Click(object sender, EventArgs e)
         {
             columnMappingDataGridView.Rows.Clear();
-            selectMetadataFileTextBox.Text= String.Empty;
+            selectMetadataFileTextBox.Text = String.Empty;
             selectMetadataFile_openFileDialog.FileName = String.Empty;
+        }
+
+        private void closeButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
         }
     }
 }
