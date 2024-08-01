@@ -761,6 +761,7 @@ namespace NewspaperBatchAssemblyTool
 
                 //Prompt batch assembly completion message:
                 logForm.appendTextsToLog($"Assembly of batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} has completed.", logForm.LOG_TYPE_INFO);
+                logForm.appendTextsToLog($"Batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} contains {issueFilesInformation.Count} issues.", logForm.LOG_TYPE_INFO);
             }
         }
 
