@@ -333,8 +333,17 @@ namespace NewspaperBatchAssemblyTool
                     newIssueFilesInfoItem.LCCN = destFileItem.LCCN;
 
                     newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW = importMetadataForm.issueMetadata[newIssueFilesInfoItem.ISSUE_NUMBER].VOLUME;
-                    newIssueFilesInfoItem.ISSUE_VOLUME = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+")[0].Value;
-                    newIssueFilesInfoItem.ISSUE_VOLUME_NUMBER = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+")[1].Value;
+                    MatchCollection volInfoMatches = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+");
+                    if (volInfoMatches.Count != 2)
+                    {
+                        newIssueFilesInfoItem.ISSUE_VOLUME = "N/A";
+                        newIssueFilesInfoItem.ISSUE_VOLUME_NUMBER = "N/A";
+                    }
+                    else
+                    {
+                        newIssueFilesInfoItem.ISSUE_VOLUME = volInfoMatches[0].Value;
+                        newIssueFilesInfoItem.ISSUE_VOLUME_NUMBER = volInfoMatches[1].Value;
+                    }
 
                     newIssueFilesInfoItem.ISSUE_EDITION_ORDER = destFileItem.ISSUE_EDITION_ORDER;
                     newIssueFilesInfoItem.ISSUE_DATE = destFileItem.ISSUE_DATE;
