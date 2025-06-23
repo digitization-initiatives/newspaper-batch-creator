@@ -158,6 +158,7 @@ namespace NewspaperBatchAssemblyTool
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1262, 673);
+            ControlBox = false;
             Controls.Add(columnMappingLabel);
             Controls.Add(columnMappingDataGridView);
             Controls.Add(selectMetadataFileButton);
