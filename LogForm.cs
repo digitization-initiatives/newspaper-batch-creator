@@ -34,7 +34,9 @@ namespace NewspaperBatchAssemblyTool
 
         private void saveLogsButton_Click(object sender, EventArgs e)
         {
-
+            logFileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".log";
+            logFileFullPath = Path.Combine(Properties.Settings.Default.OutputFolder, logFileName);
+            File.WriteAllText(logFileFullPath, logsTextBox.Text);
         }
 
         private void clearLogsButton_Click(object sender, EventArgs e)

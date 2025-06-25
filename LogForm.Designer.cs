@@ -101,6 +101,8 @@
         public TextBox logsTextBox;
         public string LOG_TYPE_INFO, LOG_TYPE_WARN, LOG_TYPE_ERROR;
         private string LOG_TIMESTAMP;
+        internal string logFileName = String.Empty;
+        internal string logFileFullPath = String.Empty;
 
         private void CustomInitialization()
         {
