@@ -43,24 +43,27 @@ namespace NewspaperBatchAssemblyTool
             sampleDataCol = new DataGridViewTextBoxColumn();
             mapToCol = new DataGridViewComboBoxColumn();
             columnMappingLabel = new Label();
+            statusLabel = new Label();
+            statusText = new Label();
+            closeButton = new Button();
             ((System.ComponentModel.ISupportInitialize)columnMappingDataGridView).BeginInit();
             SuspendLayout();
             // 
             // importAndCloseButton
             // 
             importAndCloseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            importAndCloseButton.Location = new Point(1000, 632);
+            importAndCloseButton.Location = new Point(874, 632);
             importAndCloseButton.Name = "importAndCloseButton";
             importAndCloseButton.Size = new Size(250, 29);
             importAndCloseButton.TabIndex = 0;
             importAndCloseButton.Text = "Import Metadata and Close";
             importAndCloseButton.UseVisualStyleBackColor = true;
-            importAndCloseButton.Click += exitButton_Click;
+            importAndCloseButton.Click += importAndCloseButton_Click;
             // 
             // startOverButton
             // 
             startOverButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            startOverButton.Location = new Point(814, 632);
+            startOverButton.Location = new Point(688, 632);
             startOverButton.Name = "startOverButton";
             startOverButton.Size = new Size(180, 29);
             startOverButton.TabIndex = 1;
@@ -153,12 +156,44 @@ namespace NewspaperBatchAssemblyTool
             columnMappingLabel.TabIndex = 6;
             columnMappingLabel.Text = "Column Mapping:";
             // 
+            // statusLabel
+            // 
+            statusLabel.AutoSize = true;
+            statusLabel.Location = new Point(12, 644);
+            statusLabel.Name = "statusLabel";
+            statusLabel.Size = new Size(178, 20);
+            statusLabel.TabIndex = 7;
+            statusLabel.Text = "Metadata Loading Status:";
+            // 
+            // statusText
+            // 
+            statusText.AutoSize = true;
+            statusText.Location = new Point(196, 644);
+            statusText.Name = "statusText";
+            statusText.Size = new Size(156, 20);
+            statusText.TabIndex = 8;
+            statusText.Text = "Metadata Not Loaded";
+            // 
+            // closeButton
+            // 
+            closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            closeButton.Location = new Point(1130, 632);
+            closeButton.Name = "closeButton";
+            closeButton.Size = new Size(120, 29);
+            closeButton.TabIndex = 9;
+            closeButton.Text = "Close";
+            closeButton.UseVisualStyleBackColor = true;
+            closeButton.Click += closeButton_Click;
+            // 
             // ImportMetadataForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1262, 673);
             ControlBox = false;
+            Controls.Add(closeButton);
+            Controls.Add(statusText);
+            Controls.Add(statusLabel);
             Controls.Add(columnMappingLabel);
             Controls.Add(columnMappingDataGridView);
             Controls.Add(selectMetadataFileButton);
@@ -187,7 +222,6 @@ namespace NewspaperBatchAssemblyTool
         public TextBox selectMetadataFileTextBox;
 
         public Dictionary<string, string> mappedColumnsDict;
-
         public Dictionary<string, IssueMetadata> issueMetadata;
 
         private void CustomInitialization()
@@ -195,16 +229,18 @@ namespace NewspaperBatchAssemblyTool
             //Custom form start location:
             this.StartPosition = FormStartPosition.Manual;
 
-
-
+            //Initialize openFileDialog:
             selectMetadataFileTextBox.Text = String.Empty;
-            selectMetadataFile_openFileDialog.Filter = "Excel Files|*.xls;*.xlsx|All files (*.*)|*.*";
+            selectMetadataFile_openFileDialog.Filter = "Excel Files|*.xls;*.xlsx"; //Only allow Excel files to be selected.
+            selectMetadataFile_openFileDialog.FileName = String.Empty;
 
+            //Adjust DataGridView column width:
             columnMappingDataGridView.Columns[0].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             columnMappingDataGridView.Columns[1].AutoSizeMode = DataGridViewAutoSizeColumnMode.AllCells;
             columnMappingDataGridView.Columns[2].AutoSizeMode = DataGridViewAutoSizeColumnMode.Fill;
             columnMappingDataGridView.Columns[3].Width = 250;
 
+            //Initialize other resources:
             mappedColumnsDict = new Dictionary<string, string>();
             issueMetadata = new Dictionary<string, IssueMetadata>();
         }
@@ -220,5 +256,8 @@ namespace NewspaperBatchAssemblyTool
         private DataGridViewTextBoxColumn columnHeaderCol;
         private DataGridViewTextBoxColumn sampleDataCol;
         private DataGridViewComboBoxColumn mapToCol;
+        private Label statusLabel;
+        private Label statusText;
+        private Button closeButton;
     }
 }
