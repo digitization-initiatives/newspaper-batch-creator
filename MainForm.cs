@@ -75,6 +75,8 @@ namespace NewspaperBatchAssemblyTool
         private void relocateFilesWithNoMetadata()
         {
             string issuesWithNoMetadataFolderPath = Path.Combine(Properties.Settings.Default.OutputFolder, "IssuesWithNoMetadata");
+            string sourceFileIssueNumber = String.Empty;
+
             if (!Directory.Exists(issuesWithNoMetadataFolderPath))
             {
                 Directory.CreateDirectory(issuesWithNoMetadataFolderPath);
@@ -87,7 +89,18 @@ namespace NewspaperBatchAssemblyTool
                 string sourceFilePath = sourceFileItem.SubItems[0].Text;
 
                 string sourceFileParentFolderName = Directory.GetParent(sourceFilePath).Name;
-                string sourceFileIssueNumber = sourceFileParentFolderName.Substring(sourceFileParentFolderName.Length - 10).Replace("-", "") + Properties.Settings.Default.EditionOrder;
+                string sourceFileParentFolderNameNormalized = sourceFileParentFolderName.Replace("-", "");
+                string[] sourceFileParentFolderNameParts = sourceFileParentFolderNameNormalized.Split("_");
+
+
+                if (sourceFileParentFolderNameParts.Length > 1)
+                {
+                    sourceFileIssueNumber = sourceFileParentFolderNameParts[1] + Properties.Settings.Default.EditionOrder;
+                }
+                else
+                {
+                    logForm.appendTextsToLog($"{sourceFileParentFolderName} contains illegal issue number in the folder name.", logForm.LOG_TYPE_ERROR);
+                }
 
                 if (!importMetadataForm.issueMetadata.ContainsKey(sourceFileIssueNumber))
                 {
@@ -142,7 +155,16 @@ namespace NewspaperBatchAssemblyTool
                 destItem.PRINT_FOLDER_NAME = "print";
 
                 string sourceFileIssueFolderName = Directory.GetParent(destItem.SOURCE_FILE_PATH).Name;
-                destItem.ISSUE_DATE = sourceFileIssueFolderName.Substring(sourceFileIssueFolderName.Length - 10);
+                string[] sourceFileIsueFolderNameParts = sourceFileIssueFolderName.Split("_");
+                if (sourceFileIsueFolderNameParts.Length > 1)
+                {
+                    destItem.ISSUE_DATE = sourceFileIsueFolderNameParts[1];
+                }
+                else
+                {
+                    logForm.appendTextsToLog($"{sourceFileIssueFolderName} contains illegal issue number", logForm.LOG_TYPE_ERROR);
+                }
+
                 destItem.ISSUE_FOLDER_NAME = destItem.ISSUE_DATE.Replace("-", "") + Properties.Settings.Default.EditionOrder;
                 destItem.ISSUE_NUMBER = destItem.ISSUE_FOLDER_NAME;
                 destItem.ISSUE_EDITION_ORDER = Properties.Settings.Default.EditionOrder;
@@ -333,8 +355,17 @@ namespace NewspaperBatchAssemblyTool
                     newIssueFilesInfoItem.LCCN = destFileItem.LCCN;
 
                     newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW = importMetadataForm.issueMetadata[newIssueFilesInfoItem.ISSUE_NUMBER].VOLUME;
-                    newIssueFilesInfoItem.ISSUE_VOLUME = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+")[0].Value;
-                    newIssueFilesInfoItem.ISSUE_VOLUME_NUMBER = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+")[1].Value;
+                    MatchCollection volInfoMatches = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+");
+                    if (volInfoMatches.Count != 2)
+                    {
+                        newIssueFilesInfoItem.ISSUE_VOLUME = "N/A";
+                        newIssueFilesInfoItem.ISSUE_VOLUME_NUMBER = "N/A";
+                    }
+                    else
+                    {
+                        newIssueFilesInfoItem.ISSUE_VOLUME = volInfoMatches[0].Value;
+                        newIssueFilesInfoItem.ISSUE_VOLUME_NUMBER = volInfoMatches[1].Value;
+                    }
 
                     newIssueFilesInfoItem.ISSUE_EDITION_ORDER = destFileItem.ISSUE_EDITION_ORDER;
                     newIssueFilesInfoItem.ISSUE_DATE = destFileItem.ISSUE_DATE;
@@ -761,6 +792,7 @@ namespace NewspaperBatchAssemblyTool
 
                 //Prompt batch assembly completion message:
                 logForm.appendTextsToLog($"Assembly of batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} has completed.", logForm.LOG_TYPE_INFO);
+                logForm.appendTextsToLog($"Batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} contains {issueFilesInformation.Count} issues.", logForm.LOG_TYPE_INFO);
             }
         }
 
