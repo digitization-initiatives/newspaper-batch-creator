@@ -355,7 +355,7 @@ namespace NewspaperBatchAssemblyTool
                     newIssueFilesInfoItem.LCCN = destFileItem.LCCN;
 
                     newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW = importMetadataForm.issueMetadata[newIssueFilesInfoItem.ISSUE_NUMBER].VOLUME;
-                    MatchCollection volInfoMatches = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+");
+                    MatchCollection volInfoMatches = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+(?:/\d+)?");
                     if (volInfoMatches.Count != 2)
                     {
                         newIssueFilesInfoItem.ISSUE_VOLUME = "N/A";
