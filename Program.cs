@@ -1,4 +1,4 @@
-namespace NewspaperBatchAssemblyTool
+namespace NewspaperBatchCreation
 {
     internal static class Program
     {

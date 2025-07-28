@@ -1,8 +1,8 @@
 ﻿using DocumentFormat.OpenXml.Vml.Spreadsheet;
-using NewspaperBatchAssemblyTool.src;
+using NewspaperBatchCreation.src;
 using System.DirectoryServices;
 
-namespace NewspaperBatchAssemblyTool
+namespace NewspaperBatchCreation
 {
     partial class MainForm
     {
@@ -373,12 +373,12 @@ namespace NewspaperBatchAssemblyTool
             Properties.Settings.Default.Save();
 
             //Print current default settings to logs:
-            logForm.appendTextsToLog($"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}", logForm.LOG_TYPE_INFO);
-            logForm.appendTextsToLog($"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}", logForm.LOG_TYPE_INFO);
-            logForm.appendTextsToLog($"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}", logForm.LOG_TYPE_INFO);
-            logForm.appendTextsToLog($"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}", logForm.LOG_TYPE_INFO);
-            logForm.appendTextsToLog($"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}", logForm.LOG_TYPE_INFO);
-            logForm.appendTextsToLog($"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}", logForm.LOG_TYPE_INFO);
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
         }
 
         #endregion
@@ -397,7 +397,7 @@ namespace NewspaperBatchAssemblyTool
         private Button startOverButton;
         private Label browseSourceFilesLabel;
         private FolderBrowserDialog browseSourceFiles_folderBrowserDialog;
-        private Button viewLogsButton;
+        internal Button viewLogsButton;
         private Button optionsButton;
         private ListView sourceFilesListView;
         private ColumnHeader sourceFilesListFilenameCol;

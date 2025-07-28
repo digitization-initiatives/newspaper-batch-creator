@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
-using NewspaperBatchAssemblyTool.src;
+using NewspaperBatchCreation.src;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NewspaperBatchAssemblyTool
+namespace NewspaperBatchCreation
 {
     public partial class ImportMetadataForm : Form
     {
@@ -31,14 +31,14 @@ namespace NewspaperBatchAssemblyTool
 
             if (selectedMetadataFile == String.Empty || selectedMetadataFile == "")
             {
-                logForm.appendTextsToLog($"No metadata file selected. Please select an metadata file to continue.", logForm.LOG_TYPE_WARN);
+                logForm.SendToLog(LogForm.LogType[LogForm.WARN], $"No metadata file selected. Please select an metadata file to continue.");
                 MessageBox.Show($"No metadata file selected. Please select an metadata file to continue.", "No Metadata File Selected");
             }
             else
             {
                 try
                 {
-                    logForm.appendTextsToLog($"Begin loading {selectMetadataFile_openFileDialog.FileName}, please wait ... ", logForm.LOG_TYPE_INFO);
+                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Begin loading {selectMetadataFile_openFileDialog.FileName}, please wait ... ");
                     statusText.Text = "Loading sample metadata for column mapping, please wait ... ";
 
                     using (var workbook = new XLWorkbook(selectMetadataFile_openFileDialog.FileName))
@@ -59,7 +59,7 @@ namespace NewspaperBatchAssemblyTool
                         }
                     }
 
-                    logForm.appendTextsToLog($"Finished loading {selectMetadataFile_openFileDialog.FileName} .", logForm.LOG_TYPE_INFO);
+                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Finished loading {selectMetadataFile_openFileDialog.FileName} .");
                     statusText.Text = "Sample metadata loaded.";
                 }
                 catch (IOException e)
@@ -69,7 +69,7 @@ namespace NewspaperBatchAssemblyTool
 
                     if (isFileLocked)
                     {
-                        logForm.appendTextsToLog($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.", logForm.LOG_TYPE_ERROR);
+                        logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.");
                         MessageBox.Show($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.",
                                         "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -78,7 +78,7 @@ namespace NewspaperBatchAssemblyTool
                     }
                     else
                     {
-                        logForm.appendTextsToLog($"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.", logForm.LOG_TYPE_ERROR);
+                        logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.");
                         MessageBox.Show("An I/O error occurred: " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         selectMetadataFileTextBox.Text = String.Empty;
@@ -103,11 +103,11 @@ namespace NewspaperBatchAssemblyTool
                 }
             }
 
-            logForm.appendTextsToLog($"Column mapping completed, the mapped columns are: ", logForm.LOG_TYPE_INFO);
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Column mapping completed, the mapped columns are: ");
 
             foreach (var dict in mappedColumnsDict)
             {
-                logForm.appendTextsToLog($"Column {dict.Key} is mapped to: {dict.Value} .", logForm.LOG_TYPE_INFO);
+                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Column {dict.Key} is mapped to: {dict.Value} .");
             }
         }
 
@@ -117,14 +117,14 @@ namespace NewspaperBatchAssemblyTool
 
             if (selectedFileName == String.Empty || selectedFileName == "")
             {
-                logForm.appendTextsToLog($"No metadata file selected. Please select metadata file.", logForm.LOG_TYPE_WARN);
+                logForm.SendToLog(LogForm.LogType[LogForm.WARN], $"No metadata file selected. Please select metadata file.");
                 MessageBox.Show($"No metadata file selected. Please select metadata file.", "No Metadata File Selected");
             }
             else
             {
                 try
                 {
-                    logForm.appendTextsToLog($"Begin loading all metadata from {selectMetadataFile_openFileDialog.FileName}, please wait ... ", logForm.LOG_TYPE_INFO);
+                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Begin loading all metadata from {selectMetadataFile_openFileDialog.FileName}, please wait ... ");
 
                     using (var workbook = new XLWorkbook(selectMetadataFile_openFileDialog.FileName))
                     {
@@ -216,13 +216,13 @@ namespace NewspaperBatchAssemblyTool
                             }
                             catch (ArgumentException e)
                             {
-                                logForm.appendTextsToLog($"Duplicate metadata entry for {issue_key}, please review your metadata file to resolve the duplicates.", logForm.LOG_TYPE_ERROR);
+                                logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"Duplicate metadata entry for {issue_key}, please review your metadata file to resolve the duplicates.");
                             }
 
                         }
                     }
 
-                    logForm.appendTextsToLog($"Finished loading metadata from {selectMetadataFile_openFileDialog.FileName} .", logForm.LOG_TYPE_INFO);
+                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Finished loading metadata from {selectMetadataFile_openFileDialog.FileName} .");
                 }
                 catch (IOException e)
                 {
@@ -231,7 +231,7 @@ namespace NewspaperBatchAssemblyTool
 
                     if (isFileLocked)
                     {
-                        logForm.appendTextsToLog($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.", logForm.LOG_TYPE_ERROR);
+                        logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.");
                         MessageBox.Show($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.",
                                         "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
@@ -241,7 +241,7 @@ namespace NewspaperBatchAssemblyTool
                     }
                     else
                     {
-                        logForm.appendTextsToLog($"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.", logForm.LOG_TYPE_ERROR);
+                        logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.");
                         MessageBox.Show("An I/O error occurred: " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
                         selectMetadataFile_openFileDialog.FileName = String.Empty;
@@ -252,7 +252,7 @@ namespace NewspaperBatchAssemblyTool
 
             foreach (var item in issueMetadata)
             {
-                logForm.appendTextsToLog($"{item.Key} - " +
+                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"{item.Key} - " +
                     $"{item.Value.ISSUE_NUMBER}, " +
                     $"{item.Value.TITLE}, " +
                     $"{item.Value.DESCRIPTION}, " +
@@ -270,10 +270,10 @@ namespace NewspaperBatchAssemblyTool
                     $"{item.Value.DC_LANGUAGE}, " +
                     $"{item.Value.DC_FORMAT}, " +
                     $"{item.Value.DC_TYPE}, " +
-                    $"{item.Value.DC_RIGHTS}", logForm.LOG_TYPE_INFO);
+                    $"{item.Value.DC_RIGHTS}");
             }
 
-            logForm.appendTextsToLog($"{issueMetadata.Count} metadata entries have been loaded.", logForm.LOG_TYPE_INFO);
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"{issueMetadata.Count} metadata entries have been loaded.");
 
         }
 

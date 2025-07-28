@@ -1,7 +1,7 @@
-﻿using NewspaperBatchAssemblyTool.src;
+﻿using NewspaperBatchCreation.src;
 using System.Drawing.Interop;
 
-namespace NewspaperBatchAssemblyTool
+namespace NewspaperBatchCreation
 {
     partial class OptionsForm
     {
