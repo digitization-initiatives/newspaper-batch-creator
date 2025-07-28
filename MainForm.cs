@@ -23,13 +23,13 @@ namespace NewspaperBatchCreation
         {
             foreach (var lccn in LCCN.LCCN_ITEMS)
             {
-                selectLccnComboBox.Items.Add($"{lccn.Key} - {lccn.Value.TITLE}");
+                settingsForm.selectLccnComboBox.Items.Add($"{lccn.Key} - {lccn.Value.TITLE}");
             }
         }
 
         private void lccnComboBox_SelectedIndexChanged(object sender, EventArgs e)
         {
-            if (selectLccnComboBox.SelectedIndex != -1)
+            if (settingsForm.selectLccnComboBox.SelectedIndex != -1)
             {
                 Properties.Settings.Default.SeletedLccn = selectLccnComboBox.SelectedItem.ToString().Substring(0, 10);
                 Properties.Settings.Default.Save();
@@ -700,25 +700,25 @@ namespace NewspaperBatchCreation
 
         private void browseSourceFilesButton_Click(object sender, EventArgs e)
         {
-            if (browseSourceFiles_folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (addFiles_folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                sourceFilesPathTextBox.Text = browseSourceFiles_folderBrowserDialog.SelectedPath;
-                Properties.Settings.Default.SourceFolder = browseSourceFiles_folderBrowserDialog.SelectedPath;
+                addFilesTextBox.Text = addFiles_folderBrowserDialog.SelectedPath;
+                Properties.Settings.Default.SourceFolder = addFiles_folderBrowserDialog.SelectedPath;
 
-                loadSourceFilesButton.Enabled = true;
+                addFilesButton.Enabled = true;
             }
             else
             {
-                sourceFilesPathTextBox.Text = String.Empty;
+                addFilesTextBox.Text = String.Empty;
             }
         }
 
         private void loadSourceFilesButton_Click(object sender, EventArgs e)
         {
-            if (browseSourceFiles_folderBrowserDialog.SelectedPath != null)
+            if (addFiles_folderBrowserDialog.SelectedPath != null)
             {
                 List<string> files = new List<string>();
-                files.AddRange(Directory.GetFiles(browseSourceFiles_folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories));
+                files.AddRange(Directory.GetFiles(addFiles_folderBrowserDialog.SelectedPath, "*.*", SearchOption.AllDirectories));
 
                 foreach (string file in files)
                 {
@@ -730,10 +730,10 @@ namespace NewspaperBatchCreation
 
                 relocateFilesWithNoMetadata();
 
-                statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
+                statusBar_NumberOfFilesAdded.Text = $"{sourceFilesListView.Items.Count} files loaded.";
 
                 //Enable Assemble Batch button:
-                assembleBatchButton.Enabled = true;
+                createBatchButton.Enabled = true;
             }
         }
 
@@ -802,7 +802,7 @@ namespace NewspaperBatchCreation
             //Reset settings:
             Properties.Settings.Default.SeletedLccn = String.Empty;
             Properties.Settings.Default.SourceFolder = String.Empty;
-            Properties.Settings.Default.OutputFolder = optionsForm.browseOutputFolder_folderBrowserDialog.SelectedPath;
+            Properties.Settings.Default.OutputFolder = optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath;
             Properties.Settings.Default.Awardee = "txa";
             Properties.Settings.Default.AwardYear = String.Empty;
             Properties.Settings.Default.MetadataLoaded = false;
@@ -812,7 +812,7 @@ namespace NewspaperBatchCreation
             Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
 
             optionsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
-            optionsForm.browseOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
+            optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
 
             Properties.Settings.Default.Save();
 
@@ -825,16 +825,16 @@ namespace NewspaperBatchCreation
             logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
 
             //Reset MainForm UI:
-            sourceFilesPathTextBox.Text = String.Empty;
-            browseSourceFiles_folderBrowserDialog.SelectedPath = String.Empty;
+            addFilesTextBox.Text = String.Empty;
+            addFiles_folderBrowserDialog.SelectedPath = String.Empty;
             selectLccnComboBox.SelectedIndex = -1;
             batchNamePrefixTextBox.Text = String.Empty;
             batchNumberTextBox.Text = String.Empty;
             sourceFilesListView.Items.Clear();
             //browseSourceFilesButton.Enabled = false;
             //loadSourceFilesButton.Enabled = false;
-            assembleBatchButton.Enabled = false;
-            statusBarNumberOfSourceFilesLabel.Text = $"{sourceFilesListView.Items.Count} files loaded.";
+            createBatchButton.Enabled = false;
+            statusBar_NumberOfFilesAdded.Text = $"{sourceFilesListView.Items.Count} files loaded.";
             //statusBarMetadataFileLoadedLabel.Text = $"Metadata not loaded.";
 
             //Reset ImportMetadataForm:
@@ -856,27 +856,25 @@ namespace NewspaperBatchCreation
             if (logForm.Visible)
             {
                 logForm.BringToFront();
-                //logForm.logsTextBox.ScrollToCaret();
             }
             else
             {
                 logForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
                 logForm.Show();
-                //logForm.logsTextBox.ScrollToCaret();
             }
 
         }
 
         private void optionsButton_Click(object sender, EventArgs e)
         {
-            if (optionsForm.Visible)
+            if (settingsForm.Visible)
             {
-                optionsForm.BringToFront();
+                settingsForm.BringToFront();
             }
             else
             {
-                optionsForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
-                optionsForm.Show();
+                settingsForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
+                settingsForm.Show();
             }
         }
 

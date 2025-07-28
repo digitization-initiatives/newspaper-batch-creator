@@ -10,9 +10,9 @@ using System.Windows.Forms;
 
 namespace NewspaperBatchCreation
 {
-    public partial class OptionsForm : Form
+    public partial class SettingsForm : Form
     {
-        public OptionsForm(MainForm mainFormRef)
+        public SettingsForm(MainForm mainFormRef)
         {
             InitializeComponent();
             CustomInitialization();
@@ -22,10 +22,10 @@ namespace NewspaperBatchCreation
 
         private void browseOutputFolderButton_Click(object sender, EventArgs e)
         {
-            if (browseOutputFolder_folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            if (selectOutputFolder_folderBrowserDialog.ShowDialog() == DialogResult.OK)
             {
-                outputFolderTextBox.Text = browseOutputFolder_folderBrowserDialog.SelectedPath;
-                Properties.Settings.Default.OutputFolder = browseOutputFolder_folderBrowserDialog.SelectedPath;
+                outputFolderTextBox.Text = selectOutputFolder_folderBrowserDialog.SelectedPath;
+                Properties.Settings.Default.OutputFolder = selectOutputFolder_folderBrowserDialog.SelectedPath;
                 Properties.Settings.Default.Save();
 
                 logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Output folder set to: {Properties.Settings.Default.OutputFolder}.");
@@ -42,7 +42,7 @@ namespace NewspaperBatchCreation
 
         private void saveAndCloseButton_Click(object sender, EventArgs e)
         {
-            Properties.Settings.Default.OutputFolder = browseOutputFolder_folderBrowserDialog.SelectedPath;
+            Properties.Settings.Default.OutputFolder = selectOutputFolder_folderBrowserDialog.SelectedPath;
             Properties.Settings.Default.EditionOrder = editionOrderComboBox.SelectedItem?.ToString();
 
             Properties.Settings.Default.Save();

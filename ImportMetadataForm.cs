@@ -287,10 +287,10 @@ namespace NewspaperBatchCreation
             Properties.Settings.Default.MetadataLoaded = true;
             Properties.Settings.Default.Save();
 
-            mainForm.statusBarMetadataFileLoadedLabel.Text = $"Metadata loaded.";
+            mainForm.statusBar_MetadataLoaded.Text = $"Metadata loaded.";
 
             //Enable load source files function:
-            mainForm.browseSourceFilesButton.Enabled = true;
+            mainForm.selectFolderButton.Enabled = true;
 
             this.Hide();
         }

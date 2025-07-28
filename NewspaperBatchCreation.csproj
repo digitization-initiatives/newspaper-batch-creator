@@ -9,6 +9,16 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="lccn\.keep" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Content Include="lccn\.keep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+  </ItemGroup>
+
+  <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
     <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.7.0" />
   </ItemGroup>

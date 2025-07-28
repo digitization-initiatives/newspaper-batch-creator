@@ -34,134 +34,84 @@ namespace NewspaperBatchCreation
         /// </summary>
         private void InitializeComponent()
         {
-            sourceFilesPathTextBox = new TextBox();
-            loadSourceFilesButton = new Button();
-            browseSourceFilesButton = new Button();
-            selectLccnLabel = new Label();
-            batchNumberLabel = new Label();
-            selectLccnComboBox = new ComboBox();
+            addFilesTextBox = new TextBox();
+            addFilesButton = new Button();
+            selectFolderButton = new Button();
             statusBar = new StatusStrip();
-            statusBarNumberOfSourceFilesLabel = new ToolStripStatusLabel();
-            statusBarMetadataFileLoadedLabel = new ToolStripStatusLabel();
-            statusBarNumberOfAssembledFilesLabel = new ToolStripStatusLabel();
-            batchNamePrefixTextBox = new TextBox();
-            batchNumberTextBox = new TextBox();
+            statusBar_NumberOfFilesAdded = new ToolStripStatusLabel();
+            statusBar_MetadataLoaded = new ToolStripStatusLabel();
+            statusBar_NumberOfCompletedFiles = new ToolStripStatusLabel();
             exitButton = new Button();
             startOverButton = new Button();
-            assembleBatchButton = new Button();
-            browseSourceFilesLabel = new Label();
-            browseSourceFiles_folderBrowserDialog = new FolderBrowserDialog();
+            createBatchButton = new Button();
+            addFilesLabel = new Label();
+            addFiles_folderBrowserDialog = new FolderBrowserDialog();
             viewLogsButton = new Button();
             sourceFilesListView = new ListView();
             sourceFilesListFilenameCol = new ColumnHeader();
             sourceFilesListStatusCol = new ColumnHeader();
-            optionsButton = new Button();
-            importMetadataButton = new Button();
-            batchNamePrefixLabel = new Label();
+            settingsButton = new Button();
             statusBar.SuspendLayout();
             SuspendLayout();
             // 
-            // sourceFilesPathTextBox
+            // addFilesTextBox
             // 
-            sourceFilesPathTextBox.Location = new Point(12, 32);
-            sourceFilesPathTextBox.Name = "sourceFilesPathTextBox";
-            sourceFilesPathTextBox.ReadOnly = true;
-            sourceFilesPathTextBox.Size = new Size(926, 27);
-            sourceFilesPathTextBox.TabIndex = 0;
+            addFilesTextBox.Location = new Point(12, 32);
+            addFilesTextBox.Name = "addFilesTextBox";
+            addFilesTextBox.ReadOnly = true;
+            addFilesTextBox.Size = new Size(926, 27);
+            addFilesTextBox.TabIndex = 0;
             // 
-            // loadSourceFilesButton
+            // addFilesButton
             // 
-            loadSourceFilesButton.Location = new Point(1100, 31);
-            loadSourceFilesButton.Name = "loadSourceFilesButton";
-            loadSourceFilesButton.Size = new Size(150, 29);
-            loadSourceFilesButton.TabIndex = 1;
-            loadSourceFilesButton.Text = "Load Source Files";
-            loadSourceFilesButton.UseVisualStyleBackColor = true;
-            loadSourceFilesButton.Click += loadSourceFilesButton_Click;
+            addFilesButton.Location = new Point(1100, 31);
+            addFilesButton.Name = "addFilesButton";
+            addFilesButton.Size = new Size(150, 29);
+            addFilesButton.TabIndex = 1;
+            addFilesButton.Text = "Add Files";
+            addFilesButton.UseVisualStyleBackColor = true;
+            addFilesButton.Click += loadSourceFilesButton_Click;
             // 
-            // browseSourceFilesButton
+            // selectFolderButton
             // 
-            browseSourceFilesButton.Location = new Point(944, 31);
-            browseSourceFilesButton.Name = "browseSourceFilesButton";
-            browseSourceFilesButton.Size = new Size(150, 29);
-            browseSourceFilesButton.TabIndex = 2;
-            browseSourceFilesButton.Text = "... Browse ...";
-            browseSourceFilesButton.UseVisualStyleBackColor = true;
-            browseSourceFilesButton.Click += browseSourceFilesButton_Click;
-            // 
-            // selectLccnLabel
-            // 
-            selectLccnLabel.AutoSize = true;
-            selectLccnLabel.Location = new Point(12, 69);
-            selectLccnLabel.Name = "selectLccnLabel";
-            selectLccnLabel.Size = new Size(91, 20);
-            selectLccnLabel.TabIndex = 3;
-            selectLccnLabel.Text = "Select LCCN:";
-            // 
-            // batchNumberLabel
-            // 
-            batchNumberLabel.AutoSize = true;
-            batchNumberLabel.Location = new Point(944, 69);
-            batchNumberLabel.Name = "batchNumberLabel";
-            batchNumberLabel.Size = new Size(210, 20);
-            batchNumberLabel.TabIndex = 4;
-            batchNumberLabel.Text = "Batch Number (numbers only):";
-            // 
-            // selectLccnComboBox
-            // 
-            selectLccnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            selectLccnComboBox.FormattingEnabled = true;
-            selectLccnComboBox.Location = new Point(12, 92);
-            selectLccnComboBox.Name = "selectLccnComboBox";
-            selectLccnComboBox.Size = new Size(480, 28);
-            selectLccnComboBox.TabIndex = 6;
+            selectFolderButton.Location = new Point(944, 31);
+            selectFolderButton.Name = "selectFolderButton";
+            selectFolderButton.Size = new Size(150, 29);
+            selectFolderButton.TabIndex = 2;
+            selectFolderButton.Text = "... Select Folder ...";
+            selectFolderButton.UseVisualStyleBackColor = true;
+            selectFolderButton.Click += browseSourceFilesButton_Click;
             // 
             // statusBar
             // 
             statusBar.ImageScalingSize = new Size(20, 20);
-            statusBar.Items.AddRange(new ToolStripItem[] { statusBarNumberOfSourceFilesLabel, statusBarMetadataFileLoadedLabel, statusBarNumberOfAssembledFilesLabel });
+            statusBar.Items.AddRange(new ToolStripItem[] { statusBar_NumberOfFilesAdded, statusBar_MetadataLoaded, statusBar_NumberOfCompletedFiles });
             statusBar.Location = new Point(0, 647);
             statusBar.Name = "statusBar";
             statusBar.Size = new Size(1262, 26);
             statusBar.TabIndex = 7;
             statusBar.Text = "statusBar";
             // 
-            // statusBarNumberOfSourceFilesLabel
+            // statusBar_NumberOfFilesAdded
             // 
-            statusBarNumberOfSourceFilesLabel.Name = "statusBarNumberOfSourceFilesLabel";
-            statusBarNumberOfSourceFilesLabel.Padding = new Padding(15, 0, 0, 0);
-            statusBarNumberOfSourceFilesLabel.Size = new Size(180, 20);
-            statusBarNumberOfSourceFilesLabel.Text = "No Source Files Loaded";
+            statusBar_NumberOfFilesAdded.Name = "statusBar_NumberOfFilesAdded";
+            statusBar_NumberOfFilesAdded.Padding = new Padding(15, 0, 0, 0);
+            statusBar_NumberOfFilesAdded.Size = new Size(126, 20);
+            statusBar_NumberOfFilesAdded.Text = "No Files Added";
             // 
-            // statusBarMetadataFileLoadedLabel
+            // statusBar_MetadataLoaded
             // 
-            statusBarMetadataFileLoadedLabel.Name = "statusBarMetadataFileLoadedLabel";
-            statusBarMetadataFileLoadedLabel.Padding = new Padding(15, 0, 0, 0);
-            statusBarMetadataFileLoadedLabel.Size = new Size(171, 20);
-            statusBarMetadataFileLoadedLabel.Text = "Metadata Not Loaded";
+            statusBar_MetadataLoaded.Name = "statusBar_MetadataLoaded";
+            statusBar_MetadataLoaded.Padding = new Padding(15, 0, 0, 0);
+            statusBar_MetadataLoaded.Size = new Size(166, 20);
+            statusBar_MetadataLoaded.Text = "No Metadata Loaded";
             // 
-            // statusBarNumberOfAssembledFilesLabel
+            // statusBar_NumberOfCompletedFiles
             // 
-            statusBarNumberOfAssembledFilesLabel.Name = "statusBarNumberOfAssembledFilesLabel";
-            statusBarNumberOfAssembledFilesLabel.Padding = new Padding(15, 0, 0, 0);
-            statusBarNumberOfAssembledFilesLabel.Size = new Size(142, 20);
-            statusBarNumberOfAssembledFilesLabel.Text = "0 Files Assembled";
-            // 
-            // batchNamePrefixTextBox
-            // 
-            batchNamePrefixTextBox.Location = new Point(498, 93);
-            batchNamePrefixTextBox.Name = "batchNamePrefixTextBox";
-            batchNamePrefixTextBox.ReadOnly = true;
-            batchNamePrefixTextBox.Size = new Size(440, 27);
-            batchNamePrefixTextBox.TabIndex = 8;
-            batchNamePrefixTextBox.TextAlign = HorizontalAlignment.Right;
-            // 
-            // batchNumberTextBox
-            // 
-            batchNumberTextBox.Location = new Point(944, 93);
-            batchNumberTextBox.Name = "batchNumberTextBox";
-            batchNumberTextBox.Size = new Size(306, 27);
-            batchNumberTextBox.TabIndex = 9;
+            statusBar_NumberOfCompletedFiles.Name = "statusBar_NumberOfCompletedFiles";
+            statusBar_NumberOfCompletedFiles.Padding = new Padding(15, 0, 0, 0);
+            statusBar_NumberOfCompletedFiles.Size = new Size(143, 20);
+            statusBar_NumberOfCompletedFiles.Text = "0 Files Completed";
             // 
             // exitButton
             // 
@@ -185,26 +135,26 @@ namespace NewspaperBatchCreation
             startOverButton.UseVisualStyleBackColor = true;
             startOverButton.Click += startOverButton_Click;
             // 
-            // assembleBatchButton
+            // createBatchButton
             // 
-            assembleBatchButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            assembleBatchButton.Font = new Font("Segoe UI", 9F, FontStyle.Bold);
-            assembleBatchButton.Location = new Point(218, 608);
-            assembleBatchButton.Name = "assembleBatchButton";
-            assembleBatchButton.Size = new Size(200, 29);
-            assembleBatchButton.TabIndex = 12;
-            assembleBatchButton.Text = "Assemble Batch";
-            assembleBatchButton.UseVisualStyleBackColor = true;
-            assembleBatchButton.Click += assembleBatchButton_Click;
+            createBatchButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            createBatchButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            createBatchButton.Location = new Point(12, 608);
+            createBatchButton.Name = "createBatchButton";
+            createBatchButton.Size = new Size(200, 29);
+            createBatchButton.TabIndex = 12;
+            createBatchButton.Text = "Create Batch";
+            createBatchButton.UseVisualStyleBackColor = true;
+            createBatchButton.Click += assembleBatchButton_Click;
             // 
-            // browseSourceFilesLabel
+            // addFilesLabel
             // 
-            browseSourceFilesLabel.AutoSize = true;
-            browseSourceFilesLabel.Location = new Point(12, 9);
-            browseSourceFilesLabel.Name = "browseSourceFilesLabel";
-            browseSourceFilesLabel.Size = new Size(90, 20);
-            browseSourceFilesLabel.TabIndex = 13;
-            browseSourceFilesLabel.Text = "Source Files:";
+            addFilesLabel.AutoSize = true;
+            addFilesLabel.Location = new Point(12, 9);
+            addFilesLabel.Name = "addFilesLabel";
+            addFilesLabel.Size = new Size(73, 20);
+            addFilesLabel.TabIndex = 13;
+            addFilesLabel.Text = "Add Files:";
             // 
             // viewLogsButton
             // 
@@ -220,9 +170,9 @@ namespace NewspaperBatchCreation
             // sourceFilesListView
             // 
             sourceFilesListView.Columns.AddRange(new ColumnHeader[] { sourceFilesListFilenameCol, sourceFilesListStatusCol });
-            sourceFilesListView.Location = new Point(12, 126);
+            sourceFilesListView.Location = new Point(12, 66);
             sourceFilesListView.Name = "sourceFilesListView";
-            sourceFilesListView.Size = new Size(1238, 466);
+            sourceFilesListView.Size = new Size(1238, 536);
             sourceFilesListView.TabIndex = 23;
             sourceFilesListView.UseCompatibleStateImageBehavior = false;
             sourceFilesListView.View = View.Details;
@@ -235,63 +185,37 @@ namespace NewspaperBatchCreation
             // 
             sourceFilesListStatusCol.Text = "Status";
             // 
-            // optionsButton
+            // settingsButton
             // 
-            optionsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            optionsButton.Location = new Point(848, 608);
-            optionsButton.Name = "optionsButton";
-            optionsButton.Size = new Size(120, 29);
-            optionsButton.TabIndex = 22;
-            optionsButton.Text = "Options";
-            optionsButton.UseVisualStyleBackColor = true;
-            optionsButton.Click += optionsButton_Click;
-            // 
-            // importMetadataButton
-            // 
-            importMetadataButton.Location = new Point(12, 608);
-            importMetadataButton.Name = "importMetadataButton";
-            importMetadataButton.Size = new Size(200, 29);
-            importMetadataButton.TabIndex = 24;
-            importMetadataButton.Text = "Import Metadata";
-            importMetadataButton.UseVisualStyleBackColor = true;
-            importMetadataButton.Click += importMetadataButton_Click;
-            // 
-            // batchNamePrefixLabel
-            // 
-            batchNamePrefixLabel.AutoSize = true;
-            batchNamePrefixLabel.Location = new Point(498, 69);
-            batchNamePrefixLabel.Name = "batchNamePrefixLabel";
-            batchNamePrefixLabel.Size = new Size(134, 20);
-            batchNamePrefixLabel.TabIndex = 25;
-            batchNamePrefixLabel.Text = "Batch Name Prefix:";
+            settingsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            settingsButton.Location = new Point(848, 608);
+            settingsButton.Name = "settingsButton";
+            settingsButton.Size = new Size(120, 29);
+            settingsButton.TabIndex = 22;
+            settingsButton.Text = "Settings";
+            settingsButton.UseVisualStyleBackColor = true;
+            settingsButton.Click += optionsButton_Click;
             // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1262, 673);
-            Controls.Add(batchNamePrefixLabel);
-            Controls.Add(importMetadataButton);
             Controls.Add(sourceFilesListView);
-            Controls.Add(optionsButton);
+            Controls.Add(settingsButton);
             Controls.Add(viewLogsButton);
-            Controls.Add(browseSourceFilesLabel);
-            Controls.Add(assembleBatchButton);
+            Controls.Add(addFilesLabel);
+            Controls.Add(createBatchButton);
             Controls.Add(startOverButton);
             Controls.Add(exitButton);
-            Controls.Add(batchNumberTextBox);
-            Controls.Add(batchNamePrefixTextBox);
             Controls.Add(statusBar);
-            Controls.Add(selectLccnComboBox);
-            Controls.Add(batchNumberLabel);
-            Controls.Add(selectLccnLabel);
-            Controls.Add(browseSourceFilesButton);
-            Controls.Add(loadSourceFilesButton);
-            Controls.Add(sourceFilesPathTextBox);
+            Controls.Add(selectFolderButton);
+            Controls.Add(addFilesButton);
+            Controls.Add(addFilesTextBox);
             MaximumSize = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
             Name = "MainForm";
-            Text = "Newspaper Batch Assembly Tool";
+            Text = "Newspaper Batch Creation";
             statusBar.ResumeLayout(false);
             statusBar.PerformLayout();
             ResumeLayout(false);
@@ -302,6 +226,7 @@ namespace NewspaperBatchCreation
 
         #region Custom Initializations
 
+        //Item status definitions:
         internal static readonly int LOADED = 0, COMPLETED = 1, SKIPPED = 2;
         internal static readonly Dictionary<int, string> STATUS = new Dictionary<int, string>
         {
@@ -310,14 +235,15 @@ namespace NewspaperBatchCreation
             { SKIPPED, "SKIPPED"}
         };
 
-        internal Button browseSourceFilesButton;
-        internal Button assembleBatchButton;
-        internal ToolStripStatusLabel statusBarMetadataFileLoadedLabel;
-        internal ToolStripStatusLabel statusBarNumberOfAssembledFilesLabel;
+        internal Button selectFolderButton;
+        internal Button createBatchButton;
+        internal ToolStripStatusLabel statusBar_MetadataLoaded;
+        internal ToolStripStatusLabel statusBar_NumberOfCompletedFiles;
 
         LogForm logForm;
+        SettingsForm settingsForm;
         ImportMetadataForm importMetadataForm;
-        OptionsForm optionsForm;
+
 
         List<DestinationFilesStructure> destinationFileStructure;
         Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
@@ -334,20 +260,20 @@ namespace NewspaperBatchCreation
             //Initialize forms:
             logForm = new LogForm(this);
             importMetadataForm = new ImportMetadataForm(this);
-            optionsForm = new OptionsForm(this);
+            settingsForm = new SettingsForm(this);
 
             //Pass along the logForm instance:
             importMetadataForm.logForm = logForm;
-            optionsForm.logForm = logForm;
+            settingsForm.logForm = logForm;
 
             //Disable buttons upon application startup:
-            browseSourceFilesButton.Enabled = false;
-            loadSourceFilesButton.Enabled = false;
-            assembleBatchButton.Enabled = false;
+            selectFolderButton.Enabled = false;
+            addFilesButton.Enabled = false;
+            createBatchButton.Enabled = false;
 
             //Load LCCN selection ComboBox items:
             loadLccnComboBoxItems();
-            selectLccnComboBox.SelectedIndexChanged += lccnComboBox_SelectedIndexChanged;
+            //selectLccnComboBox.SelectedIndexChanged += lccnComboBox_SelectedIndexChanged;
 
             //Set ListView properties:
             sourceFilesListFilenameCol.Width = sourceFilesListView.Width - 150;
@@ -371,11 +297,11 @@ namespace NewspaperBatchCreation
             Properties.Settings.Default.MetadataLoaded = false;
             Properties.Settings.Default.SourceFilesLoaded = false;
 
-            optionsForm.editionOrderComboBox.SelectedIndex = 0;
-            Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
-            
-            optionsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
-            optionsForm.browseOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
+            //settingsForm.editionOrderComboBox.SelectedIndex = 0;
+            //Properties.Settings.Default.EditionOrder = settingsForm.editionOrderComboBox.SelectedItem?.ToString();
+
+            settingsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
+            settingsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
 
             Properties.Settings.Default.Save();
 
@@ -391,26 +317,19 @@ namespace NewspaperBatchCreation
         #endregion
 
 
-        private TextBox sourceFilesPathTextBox;
-        private Button loadSourceFilesButton;
-        private Label selectLccnLabel;
-        private Label batchNumberLabel;
+        private TextBox addFilesTextBox;
+        private Button addFilesButton;
         private Label label3;
-        private ComboBox selectLccnComboBox;
         private StatusStrip statusBar;
-        private TextBox batchNumberTextBox;
-        private TextBox batchNamePrefixTextBox;
         private Button exitButton;
         private Button startOverButton;
-        private Label browseSourceFilesLabel;
-        private FolderBrowserDialog browseSourceFiles_folderBrowserDialog;
+        private Label addFilesLabel;
+        private FolderBrowserDialog addFiles_folderBrowserDialog;
         internal Button viewLogsButton;
-        private Button optionsButton;
+        private Button settingsButton;
         private ListView sourceFilesListView;
         private ColumnHeader sourceFilesListFilenameCol;
         private ColumnHeader sourceFilesListStatusCol;
-        private ToolStripStatusLabel statusBarNumberOfSourceFilesLabel;
-        private Button importMetadataButton;
-        private Label batchNamePrefixLabel;
+        private ToolStripStatusLabel statusBar_NumberOfFilesAdded;
     }
 }
