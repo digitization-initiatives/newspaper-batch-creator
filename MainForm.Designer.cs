@@ -1,5 +1,7 @@
-﻿using DocumentFormat.OpenXml.Vml.Spreadsheet;
+﻿using DocumentFormat.OpenXml.EMMA;
+using DocumentFormat.OpenXml.Vml.Spreadsheet;
 using NewspaperBatchCreation.src;
+using System.Diagnostics;
 using System.DirectoryServices;
 
 namespace NewspaperBatchCreation
@@ -299,14 +301,19 @@ namespace NewspaperBatchCreation
         #endregion
 
         #region Custom Initializations
-        public Button browseSourceFilesButton;
-        public Button assembleBatchButton;
-        public ToolStripStatusLabel statusBarMetadataFileLoadedLabel;
-        public ToolStripStatusLabel statusBarNumberOfAssembledFilesLabel;
 
-        public string STATUS_LOADED = "Loaded";
-        public string STATUS_ASSEMBLED = "Assembled";
-        public string STATUS_SKIPPED = "Skipped";
+        internal static readonly int LOADED = 0, COMPLETED = 1, SKIPPED = 2;
+        internal static readonly Dictionary<int, string> STATUS = new Dictionary<int, string>
+        {
+            { LOADED, "LOADED" },
+            { COMPLETED, "COMPLETED" },
+            { SKIPPED, "SKIPPED"}
+        };
+
+        internal Button browseSourceFilesButton;
+        internal Button assembleBatchButton;
+        internal ToolStripStatusLabel statusBarMetadataFileLoadedLabel;
+        internal ToolStripStatusLabel statusBarNumberOfAssembledFilesLabel;
 
         LogForm logForm;
         ImportMetadataForm importMetadataForm;

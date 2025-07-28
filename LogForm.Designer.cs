@@ -46,7 +46,7 @@ namespace NewspaperBatchCreation
             // 
             // hideLogsButton
             // 
-            hideLogsButton.Location = new Point(874, 632);
+            hideLogsButton.Location = new Point(874, 615);
             hideLogsButton.Name = "hideLogsButton";
             hideLogsButton.Size = new Size(120, 29);
             hideLogsButton.TabIndex = 1;
@@ -55,7 +55,7 @@ namespace NewspaperBatchCreation
             // 
             // clearLogsButton
             // 
-            clearLogsButton.Location = new Point(748, 632);
+            clearLogsButton.Location = new Point(748, 615);
             clearLogsButton.Name = "clearLogsButton";
             clearLogsButton.Size = new Size(120, 29);
             clearLogsButton.TabIndex = 2;
@@ -65,7 +65,7 @@ namespace NewspaperBatchCreation
             // 
             // saveLogsButton
             // 
-            saveLogsButton.Location = new Point(622, 632);
+            saveLogsButton.Location = new Point(622, 615);
             saveLogsButton.Name = "saveLogsButton";
             saveLogsButton.Size = new Size(120, 29);
             saveLogsButton.TabIndex = 3;
@@ -75,7 +75,7 @@ namespace NewspaperBatchCreation
             // pauseLogMonitoringCheckbox
             // 
             pauseLogMonitoringCheckbox.AutoSize = true;
-            pauseLogMonitoringCheckbox.Location = new Point(12, 632);
+            pauseLogMonitoringCheckbox.Location = new Point(12, 615);
             pauseLogMonitoringCheckbox.Name = "pauseLogMonitoringCheckbox";
             pauseLogMonitoringCheckbox.Size = new Size(175, 24);
             pauseLogMonitoringCheckbox.TabIndex = 4;
@@ -95,7 +95,7 @@ namespace NewspaperBatchCreation
             logEntryDataGridView.Location = new Point(12, 12);
             logEntryDataGridView.Name = "logEntryDataGridView";
             logEntryDataGridView.RowHeadersWidth = 51;
-            logEntryDataGridView.Size = new Size(982, 605);
+            logEntryDataGridView.Size = new Size(982, 595);
             logEntryDataGridView.TabIndex = 5;
             // 
             // logTimestampCol

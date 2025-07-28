@@ -723,7 +723,7 @@ namespace NewspaperBatchCreation
                 foreach (string file in files)
                 {
                     ListViewItem item = new ListViewItem(file);
-                    item.SubItems.Add(STATUS_LOADED);
+                    item.SubItems.Add(STATUS[LOADED]);
 
                     sourceFilesListView.Items.Add(item);
                 }
