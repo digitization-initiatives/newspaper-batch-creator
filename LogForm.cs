@@ -2,13 +2,14 @@
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NewspaperBatchAssemblyTool
+namespace NewspaperBatchCreation
 {
     public partial class LogForm : Form
     {
@@ -20,33 +21,64 @@ namespace NewspaperBatchAssemblyTool
             mainForm = mainFormRef;
         }
 
-        #region Custom Methods
-
-        public void appendTextsToLog(string logText, string logType)
+        public string GetTimestamp()
         {
-            LOG_TIMESTAMP = DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
-            logsTextBox.AppendText(LOG_TIMESTAMP + logType + logText);
-            logsTextBox.AppendText(Environment.NewLine);
-            logsTextBox.ScrollToCaret();
+            return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
-        #endregion
-
-        private void saveLogsButton_Click(object sender, EventArgs e)
+        public void SendToLog(string logType, string logMessage)
         {
-            logFileName = DateTime.Now.ToString("yyyy-MM-dd-HH-mm-ss") + ".log";
-            logFileFullPath = Path.Combine(Properties.Settings.Default.OutputFolder, logFileName);
-            File.WriteAllText(logFileFullPath, logsTextBox.Text);
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => SendToLog(logType, logMessage)));
+                return;
+            }
+
+            // Handle log monitoring UI:
+            if (!pauseLogMonitoringCheckbox.Checked)
+            {
+                int rowIndex = logEntryDataGridView.Rows.Add(GetTimestamp(), logType, logMessage);
+                logEntryDataGridView.FirstDisplayedScrollingRowIndex = logEntryDataGridView.Rows.Count - 1;
+            }
+
+            if (logEntryDataGridView.Rows.Count > MAX_LOG_ROWS)
+            {
+                logEntryDataGridView.Rows.RemoveAt(0);
+            }
+
+            // Handle writing to log file:
+            string messageEntry = $"{GetTimestamp()} - {logType} - {logMessage}" + Environment.NewLine;
+
+            File.AppendAllText(logFileFullPath, messageEntry);
+        }
+
+        private void logFormHideLogsButton_Click(object sender, EventArgs e)
+        {
+            this.Hide();
+            mainForm.viewLogsButton.Text = "View Logs";
         }
 
         private void clearLogsButton_Click(object sender, EventArgs e)
         {
-            logsTextBox.Clear();
+            logEntryDataGridView.Rows.Clear();
+            logEntryDataGridView.Refresh();
         }
 
-        private void hideLogsButton_Click(object sender, EventArgs e)
+        private void viewLogFileButton_Click(object sender, EventArgs e)
         {
-            this.Hide();
+            try
+            {
+                Process.Start(@"notepad.exe", logFileFullPath);
+            }
+            catch (Exception err)
+            {
+                SendToLog(LogForm.LogType[LogForm.ERROR], err.Message);
+            }
+        }
+
+        private void LogForm_Click(object sender, EventArgs e)
+        {
+            logEntryDataGridView.ClearSelection();
         }
     }
 }

@@ -8,7 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NewspaperBatchAssemblyTool
+namespace NewspaperBatchCreation
 {
     public partial class OptionsForm : Form
     {
@@ -28,7 +28,7 @@ namespace NewspaperBatchAssemblyTool
                 Properties.Settings.Default.OutputFolder = browseOutputFolder_folderBrowserDialog.SelectedPath;
                 Properties.Settings.Default.Save();
 
-                logForm.appendTextsToLog($"Output folder set to: {Properties.Settings.Default.OutputFolder}.", logForm.LOG_TYPE_INFO);
+                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Output folder set to: {Properties.Settings.Default.OutputFolder}.");
             }
             else
             {
@@ -36,7 +36,7 @@ namespace NewspaperBatchAssemblyTool
                 Properties.Settings.Default.OutputFolder = Environment.CurrentDirectory;
                 Properties.Settings.Default.Save();
 
-                logForm.appendTextsToLog($"Output folder set to: {Properties.Settings.Default.OutputFolder}.", logForm.LOG_TYPE_INFO);
+                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Output folder set to: {Properties.Settings.Default.OutputFolder}.");
             }
         }
 
@@ -47,8 +47,8 @@ namespace NewspaperBatchAssemblyTool
 
             Properties.Settings.Default.Save();
 
-            logForm.appendTextsToLog($"Output folder set to: {Properties.Settings.Default.OutputFolder}.", logForm.LOG_TYPE_INFO);
-            logForm.appendTextsToLog($"Edition order set to: {Properties.Settings.Default.EditionOrder}", logForm.LOG_TYPE_INFO);
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Output folder set to: {Properties.Settings.Default.OutputFolder}.");
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Edition order set to: {Properties.Settings.Default.EditionOrder}");
 
             this.Hide();
         }
@@ -63,8 +63,8 @@ namespace NewspaperBatchAssemblyTool
 
             Properties.Settings.Default.Save();
 
-            logForm.appendTextsToLog($"Output folder set to: {Properties.Settings.Default.OutputFolder}.", logForm.LOG_TYPE_INFO);
-            logForm.appendTextsToLog($"Edition order set to: {Properties.Settings.Default.EditionOrder}", logForm.LOG_TYPE_INFO);
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Output folder set to: {Properties.Settings.Default.OutputFolder}.");
+            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Edition order set to: {Properties.Settings.Default.EditionOrder}");
         }
     }
 }
