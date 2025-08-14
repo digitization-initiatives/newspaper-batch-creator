@@ -9,11 +9,14 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <None Remove="lccn\.keep" />
+    <None Remove="resources\.keep" />
   </ItemGroup>
 
   <ItemGroup>
-    <Content Include="lccn\.keep">
+    <Content Include="resources\.keep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="resources\images\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>
