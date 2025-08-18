@@ -34,8 +34,8 @@ namespace NewspaperBatchCreation
             selectOutputFolder_folderBrowserDialog = new FolderBrowserDialog();
             closeButton = new Button();
             selectMetadataFile_folderBrowserDialog = new FolderBrowserDialog();
-            applicationSettingsTabControl = new TabControl();
-            applicationSettingsTab = new TabPage();
+            settingsTabControl = new TabControl();
+            applicationAndBatchSettingsTab = new TabPage();
             issueFolderValidationRegexTextBox = new TextBox();
             issueFolderNameValidationRegexLabel = new Label();
             batchNamePrefixLabel = new Label();
@@ -47,19 +47,13 @@ namespace NewspaperBatchCreation
             selectOutputFolderLabel = new Label();
             browseOutputFolderButton = new Button();
             outputFolderTextBox = new TextBox();
-            importMetadataTab = new TabPage();
-            listView1 = new ListView();
-            selectMetadataFileButton = new Button();
-            selectedMetadataFilePathTextBox = new TextBox();
-            selectMetadataFileLabel = new Label();
             manageNewspaperTitlesTab = new TabPage();
+            manageNewspaperTitlesDataGridView = new DataGridView();
             settingsStatusStrip = new StatusStrip();
             resetToDefaultButton = new Button();
-            manageNewspaperTitlesDataGridView = new DataGridView();
             saveButton = new Button();
-            applicationSettingsTabControl.SuspendLayout();
-            applicationSettingsTab.SuspendLayout();
-            importMetadataTab.SuspendLayout();
+            settingsTabControl.SuspendLayout();
+            applicationAndBatchSettingsTab.SuspendLayout();
             manageNewspaperTitlesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)manageNewspaperTitlesDataGridView).BeginInit();
             SuspendLayout();
@@ -74,37 +68,36 @@ namespace NewspaperBatchCreation
             closeButton.UseVisualStyleBackColor = true;
             closeButton.Click += saveAndCloseButton_Click;
             // 
-            // applicationSettingsTabControl
+            // settingsTabControl
             // 
-            applicationSettingsTabControl.Controls.Add(applicationSettingsTab);
-            applicationSettingsTabControl.Controls.Add(importMetadataTab);
-            applicationSettingsTabControl.Controls.Add(manageNewspaperTitlesTab);
-            applicationSettingsTabControl.Location = new Point(12, 12);
-            applicationSettingsTabControl.Name = "applicationSettingsTabControl";
-            applicationSettingsTabControl.SelectedIndex = 0;
-            applicationSettingsTabControl.Size = new Size(1238, 601);
-            applicationSettingsTabControl.TabIndex = 46;
+            settingsTabControl.Controls.Add(applicationAndBatchSettingsTab);
+            settingsTabControl.Controls.Add(manageNewspaperTitlesTab);
+            settingsTabControl.Location = new Point(12, 12);
+            settingsTabControl.Name = "settingsTabControl";
+            settingsTabControl.SelectedIndex = 0;
+            settingsTabControl.Size = new Size(1238, 601);
+            settingsTabControl.TabIndex = 46;
             // 
-            // applicationSettingsTab
+            // applicationAndBatchSettingsTab
             // 
-            applicationSettingsTab.Controls.Add(issueFolderValidationRegexTextBox);
-            applicationSettingsTab.Controls.Add(issueFolderNameValidationRegexLabel);
-            applicationSettingsTab.Controls.Add(batchNamePrefixLabel);
-            applicationSettingsTab.Controls.Add(batchNamePrefixTextBox);
-            applicationSettingsTab.Controls.Add(selectLccnComboBox);
-            applicationSettingsTab.Controls.Add(selectLccnLabel);
-            applicationSettingsTab.Controls.Add(batchNumberTextBox);
-            applicationSettingsTab.Controls.Add(batchNumberLabel);
-            applicationSettingsTab.Controls.Add(selectOutputFolderLabel);
-            applicationSettingsTab.Controls.Add(browseOutputFolderButton);
-            applicationSettingsTab.Controls.Add(outputFolderTextBox);
-            applicationSettingsTab.Location = new Point(4, 29);
-            applicationSettingsTab.Name = "applicationSettingsTab";
-            applicationSettingsTab.Padding = new Padding(3);
-            applicationSettingsTab.Size = new Size(1230, 568);
-            applicationSettingsTab.TabIndex = 0;
-            applicationSettingsTab.Text = "Application Settings";
-            applicationSettingsTab.UseVisualStyleBackColor = true;
+            applicationAndBatchSettingsTab.Controls.Add(issueFolderValidationRegexTextBox);
+            applicationAndBatchSettingsTab.Controls.Add(issueFolderNameValidationRegexLabel);
+            applicationAndBatchSettingsTab.Controls.Add(batchNamePrefixLabel);
+            applicationAndBatchSettingsTab.Controls.Add(batchNamePrefixTextBox);
+            applicationAndBatchSettingsTab.Controls.Add(selectLccnComboBox);
+            applicationAndBatchSettingsTab.Controls.Add(selectLccnLabel);
+            applicationAndBatchSettingsTab.Controls.Add(batchNumberTextBox);
+            applicationAndBatchSettingsTab.Controls.Add(batchNumberLabel);
+            applicationAndBatchSettingsTab.Controls.Add(selectOutputFolderLabel);
+            applicationAndBatchSettingsTab.Controls.Add(browseOutputFolderButton);
+            applicationAndBatchSettingsTab.Controls.Add(outputFolderTextBox);
+            applicationAndBatchSettingsTab.Location = new Point(4, 29);
+            applicationAndBatchSettingsTab.Name = "applicationAndBatchSettingsTab";
+            applicationAndBatchSettingsTab.Padding = new Padding(3);
+            applicationAndBatchSettingsTab.Size = new Size(1230, 568);
+            applicationAndBatchSettingsTab.TabIndex = 0;
+            applicationAndBatchSettingsTab.Text = "Application and Batch Settings";
+            applicationAndBatchSettingsTab.UseVisualStyleBackColor = true;
             // 
             // issueFolderValidationRegexTextBox
             // 
@@ -200,54 +193,6 @@ namespace NewspaperBatchCreation
             outputFolderTextBox.Size = new Size(872, 27);
             outputFolderTextBox.TabIndex = 36;
             // 
-            // importMetadataTab
-            // 
-            importMetadataTab.Controls.Add(listView1);
-            importMetadataTab.Controls.Add(selectMetadataFileButton);
-            importMetadataTab.Controls.Add(selectedMetadataFilePathTextBox);
-            importMetadataTab.Controls.Add(selectMetadataFileLabel);
-            importMetadataTab.Location = new Point(4, 29);
-            importMetadataTab.Name = "importMetadataTab";
-            importMetadataTab.Padding = new Padding(3);
-            importMetadataTab.Size = new Size(1230, 568);
-            importMetadataTab.TabIndex = 1;
-            importMetadataTab.Text = "Import Metadata";
-            importMetadataTab.UseVisualStyleBackColor = true;
-            // 
-            // listView1
-            // 
-            listView1.Location = new Point(6, 70);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(1215, 492);
-            listView1.TabIndex = 42;
-            listView1.UseCompatibleStateImageBehavior = false;
-            // 
-            // selectMetadataFileButton
-            // 
-            selectMetadataFileButton.Location = new Point(971, 35);
-            selectMetadataFileButton.Name = "selectMetadataFileButton";
-            selectMetadataFileButton.Size = new Size(250, 29);
-            selectMetadataFileButton.TabIndex = 41;
-            selectMetadataFileButton.Text = "... Select Metadata File (CSV) ...";
-            selectMetadataFileButton.UseVisualStyleBackColor = true;
-            // 
-            // selectedMetadataFilePathTextBox
-            // 
-            selectedMetadataFilePathTextBox.Location = new Point(6, 35);
-            selectedMetadataFilePathTextBox.Name = "selectedMetadataFilePathTextBox";
-            selectedMetadataFilePathTextBox.ReadOnly = true;
-            selectedMetadataFilePathTextBox.Size = new Size(959, 27);
-            selectedMetadataFilePathTextBox.TabIndex = 40;
-            // 
-            // selectMetadataFileLabel
-            // 
-            selectMetadataFileLabel.AutoSize = true;
-            selectMetadataFileLabel.Location = new Point(6, 12);
-            selectMetadataFileLabel.Name = "selectMetadataFileLabel";
-            selectMetadataFileLabel.Size = new Size(147, 20);
-            selectMetadataFileLabel.TabIndex = 39;
-            selectMetadataFileLabel.Text = "Select Metadata File:";
-            // 
             // manageNewspaperTitlesTab
             // 
             manageNewspaperTitlesTab.Controls.Add(manageNewspaperTitlesDataGridView);
@@ -257,6 +202,15 @@ namespace NewspaperBatchCreation
             manageNewspaperTitlesTab.TabIndex = 2;
             manageNewspaperTitlesTab.Text = "Manage Newspaper Titles";
             manageNewspaperTitlesTab.UseVisualStyleBackColor = true;
+            // 
+            // manageNewspaperTitlesDataGridView
+            // 
+            manageNewspaperTitlesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            manageNewspaperTitlesDataGridView.Location = new Point(3, 3);
+            manageNewspaperTitlesDataGridView.Name = "manageNewspaperTitlesDataGridView";
+            manageNewspaperTitlesDataGridView.RowHeadersWidth = 51;
+            manageNewspaperTitlesDataGridView.Size = new Size(1224, 562);
+            manageNewspaperTitlesDataGridView.TabIndex = 0;
             // 
             // settingsStatusStrip
             // 
@@ -276,15 +230,6 @@ namespace NewspaperBatchCreation
             resetToDefaultButton.Text = "Reset to Default";
             resetToDefaultButton.UseVisualStyleBackColor = true;
             // 
-            // manageNewspaperTitlesDataGridView
-            // 
-            manageNewspaperTitlesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            manageNewspaperTitlesDataGridView.Location = new Point(3, 3);
-            manageNewspaperTitlesDataGridView.Name = "manageNewspaperTitlesDataGridView";
-            manageNewspaperTitlesDataGridView.RowHeadersWidth = 51;
-            manageNewspaperTitlesDataGridView.Size = new Size(1224, 562);
-            manageNewspaperTitlesDataGridView.TabIndex = 0;
-            // 
             // saveButton
             // 
             saveButton.Location = new Point(1004, 619);
@@ -303,17 +248,15 @@ namespace NewspaperBatchCreation
             Controls.Add(saveButton);
             Controls.Add(resetToDefaultButton);
             Controls.Add(settingsStatusStrip);
-            Controls.Add(applicationSettingsTabControl);
+            Controls.Add(settingsTabControl);
             Controls.Add(closeButton);
             MaximumSize = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
             Name = "SettingsForm";
             Text = "Settings";
-            applicationSettingsTabControl.ResumeLayout(false);
-            applicationSettingsTab.ResumeLayout(false);
-            applicationSettingsTab.PerformLayout();
-            importMetadataTab.ResumeLayout(false);
-            importMetadataTab.PerformLayout();
+            settingsTabControl.ResumeLayout(false);
+            applicationAndBatchSettingsTab.ResumeLayout(false);
+            applicationAndBatchSettingsTab.PerformLayout();
             manageNewspaperTitlesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)manageNewspaperTitlesDataGridView).EndInit();
             ResumeLayout(false);
@@ -340,9 +283,8 @@ namespace NewspaperBatchCreation
 
         private Button closeButton;
         internal FolderBrowserDialog selectMetadataFile_folderBrowserDialog;
-        private TabControl applicationSettingsTabControl;
-        private TabPage applicationSettingsTab;
-        private TabPage importMetadataTab;
+        private TabControl settingsTabControl;
+        private TabPage applicationAndBatchSettingsTab;
         private TextBox issueFolderValidationRegexTextBox;
         private Label issueFolderNameValidationRegexLabel;
         private Label batchNamePrefixLabel;
@@ -354,13 +296,9 @@ namespace NewspaperBatchCreation
         private Label selectOutputFolderLabel;
         private Button browseOutputFolderButton;
         public TextBox outputFolderTextBox;
-        private Button selectMetadataFileButton;
-        internal TextBox selectedMetadataFilePathTextBox;
-        private Label selectMetadataFileLabel;
         private StatusStrip settingsStatusStrip;
         private Button resetToDefaultButton;
         private TabPage manageNewspaperTitlesTab;
-        private ListView listView1;
         private DataGridView manageNewspaperTitlesDataGridView;
         private Button saveButton;
     }

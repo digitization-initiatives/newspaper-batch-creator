@@ -16,6 +16,8 @@ namespace NewspaperBatchCreation.src
         public string VOLUME { get; set; }
         public string FREQUENCY { get; set; }
         public string NUMBER_OF_PAGES { get; set; }
+        public string REEL_NUMBER { get; set; }
+        public string REEL_SEQUENCE_NUMBER { get; set; }
         public string DC_SUBJECT_INSTITUTION { get; set; }
         public string DC_SUBJECT_COLLEGE {  get; set; }
         public string DC_SUBJECT_LOCATION { get; set; }

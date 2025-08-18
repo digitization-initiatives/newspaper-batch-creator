@@ -95,7 +95,7 @@ namespace NewspaperBatchCreation
             logEntryDataGridView.Location = new Point(12, 12);
             logEntryDataGridView.Name = "logEntryDataGridView";
             logEntryDataGridView.RowHeadersWidth = 51;
-            logEntryDataGridView.Size = new Size(982, 595);
+            logEntryDataGridView.Size = new Size(982, 597);
             logEntryDataGridView.TabIndex = 5;
             // 
             // logTimestampCol

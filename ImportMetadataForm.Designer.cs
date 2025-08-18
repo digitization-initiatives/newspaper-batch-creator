@@ -31,153 +31,40 @@ namespace NewspaperBatchCreation
         /// </summary>
         private void InitializeComponent()
         {
-            importAndCloseButton = new Button();
-            startOverButton = new Button();
+            resetButton = new Button();
             selectMetadataFile_openFileDialog = new OpenFileDialog();
-            selectMetadataFileTextBox = new TextBox();
-            selectMetadataFileLabel = new Label();
-            selectMetadataFileButton = new Button();
-            columnMappingDataGridView = new DataGridView();
-            columnNumberCol = new DataGridViewTextBoxColumn();
-            columnHeaderCol = new DataGridViewTextBoxColumn();
-            sampleDataCol = new DataGridViewTextBoxColumn();
-            mapToCol = new DataGridViewComboBoxColumn();
-            columnMappingLabel = new Label();
-            statusLabel = new Label();
-            statusText = new Label();
             closeButton = new Button();
-            ((System.ComponentModel.ISupportInitialize)columnMappingDataGridView).BeginInit();
+            selectMetadataFileButton = new Button();
+            selectedMetadataFilePathTextBox = new TextBox();
+            selectMetadataFileLabel = new Label();
+            importMetadataStatusStrip = new StatusStrip();
+            numberOfMetadataImportedStatusLabel = new ToolStripStatusLabel();
+            listView1 = new ListView();
+            numberOfMetadataImported = new ToolStripStatusLabel();
+            importMetadataStatus = new ToolStripStatusLabel();
+            statusLabelDivider = new ToolStripStatusLabel();
+            importMetadataStatusStrip.SuspendLayout();
             SuspendLayout();
             // 
-            // importAndCloseButton
+            // resetButton
             // 
-            importAndCloseButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            importAndCloseButton.Location = new Point(874, 632);
-            importAndCloseButton.Name = "importAndCloseButton";
-            importAndCloseButton.Size = new Size(250, 29);
-            importAndCloseButton.TabIndex = 0;
-            importAndCloseButton.Text = "Import Metadata and Close";
-            importAndCloseButton.UseVisualStyleBackColor = true;
-            importAndCloseButton.Click += importAndCloseButton_Click;
-            // 
-            // startOverButton
-            // 
-            startOverButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            startOverButton.Location = new Point(688, 632);
-            startOverButton.Name = "startOverButton";
-            startOverButton.Size = new Size(180, 29);
-            startOverButton.TabIndex = 1;
-            startOverButton.Text = "Start Over";
-            startOverButton.UseVisualStyleBackColor = true;
-            startOverButton.Click += startOverButton_Click;
+            resetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            resetButton.Location = new Point(1004, 615);
+            resetButton.Name = "resetButton";
+            resetButton.Size = new Size(120, 29);
+            resetButton.TabIndex = 1;
+            resetButton.Text = "Reset";
+            resetButton.UseVisualStyleBackColor = true;
+            resetButton.Click += startOverButton_Click;
             // 
             // selectMetadataFile_openFileDialog
             // 
             selectMetadataFile_openFileDialog.FileName = "openFileDialog1";
             // 
-            // selectMetadataFileTextBox
-            // 
-            selectMetadataFileTextBox.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            selectMetadataFileTextBox.Location = new Point(12, 32);
-            selectMetadataFileTextBox.Name = "selectMetadataFileTextBox";
-            selectMetadataFileTextBox.ReadOnly = true;
-            selectMetadataFileTextBox.Size = new Size(1052, 27);
-            selectMetadataFileTextBox.TabIndex = 2;
-            // 
-            // selectMetadataFileLabel
-            // 
-            selectMetadataFileLabel.AutoSize = true;
-            selectMetadataFileLabel.Location = new Point(12, 9);
-            selectMetadataFileLabel.Name = "selectMetadataFileLabel";
-            selectMetadataFileLabel.Size = new Size(147, 20);
-            selectMetadataFileLabel.TabIndex = 3;
-            selectMetadataFileLabel.Text = "Select Metadata File:";
-            // 
-            // selectMetadataFileButton
-            // 
-            selectMetadataFileButton.Anchor = AnchorStyles.Top | AnchorStyles.Left | AnchorStyles.Right;
-            selectMetadataFileButton.Location = new Point(1070, 31);
-            selectMetadataFileButton.Name = "selectMetadataFileButton";
-            selectMetadataFileButton.Size = new Size(180, 29);
-            selectMetadataFileButton.TabIndex = 4;
-            selectMetadataFileButton.Text = "... Select File ...";
-            selectMetadataFileButton.UseVisualStyleBackColor = true;
-            selectMetadataFileButton.Click += selectMetadataFileButton_Click;
-            // 
-            // columnMappingDataGridView
-            // 
-            columnMappingDataGridView.AllowUserToAddRows = false;
-            columnMappingDataGridView.AllowUserToDeleteRows = false;
-            columnMappingDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            columnMappingDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            columnMappingDataGridView.Columns.AddRange(new DataGridViewColumn[] { columnNumberCol, columnHeaderCol, sampleDataCol, mapToCol });
-            columnMappingDataGridView.EditMode = DataGridViewEditMode.EditOnEnter;
-            columnMappingDataGridView.Location = new Point(12, 102);
-            columnMappingDataGridView.Name = "columnMappingDataGridView";
-            columnMappingDataGridView.RowHeadersWidth = 51;
-            columnMappingDataGridView.Size = new Size(1238, 515);
-            columnMappingDataGridView.TabIndex = 5;
-            // 
-            // columnNumberCol
-            // 
-            columnNumberCol.HeaderText = "Column Number";
-            columnNumberCol.MinimumWidth = 6;
-            columnNumberCol.Name = "columnNumberCol";
-            columnNumberCol.Width = 125;
-            // 
-            // columnHeaderCol
-            // 
-            columnHeaderCol.HeaderText = "Column Header";
-            columnHeaderCol.MinimumWidth = 6;
-            columnHeaderCol.Name = "columnHeaderCol";
-            columnHeaderCol.Width = 125;
-            // 
-            // sampleDataCol
-            // 
-            sampleDataCol.HeaderText = "Sample Data";
-            sampleDataCol.MinimumWidth = 6;
-            sampleDataCol.Name = "sampleDataCol";
-            sampleDataCol.Width = 125;
-            // 
-            // mapToCol
-            // 
-            mapToCol.HeaderText = "Map To:";
-            mapToCol.Items.AddRange(new object[] { "ISSUE_NUMBER", "TITLE", "DESCRIPTION", "DATE", "VOLUME", "FREQUENCY", "NUMBER_OF_PAGES", "DC_SUBJECT_INSTITUTION", "DC_SUBJECT_COLLEGE", "DC_SUBJECT_LOCATION", "DC_CONTRIBUTOR_COLLEGE", "DC_CONTRIBUTOR_INSTITUTION", "DC_COVERAGE", "DC_PUBLISHER", "DC_LANGUAGE", "DC_FORMAT", "DC_TYPE", "DC_RIGHTS" });
-            mapToCol.MinimumWidth = 6;
-            mapToCol.Name = "mapToCol";
-            mapToCol.Width = 125;
-            // 
-            // columnMappingLabel
-            // 
-            columnMappingLabel.AutoSize = true;
-            columnMappingLabel.Location = new Point(12, 79);
-            columnMappingLabel.Name = "columnMappingLabel";
-            columnMappingLabel.Size = new Size(127, 20);
-            columnMappingLabel.TabIndex = 6;
-            columnMappingLabel.Text = "Column Mapping:";
-            // 
-            // statusLabel
-            // 
-            statusLabel.AutoSize = true;
-            statusLabel.Location = new Point(12, 644);
-            statusLabel.Name = "statusLabel";
-            statusLabel.Size = new Size(178, 20);
-            statusLabel.TabIndex = 7;
-            statusLabel.Text = "Metadata Loading Status:";
-            // 
-            // statusText
-            // 
-            statusText.AutoSize = true;
-            statusText.Location = new Point(196, 644);
-            statusText.Name = "statusText";
-            statusText.Size = new Size(156, 20);
-            statusText.TabIndex = 8;
-            statusText.Text = "Metadata Not Loaded";
-            // 
             // closeButton
             // 
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            closeButton.Location = new Point(1130, 632);
+            closeButton.Location = new Point(1130, 615);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(120, 29);
             closeButton.TabIndex = 9;
@@ -185,27 +72,93 @@ namespace NewspaperBatchCreation
             closeButton.UseVisualStyleBackColor = true;
             closeButton.Click += closeButton_Click;
             // 
+            // selectMetadataFileButton
+            // 
+            selectMetadataFileButton.Location = new Point(1000, 32);
+            selectMetadataFileButton.Name = "selectMetadataFileButton";
+            selectMetadataFileButton.Size = new Size(250, 29);
+            selectMetadataFileButton.TabIndex = 44;
+            selectMetadataFileButton.Text = "... Select Metadata File (CSV) ...";
+            selectMetadataFileButton.UseVisualStyleBackColor = true;
+            // 
+            // selectedMetadataFilePathTextBox
+            // 
+            selectedMetadataFilePathTextBox.Location = new Point(12, 32);
+            selectedMetadataFilePathTextBox.Name = "selectedMetadataFilePathTextBox";
+            selectedMetadataFilePathTextBox.ReadOnly = true;
+            selectedMetadataFilePathTextBox.Size = new Size(982, 27);
+            selectedMetadataFilePathTextBox.TabIndex = 43;
+            // 
+            // selectMetadataFileLabel
+            // 
+            selectMetadataFileLabel.AutoSize = true;
+            selectMetadataFileLabel.Location = new Point(12, 9);
+            selectMetadataFileLabel.Name = "selectMetadataFileLabel";
+            selectMetadataFileLabel.Size = new Size(147, 20);
+            selectMetadataFileLabel.TabIndex = 42;
+            selectMetadataFileLabel.Text = "Select Metadata File:";
+            // 
+            // importMetadataStatusStrip
+            // 
+            importMetadataStatusStrip.ImageScalingSize = new Size(20, 20);
+            importMetadataStatusStrip.Items.AddRange(new ToolStripItem[] { importMetadataStatus, statusLabelDivider, numberOfMetadataImportedStatusLabel, numberOfMetadataImported });
+            importMetadataStatusStrip.Location = new Point(0, 647);
+            importMetadataStatusStrip.Name = "importMetadataStatusStrip";
+            importMetadataStatusStrip.Size = new Size(1262, 26);
+            importMetadataStatusStrip.TabIndex = 45;
+            importMetadataStatusStrip.Text = "statusStrip1";
+            // 
+            // numberOfMetadataImportedStatusLabel
+            // 
+            numberOfMetadataImportedStatusLabel.Name = "numberOfMetadataImportedStatusLabel";
+            numberOfMetadataImportedStatusLabel.Size = new Size(218, 20);
+            numberOfMetadataImportedStatusLabel.Text = "Number of metadata imported:";
+            // 
+            // listView1
+            // 
+            listView1.Location = new Point(12, 67);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(1238, 542);
+            listView1.TabIndex = 46;
+            listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // numberOfMetadataImported
+            // 
+            numberOfMetadataImported.Name = "numberOfMetadataImported";
+            numberOfMetadataImported.Size = new Size(15, 20);
+            numberOfMetadataImported.Text = "-";
+            // 
+            // importMetadataStatus
+            // 
+            importMetadataStatus.Name = "importMetadataStatus";
+            importMetadataStatus.Size = new Size(184, 20);
+            importMetadataStatus.Text = "No metadata file selected.";
+            // 
+            // statusLabelDivider
+            // 
+            statusLabelDivider.Name = "statusLabelDivider";
+            statusLabelDivider.Size = new Size(21, 20);
+            statusLabelDivider.Text = " | ";
+            // 
             // ImportMetadataForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1262, 673);
             ControlBox = false;
-            Controls.Add(closeButton);
-            Controls.Add(statusText);
-            Controls.Add(statusLabel);
-            Controls.Add(columnMappingLabel);
-            Controls.Add(columnMappingDataGridView);
+            Controls.Add(listView1);
+            Controls.Add(importMetadataStatusStrip);
             Controls.Add(selectMetadataFileButton);
+            Controls.Add(selectedMetadataFilePathTextBox);
             Controls.Add(selectMetadataFileLabel);
-            Controls.Add(selectMetadataFileTextBox);
-            Controls.Add(startOverButton);
-            Controls.Add(importAndCloseButton);
+            Controls.Add(closeButton);
+            Controls.Add(resetButton);
             MaximumSize = new Size(1280, 720);
             MinimumSize = new Size(1280, 720);
             Name = "ImportMetadataForm";
             Text = "Import Metadata";
-            ((System.ComponentModel.ISupportInitialize)columnMappingDataGridView).EndInit();
+            importMetadataStatusStrip.ResumeLayout(false);
+            importMetadataStatusStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -216,10 +169,7 @@ namespace NewspaperBatchCreation
 
         private MainForm mainForm;
         public LogForm logForm;
-
-        public DataGridView columnMappingDataGridView;
         public OpenFileDialog selectMetadataFile_openFileDialog;
-        public TextBox selectMetadataFileTextBox;
 
         public Dictionary<string, string> mappedColumnsDict;
         public Dictionary<string, IssueMetadata> issueMetadata;
@@ -246,18 +196,16 @@ namespace NewspaperBatchCreation
         }
 
         #endregion Custom Initialization
-
-        private Button importAndCloseButton;
-        private Button startOverButton;
-        private Label selectMetadataFileLabel;
-        private Button selectMetadataFileButton;
-        private Label columnMappingLabel;
-        private DataGridViewTextBoxColumn columnNumberCol;
-        private DataGridViewTextBoxColumn columnHeaderCol;
-        private DataGridViewTextBoxColumn sampleDataCol;
-        private DataGridViewComboBoxColumn mapToCol;
-        private Label statusLabel;
-        private Label statusText;
+        private Button resetButton;
         private Button closeButton;
+        private Button selectMetadataFileButton;
+        internal TextBox selectedMetadataFilePathTextBox;
+        private Label selectMetadataFileLabel;
+        private StatusStrip importMetadataStatusStrip;
+        private ToolStripStatusLabel numberOfMetadataImportedStatusLabel;
+        private ListView listView1;
+        private ToolStripStatusLabel numberOfMetadataImported;
+        private ToolStripStatusLabel importMetadataStatus;
+        private ToolStripStatusLabel statusLabelDivider;
     }
 }

@@ -316,7 +316,6 @@ namespace NewspaperBatchCreation
 
         #endregion
 
-
         private TextBox addFilesTextBox;
         private Button addFilesButton;
         private Label label3;
@@ -327,7 +326,7 @@ namespace NewspaperBatchCreation
         private FolderBrowserDialog addFiles_folderBrowserDialog;
         internal Button viewLogsButton;
         private Button settingsButton;
-        private ListView sourceFilesListView;
+        internal ListView sourceFilesListView;
         private ColumnHeader sourceFilesListFilenameCol;
         private ColumnHeader sourceFilesListStatusCol;
         private ToolStripStatusLabel statusBar_NumberOfFilesAdded;
