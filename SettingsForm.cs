@@ -63,5 +63,9 @@ namespace NewspaperBatchCreation
             logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Edition order set to: {Properties.Settings.Default.EditionOrder}");
         }
 
+        private void batchNamePrefixTextBox_TextChanged(object sender, EventArgs e)
+        {
+
+        }
     }
 }

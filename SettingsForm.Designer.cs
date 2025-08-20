@@ -35,25 +35,49 @@ namespace NewspaperBatchCreation
             closeButton = new Button();
             selectMetadataFile_folderBrowserDialog = new FolderBrowserDialog();
             settingsTabControl = new TabControl();
-            applicationAndBatchSettingsTab = new TabPage();
+            applicationSettingsTab = new TabPage();
             issueFolderValidationRegexTextBox = new TextBox();
             issueFolderNameValidationRegexLabel = new Label();
-            batchNamePrefixLabel = new Label();
-            batchNamePrefixTextBox = new TextBox();
-            selectLccnComboBox = new ComboBox();
-            selectLccnLabel = new Label();
-            batchNumberTextBox = new TextBox();
-            batchNumberLabel = new Label();
             selectOutputFolderLabel = new Label();
             browseOutputFolderButton = new Button();
             outputFolderTextBox = new TextBox();
+            batchSettingsTab = new TabPage();
+            physicalLocationShortCodeTextBoxLabel = new Label();
+            physicalLocationShortCodeTextBox = new TextBox();
+            awardeeFullNameTextBoxLabel = new Label();
+            awardeeFullNameTextBox = new TextBox();
+            awardYearTextBox = new TextBox();
+            awardYearTextBoxLabel = new Label();
+            awardeeShortCodeTextBox = new TextBox();
+            awardeeShortCodeTextBoxLabel = new Label();
+            batchTypeComboBox = new ComboBox();
+            batchTypeComboBoxLabel = new Label();
+            batchNamePrefixLabel = new Label();
+            batchNamePrefixTextBox = new TextBox();
+            selectLccnComboBox = new ComboBox();
+            selectLccnComboBoxLabel = new Label();
+            batchNumberTextBox = new TextBox();
+            batchNumberLabel = new Label();
             manageNewspaperTitlesTab = new TabPage();
             manageNewspaperTitlesDataGridView = new DataGridView();
+            lccnCol = new DataGridViewTextBoxColumn();
+            titleFullCol = new DataGridViewTextBoxColumn();
+            titleShortCol = new DataGridViewTextBoxColumn();
+            batchPrefixCol = new DataGridViewTextBoxColumn();
             settingsStatusStrip = new StatusStrip();
             resetToDefaultButton = new Button();
             saveButton = new Button();
+            physicalLocationFullAddrTextBoxLabel = new Label();
+            physicalLocationFullAddrTextBox = new TextBox();
+            agencyResponsibleForReproductionFullAddrTextBox = new TextBox();
+            agencyResponsibleForReproductionFullAddrTextBoxLabel = new Label();
+            agencyResponsibleForReproductionShortCodeTextBoxLabel = new Label();
+            agencyResponsibleForReproductionShortCodeTextBox = new TextBox();
+            noteAboutReproductionTextBoxLabel = new Label();
+            noteAboutReproductionTextBox = new TextBox();
             settingsTabControl.SuspendLayout();
-            applicationAndBatchSettingsTab.SuspendLayout();
+            applicationSettingsTab.SuspendLayout();
+            batchSettingsTab.SuspendLayout();
             manageNewspaperTitlesTab.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)manageNewspaperTitlesDataGridView).BeginInit();
             SuspendLayout();
@@ -70,7 +94,8 @@ namespace NewspaperBatchCreation
             // 
             // settingsTabControl
             // 
-            settingsTabControl.Controls.Add(applicationAndBatchSettingsTab);
+            settingsTabControl.Controls.Add(applicationSettingsTab);
+            settingsTabControl.Controls.Add(batchSettingsTab);
             settingsTabControl.Controls.Add(manageNewspaperTitlesTab);
             settingsTabControl.Location = new Point(12, 12);
             settingsTabControl.Name = "settingsTabControl";
@@ -78,99 +103,41 @@ namespace NewspaperBatchCreation
             settingsTabControl.Size = new Size(1238, 601);
             settingsTabControl.TabIndex = 46;
             // 
-            // applicationAndBatchSettingsTab
+            // applicationSettingsTab
             // 
-            applicationAndBatchSettingsTab.Controls.Add(issueFolderValidationRegexTextBox);
-            applicationAndBatchSettingsTab.Controls.Add(issueFolderNameValidationRegexLabel);
-            applicationAndBatchSettingsTab.Controls.Add(batchNamePrefixLabel);
-            applicationAndBatchSettingsTab.Controls.Add(batchNamePrefixTextBox);
-            applicationAndBatchSettingsTab.Controls.Add(selectLccnComboBox);
-            applicationAndBatchSettingsTab.Controls.Add(selectLccnLabel);
-            applicationAndBatchSettingsTab.Controls.Add(batchNumberTextBox);
-            applicationAndBatchSettingsTab.Controls.Add(batchNumberLabel);
-            applicationAndBatchSettingsTab.Controls.Add(selectOutputFolderLabel);
-            applicationAndBatchSettingsTab.Controls.Add(browseOutputFolderButton);
-            applicationAndBatchSettingsTab.Controls.Add(outputFolderTextBox);
-            applicationAndBatchSettingsTab.Location = new Point(4, 29);
-            applicationAndBatchSettingsTab.Name = "applicationAndBatchSettingsTab";
-            applicationAndBatchSettingsTab.Padding = new Padding(3);
-            applicationAndBatchSettingsTab.Size = new Size(1230, 568);
-            applicationAndBatchSettingsTab.TabIndex = 0;
-            applicationAndBatchSettingsTab.Text = "Application and Batch Settings";
-            applicationAndBatchSettingsTab.UseVisualStyleBackColor = true;
+            applicationSettingsTab.Controls.Add(issueFolderValidationRegexTextBox);
+            applicationSettingsTab.Controls.Add(issueFolderNameValidationRegexLabel);
+            applicationSettingsTab.Controls.Add(selectOutputFolderLabel);
+            applicationSettingsTab.Controls.Add(browseOutputFolderButton);
+            applicationSettingsTab.Controls.Add(outputFolderTextBox);
+            applicationSettingsTab.Location = new Point(4, 29);
+            applicationSettingsTab.Name = "applicationSettingsTab";
+            applicationSettingsTab.Padding = new Padding(3);
+            applicationSettingsTab.Size = new Size(1230, 568);
+            applicationSettingsTab.TabIndex = 0;
+            applicationSettingsTab.Text = "Application Settings";
+            applicationSettingsTab.UseVisualStyleBackColor = true;
             // 
             // issueFolderValidationRegexTextBox
             // 
-            issueFolderValidationRegexTextBox.Location = new Point(6, 156);
+            issueFolderValidationRegexTextBox.Location = new Point(9, 109);
             issueFolderValidationRegexTextBox.Name = "issueFolderValidationRegexTextBox";
-            issueFolderValidationRegexTextBox.Size = new Size(1218, 27);
+            issueFolderValidationRegexTextBox.Size = new Size(1215, 27);
             issueFolderValidationRegexTextBox.TabIndex = 52;
             // 
             // issueFolderNameValidationRegexLabel
             // 
             issueFolderNameValidationRegexLabel.AutoSize = true;
-            issueFolderNameValidationRegexLabel.Location = new Point(6, 133);
+            issueFolderNameValidationRegexLabel.Location = new Point(6, 86);
             issueFolderNameValidationRegexLabel.Name = "issueFolderNameValidationRegexLabel";
             issueFolderNameValidationRegexLabel.Size = new Size(298, 20);
             issueFolderNameValidationRegexLabel.TabIndex = 51;
             issueFolderNameValidationRegexLabel.Text = "Issue Folder Name Validation Regex (Input):";
             // 
-            // batchNamePrefixLabel
-            // 
-            batchNamePrefixLabel.AutoSize = true;
-            batchNamePrefixLabel.Location = new Point(497, 68);
-            batchNamePrefixLabel.Name = "batchNamePrefixLabel";
-            batchNamePrefixLabel.Size = new Size(134, 20);
-            batchNamePrefixLabel.TabIndex = 50;
-            batchNamePrefixLabel.Text = "Batch Name Prefix:";
-            // 
-            // batchNamePrefixTextBox
-            // 
-            batchNamePrefixTextBox.Location = new Point(497, 91);
-            batchNamePrefixTextBox.Name = "batchNamePrefixTextBox";
-            batchNamePrefixTextBox.ReadOnly = true;
-            batchNamePrefixTextBox.Size = new Size(491, 27);
-            batchNamePrefixTextBox.TabIndex = 49;
-            batchNamePrefixTextBox.TextAlign = HorizontalAlignment.Right;
-            // 
-            // selectLccnComboBox
-            // 
-            selectLccnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            selectLccnComboBox.FormattingEnabled = true;
-            selectLccnComboBox.Location = new Point(6, 91);
-            selectLccnComboBox.Name = "selectLccnComboBox";
-            selectLccnComboBox.Size = new Size(485, 28);
-            selectLccnComboBox.TabIndex = 48;
-            // 
-            // selectLccnLabel
-            // 
-            selectLccnLabel.AutoSize = true;
-            selectLccnLabel.Location = new Point(6, 68);
-            selectLccnLabel.Name = "selectLccnLabel";
-            selectLccnLabel.Size = new Size(91, 20);
-            selectLccnLabel.TabIndex = 47;
-            selectLccnLabel.Text = "Select LCCN:";
-            // 
-            // batchNumberTextBox
-            // 
-            batchNumberTextBox.Location = new Point(994, 92);
-            batchNumberTextBox.Name = "batchNumberTextBox";
-            batchNumberTextBox.Size = new Size(230, 27);
-            batchNumberTextBox.TabIndex = 46;
-            // 
-            // batchNumberLabel
-            // 
-            batchNumberLabel.AutoSize = true;
-            batchNumberLabel.Location = new Point(994, 69);
-            batchNumberLabel.Name = "batchNumberLabel";
-            batchNumberLabel.Size = new Size(210, 20);
-            batchNumberLabel.TabIndex = 45;
-            batchNumberLabel.Text = "Batch Number (numbers only):";
-            // 
             // selectOutputFolderLabel
             // 
             selectOutputFolderLabel.AutoSize = true;
-            selectOutputFolderLabel.Location = new Point(6, 29);
+            selectOutputFolderLabel.Location = new Point(6, 13);
             selectOutputFolderLabel.Name = "selectOutputFolderLabel";
             selectOutputFolderLabel.Size = new Size(104, 20);
             selectOutputFolderLabel.TabIndex = 38;
@@ -178,7 +145,7 @@ namespace NewspaperBatchCreation
             // 
             // browseOutputFolderButton
             // 
-            browseOutputFolderButton.Location = new Point(994, 20);
+            browseOutputFolderButton.Location = new Point(994, 36);
             browseOutputFolderButton.Name = "browseOutputFolderButton";
             browseOutputFolderButton.Size = new Size(230, 29);
             browseOutputFolderButton.TabIndex = 37;
@@ -187,11 +154,180 @@ namespace NewspaperBatchCreation
             // 
             // outputFolderTextBox
             // 
-            outputFolderTextBox.Location = new Point(116, 22);
+            outputFolderTextBox.Location = new Point(9, 36);
             outputFolderTextBox.Name = "outputFolderTextBox";
             outputFolderTextBox.ReadOnly = true;
-            outputFolderTextBox.Size = new Size(872, 27);
+            outputFolderTextBox.Size = new Size(979, 27);
             outputFolderTextBox.TabIndex = 36;
+            // 
+            // batchSettingsTab
+            // 
+            batchSettingsTab.Controls.Add(noteAboutReproductionTextBox);
+            batchSettingsTab.Controls.Add(noteAboutReproductionTextBoxLabel);
+            batchSettingsTab.Controls.Add(agencyResponsibleForReproductionFullAddrTextBox);
+            batchSettingsTab.Controls.Add(agencyResponsibleForReproductionFullAddrTextBoxLabel);
+            batchSettingsTab.Controls.Add(agencyResponsibleForReproductionShortCodeTextBoxLabel);
+            batchSettingsTab.Controls.Add(agencyResponsibleForReproductionShortCodeTextBox);
+            batchSettingsTab.Controls.Add(physicalLocationFullAddrTextBox);
+            batchSettingsTab.Controls.Add(physicalLocationFullAddrTextBoxLabel);
+            batchSettingsTab.Controls.Add(physicalLocationShortCodeTextBoxLabel);
+            batchSettingsTab.Controls.Add(physicalLocationShortCodeTextBox);
+            batchSettingsTab.Controls.Add(awardeeFullNameTextBoxLabel);
+            batchSettingsTab.Controls.Add(awardeeFullNameTextBox);
+            batchSettingsTab.Controls.Add(awardYearTextBox);
+            batchSettingsTab.Controls.Add(awardYearTextBoxLabel);
+            batchSettingsTab.Controls.Add(awardeeShortCodeTextBox);
+            batchSettingsTab.Controls.Add(awardeeShortCodeTextBoxLabel);
+            batchSettingsTab.Controls.Add(batchTypeComboBox);
+            batchSettingsTab.Controls.Add(batchTypeComboBoxLabel);
+            batchSettingsTab.Controls.Add(batchNamePrefixLabel);
+            batchSettingsTab.Controls.Add(batchNamePrefixTextBox);
+            batchSettingsTab.Controls.Add(selectLccnComboBox);
+            batchSettingsTab.Controls.Add(selectLccnComboBoxLabel);
+            batchSettingsTab.Controls.Add(batchNumberTextBox);
+            batchSettingsTab.Controls.Add(batchNumberLabel);
+            batchSettingsTab.Location = new Point(4, 29);
+            batchSettingsTab.Name = "batchSettingsTab";
+            batchSettingsTab.Size = new Size(1230, 568);
+            batchSettingsTab.TabIndex = 3;
+            batchSettingsTab.Text = "Batch Settings";
+            batchSettingsTab.UseVisualStyleBackColor = true;
+            // 
+            // physicalLocationShortCodeTextBoxLabel
+            // 
+            physicalLocationShortCodeTextBoxLabel.AutoSize = true;
+            physicalLocationShortCodeTextBoxLabel.Location = new Point(824, 109);
+            physicalLocationShortCodeTextBoxLabel.Name = "physicalLocationShortCodeTextBoxLabel";
+            physicalLocationShortCodeTextBoxLabel.Size = new Size(209, 20);
+            physicalLocationShortCodeTextBoxLabel.TabIndex = 78;
+            physicalLocationShortCodeTextBoxLabel.Text = "Physical Location (short code):";
+            // 
+            // physicalLocationShortCodeTextBox
+            // 
+            physicalLocationShortCodeTextBox.Location = new Point(824, 132);
+            physicalLocationShortCodeTextBox.Name = "physicalLocationShortCodeTextBox";
+            physicalLocationShortCodeTextBox.Size = new Size(400, 27);
+            physicalLocationShortCodeTextBox.TabIndex = 77;
+            // 
+            // awardeeFullNameTextBoxLabel
+            // 
+            awardeeFullNameTextBoxLabel.AutoSize = true;
+            awardeeFullNameTextBoxLabel.Location = new Point(418, 175);
+            awardeeFullNameTextBoxLabel.Name = "awardeeFullNameTextBoxLabel";
+            awardeeFullNameTextBoxLabel.Size = new Size(147, 20);
+            awardeeFullNameTextBoxLabel.TabIndex = 76;
+            awardeeFullNameTextBoxLabel.Text = "Awardee (full name):";
+            // 
+            // awardeeFullNameTextBox
+            // 
+            awardeeFullNameTextBox.Location = new Point(418, 198);
+            awardeeFullNameTextBox.Name = "awardeeFullNameTextBox";
+            awardeeFullNameTextBox.Size = new Size(400, 27);
+            awardeeFullNameTextBox.TabIndex = 75;
+            // 
+            // awardYearTextBox
+            // 
+            awardYearTextBox.Location = new Point(12, 198);
+            awardYearTextBox.Name = "awardYearTextBox";
+            awardYearTextBox.Size = new Size(400, 27);
+            awardYearTextBox.TabIndex = 74;
+            // 
+            // awardYearTextBoxLabel
+            // 
+            awardYearTextBoxLabel.AutoSize = true;
+            awardYearTextBoxLabel.Location = new Point(12, 175);
+            awardYearTextBoxLabel.Name = "awardYearTextBoxLabel";
+            awardYearTextBoxLabel.Size = new Size(87, 20);
+            awardYearTextBoxLabel.TabIndex = 73;
+            awardYearTextBoxLabel.Text = "Award Year:";
+            // 
+            // awardeeShortCodeTextBox
+            // 
+            awardeeShortCodeTextBox.Location = new Point(418, 132);
+            awardeeShortCodeTextBox.Name = "awardeeShortCodeTextBox";
+            awardeeShortCodeTextBox.Size = new Size(400, 27);
+            awardeeShortCodeTextBox.TabIndex = 72;
+            // 
+            // awardeeShortCodeTextBoxLabel
+            // 
+            awardeeShortCodeTextBoxLabel.AutoSize = true;
+            awardeeShortCodeTextBoxLabel.Location = new Point(418, 109);
+            awardeeShortCodeTextBoxLabel.Name = "awardeeShortCodeTextBoxLabel";
+            awardeeShortCodeTextBoxLabel.Size = new Size(155, 20);
+            awardeeShortCodeTextBoxLabel.TabIndex = 71;
+            awardeeShortCodeTextBoxLabel.Text = "Awardee (short code):";
+            // 
+            // batchTypeComboBox
+            // 
+            batchTypeComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            batchTypeComboBox.FormattingEnabled = true;
+            batchTypeComboBox.Items.AddRange(new object[] { "print", "reel" });
+            batchTypeComboBox.Location = new Point(12, 132);
+            batchTypeComboBox.Name = "batchTypeComboBox";
+            batchTypeComboBox.Size = new Size(400, 28);
+            batchTypeComboBox.TabIndex = 70;
+            // 
+            // batchTypeComboBoxLabel
+            // 
+            batchTypeComboBoxLabel.AutoSize = true;
+            batchTypeComboBoxLabel.Location = new Point(12, 109);
+            batchTypeComboBoxLabel.Name = "batchTypeComboBoxLabel";
+            batchTypeComboBoxLabel.Size = new Size(84, 20);
+            batchTypeComboBoxLabel.TabIndex = 69;
+            batchTypeComboBoxLabel.Text = "Batch Type:";
+            // 
+            // batchNamePrefixLabel
+            // 
+            batchNamePrefixLabel.AutoSize = true;
+            batchNamePrefixLabel.Location = new Point(418, 19);
+            batchNamePrefixLabel.Name = "batchNamePrefixLabel";
+            batchNamePrefixLabel.Size = new Size(134, 20);
+            batchNamePrefixLabel.TabIndex = 68;
+            batchNamePrefixLabel.Text = "Batch Name Prefix:";
+            // 
+            // batchNamePrefixTextBox
+            // 
+            batchNamePrefixTextBox.Location = new Point(418, 42);
+            batchNamePrefixTextBox.Name = "batchNamePrefixTextBox";
+            batchNamePrefixTextBox.ReadOnly = true;
+            batchNamePrefixTextBox.Size = new Size(400, 27);
+            batchNamePrefixTextBox.TabIndex = 67;
+            batchNamePrefixTextBox.TextAlign = HorizontalAlignment.Right;
+            batchNamePrefixTextBox.TextChanged += batchNamePrefixTextBox_TextChanged;
+            // 
+            // selectLccnComboBox
+            // 
+            selectLccnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
+            selectLccnComboBox.FormattingEnabled = true;
+            selectLccnComboBox.Location = new Point(12, 42);
+            selectLccnComboBox.Name = "selectLccnComboBox";
+            selectLccnComboBox.Size = new Size(400, 28);
+            selectLccnComboBox.TabIndex = 66;
+            // 
+            // selectLccnComboBoxLabel
+            // 
+            selectLccnComboBoxLabel.AutoSize = true;
+            selectLccnComboBoxLabel.Location = new Point(12, 19);
+            selectLccnComboBoxLabel.Name = "selectLccnComboBoxLabel";
+            selectLccnComboBoxLabel.Size = new Size(91, 20);
+            selectLccnComboBoxLabel.TabIndex = 65;
+            selectLccnComboBoxLabel.Text = "Select LCCN:";
+            // 
+            // batchNumberTextBox
+            // 
+            batchNumberTextBox.Location = new Point(824, 42);
+            batchNumberTextBox.Name = "batchNumberTextBox";
+            batchNumberTextBox.Size = new Size(400, 27);
+            batchNumberTextBox.TabIndex = 64;
+            // 
+            // batchNumberLabel
+            // 
+            batchNumberLabel.AutoSize = true;
+            batchNumberLabel.Location = new Point(824, 19);
+            batchNumberLabel.Name = "batchNumberLabel";
+            batchNumberLabel.Size = new Size(210, 20);
+            batchNumberLabel.TabIndex = 63;
+            batchNumberLabel.Text = "Batch Number (numbers only):";
             // 
             // manageNewspaperTitlesTab
             // 
@@ -206,11 +342,41 @@ namespace NewspaperBatchCreation
             // manageNewspaperTitlesDataGridView
             // 
             manageNewspaperTitlesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            manageNewspaperTitlesDataGridView.Columns.AddRange(new DataGridViewColumn[] { lccnCol, titleFullCol, titleShortCol, batchPrefixCol });
             manageNewspaperTitlesDataGridView.Location = new Point(3, 3);
             manageNewspaperTitlesDataGridView.Name = "manageNewspaperTitlesDataGridView";
             manageNewspaperTitlesDataGridView.RowHeadersWidth = 51;
             manageNewspaperTitlesDataGridView.Size = new Size(1224, 562);
             manageNewspaperTitlesDataGridView.TabIndex = 0;
+            // 
+            // lccnCol
+            // 
+            lccnCol.HeaderText = "LCCN";
+            lccnCol.MinimumWidth = 6;
+            lccnCol.Name = "lccnCol";
+            lccnCol.Width = 125;
+            // 
+            // titleFullCol
+            // 
+            titleFullCol.HeaderText = "Title (full)";
+            titleFullCol.MinimumWidth = 6;
+            titleFullCol.Name = "titleFullCol";
+            titleFullCol.Width = 125;
+            // 
+            // titleShortCol
+            // 
+            titleShortCol.HeaderText = "Title (short)";
+            titleShortCol.MinimumWidth = 6;
+            titleShortCol.Name = "titleShortCol";
+            titleShortCol.Width = 125;
+            // 
+            // batchPrefixCol
+            // 
+            batchPrefixCol.HeaderText = "Batch Prefix (format: batch_awardee_short-title_ver)";
+            batchPrefixCol.MinimumWidth = 6;
+            batchPrefixCol.Name = "batchPrefixCol";
+            batchPrefixCol.ReadOnly = true;
+            batchPrefixCol.Width = 125;
             // 
             // settingsStatusStrip
             // 
@@ -239,6 +405,70 @@ namespace NewspaperBatchCreation
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
             // 
+            // physicalLocationFullAddrTextBoxLabel
+            // 
+            physicalLocationFullAddrTextBoxLabel.AutoSize = true;
+            physicalLocationFullAddrTextBoxLabel.Location = new Point(824, 175);
+            physicalLocationFullAddrTextBoxLabel.Name = "physicalLocationFullAddrTextBoxLabel";
+            physicalLocationFullAddrTextBoxLabel.Size = new Size(215, 20);
+            physicalLocationFullAddrTextBoxLabel.TabIndex = 80;
+            physicalLocationFullAddrTextBoxLabel.Text = "Physical Location (full address):";
+            // 
+            // physicalLocationFullAddrTextBox
+            // 
+            physicalLocationFullAddrTextBox.Location = new Point(824, 198);
+            physicalLocationFullAddrTextBox.Name = "physicalLocationFullAddrTextBox";
+            physicalLocationFullAddrTextBox.Size = new Size(400, 27);
+            physicalLocationFullAddrTextBox.TabIndex = 81;
+            // 
+            // agencyResponsibleForReproductionFullAddrTextBox
+            // 
+            agencyResponsibleForReproductionFullAddrTextBox.Location = new Point(824, 267);
+            agencyResponsibleForReproductionFullAddrTextBox.Name = "agencyResponsibleForReproductionFullAddrTextBox";
+            agencyResponsibleForReproductionFullAddrTextBox.Size = new Size(400, 27);
+            agencyResponsibleForReproductionFullAddrTextBox.TabIndex = 85;
+            // 
+            // agencyResponsibleForReproductionFullAddrTextBoxLabel
+            // 
+            agencyResponsibleForReproductionFullAddrTextBoxLabel.AutoSize = true;
+            agencyResponsibleForReproductionFullAddrTextBoxLabel.Location = new Point(824, 244);
+            agencyResponsibleForReproductionFullAddrTextBoxLabel.Name = "agencyResponsibleForReproductionFullAddrTextBoxLabel";
+            agencyResponsibleForReproductionFullAddrTextBoxLabel.Size = new Size(352, 20);
+            agencyResponsibleForReproductionFullAddrTextBoxLabel.TabIndex = 84;
+            agencyResponsibleForReproductionFullAddrTextBoxLabel.Text = "Agency Responsible for Reproduction (full address):";
+            // 
+            // agencyResponsibleForReproductionShortCodeTextBoxLabel
+            // 
+            agencyResponsibleForReproductionShortCodeTextBoxLabel.AutoSize = true;
+            agencyResponsibleForReproductionShortCodeTextBoxLabel.Location = new Point(418, 244);
+            agencyResponsibleForReproductionShortCodeTextBoxLabel.Name = "agencyResponsibleForReproductionShortCodeTextBoxLabel";
+            agencyResponsibleForReproductionShortCodeTextBoxLabel.Size = new Size(346, 20);
+            agencyResponsibleForReproductionShortCodeTextBoxLabel.TabIndex = 83;
+            agencyResponsibleForReproductionShortCodeTextBoxLabel.Text = "Agency Responsible for Reproduction (short code):";
+            // 
+            // agencyResponsibleForReproductionShortCodeTextBox
+            // 
+            agencyResponsibleForReproductionShortCodeTextBox.Location = new Point(418, 267);
+            agencyResponsibleForReproductionShortCodeTextBox.Name = "agencyResponsibleForReproductionShortCodeTextBox";
+            agencyResponsibleForReproductionShortCodeTextBox.Size = new Size(400, 27);
+            agencyResponsibleForReproductionShortCodeTextBox.TabIndex = 82;
+            // 
+            // noteAboutReproductionTextBoxLabel
+            // 
+            noteAboutReproductionTextBoxLabel.AutoSize = true;
+            noteAboutReproductionTextBoxLabel.Location = new Point(12, 244);
+            noteAboutReproductionTextBoxLabel.Name = "noteAboutReproductionTextBoxLabel";
+            noteAboutReproductionTextBoxLabel.Size = new Size(184, 20);
+            noteAboutReproductionTextBoxLabel.TabIndex = 86;
+            noteAboutReproductionTextBoxLabel.Text = "Note About Reproduction:";
+            // 
+            // noteAboutReproductionTextBox
+            // 
+            noteAboutReproductionTextBox.Location = new Point(12, 267);
+            noteAboutReproductionTextBox.Name = "noteAboutReproductionTextBox";
+            noteAboutReproductionTextBox.Size = new Size(400, 27);
+            noteAboutReproductionTextBox.TabIndex = 87;
+            // 
             // SettingsForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
@@ -255,8 +485,10 @@ namespace NewspaperBatchCreation
             Name = "SettingsForm";
             Text = "Settings";
             settingsTabControl.ResumeLayout(false);
-            applicationAndBatchSettingsTab.ResumeLayout(false);
-            applicationAndBatchSettingsTab.PerformLayout();
+            applicationSettingsTab.ResumeLayout(false);
+            applicationSettingsTab.PerformLayout();
+            batchSettingsTab.ResumeLayout(false);
+            batchSettingsTab.PerformLayout();
             manageNewspaperTitlesTab.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)manageNewspaperTitlesDataGridView).EndInit();
             ResumeLayout(false);
@@ -277,6 +509,7 @@ namespace NewspaperBatchCreation
             this.StartPosition = FormStartPosition.Manual;
 
             outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
+            batchTypeComboBox.SelectedIndex = 0;
         }
 
         #endregion
@@ -284,15 +517,9 @@ namespace NewspaperBatchCreation
         private Button closeButton;
         internal FolderBrowserDialog selectMetadataFile_folderBrowserDialog;
         private TabControl settingsTabControl;
-        private TabPage applicationAndBatchSettingsTab;
+        private TabPage applicationSettingsTab;
         private TextBox issueFolderValidationRegexTextBox;
         private Label issueFolderNameValidationRegexLabel;
-        private Label batchNamePrefixLabel;
-        private TextBox batchNamePrefixTextBox;
-        internal ComboBox selectLccnComboBox;
-        private Label selectLccnLabel;
-        private TextBox batchNumberTextBox;
-        private Label batchNumberLabel;
         private Label selectOutputFolderLabel;
         private Button browseOutputFolderButton;
         public TextBox outputFolderTextBox;
@@ -301,5 +528,34 @@ namespace NewspaperBatchCreation
         private TabPage manageNewspaperTitlesTab;
         private DataGridView manageNewspaperTitlesDataGridView;
         private Button saveButton;
+        private DataGridViewTextBoxColumn lccnCol;
+        private DataGridViewTextBoxColumn titleFullCol;
+        private DataGridViewTextBoxColumn titleShortCol;
+        private DataGridViewTextBoxColumn batchPrefixCol;
+        private TabPage batchSettingsTab;
+        private Label physicalLocationShortCodeTextBoxLabel;
+        private TextBox physicalLocationShortCodeTextBox;
+        private Label awardeeFullNameTextBoxLabel;
+        private TextBox awardeeFullNameTextBox;
+        private TextBox awardYearTextBox;
+        private Label awardYearTextBoxLabel;
+        private TextBox awardeeShortCodeTextBox;
+        private Label awardeeShortCodeTextBoxLabel;
+        internal ComboBox batchTypeComboBox;
+        private Label batchTypeComboBoxLabel;
+        private Label batchNamePrefixLabel;
+        private TextBox batchNamePrefixTextBox;
+        internal ComboBox selectLccnComboBox;
+        private Label selectLccnComboBoxLabel;
+        private TextBox batchNumberTextBox;
+        private Label batchNumberLabel;
+        private Label physicalLocationFullAddrTextBoxLabel;
+        private TextBox physicalLocationFullAddrTextBox;
+        private TextBox agencyResponsibleForReproductionFullAddrTextBox;
+        private Label agencyResponsibleForReproductionFullAddrTextBoxLabel;
+        private Label agencyResponsibleForReproductionShortCodeTextBoxLabel;
+        private TextBox agencyResponsibleForReproductionShortCodeTextBox;
+        private TextBox noteAboutReproductionTextBox;
+        private Label noteAboutReproductionTextBoxLabel;
     }
 }

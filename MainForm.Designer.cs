@@ -51,6 +51,7 @@ namespace NewspaperBatchCreation
             sourceFilesListFilenameCol = new ColumnHeader();
             sourceFilesListStatusCol = new ColumnHeader();
             settingsButton = new Button();
+            importMetadataButton = new Button();
             statusBar.SuspendLayout();
             SuspendLayout();
             // 
@@ -139,7 +140,7 @@ namespace NewspaperBatchCreation
             // 
             createBatchButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             createBatchButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            createBatchButton.Location = new Point(12, 608);
+            createBatchButton.Location = new Point(216, 608);
             createBatchButton.Name = "createBatchButton";
             createBatchButton.Size = new Size(200, 29);
             createBatchButton.TabIndex = 12;
@@ -196,11 +197,23 @@ namespace NewspaperBatchCreation
             settingsButton.UseVisualStyleBackColor = true;
             settingsButton.Click += optionsButton_Click;
             // 
+            // importMetadataButton
+            // 
+            importMetadataButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
+            importMetadataButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
+            importMetadataButton.Location = new Point(10, 608);
+            importMetadataButton.Name = "importMetadataButton";
+            importMetadataButton.Size = new Size(200, 29);
+            importMetadataButton.TabIndex = 24;
+            importMetadataButton.Text = "Import Metadata";
+            importMetadataButton.UseVisualStyleBackColor = true;
+            // 
             // MainForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1262, 673);
+            Controls.Add(importMetadataButton);
             Controls.Add(sourceFilesListView);
             Controls.Add(settingsButton);
             Controls.Add(viewLogsButton);
@@ -330,5 +343,6 @@ namespace NewspaperBatchCreation
         private ColumnHeader sourceFilesListFilenameCol;
         private ColumnHeader sourceFilesListStatusCol;
         private ToolStripStatusLabel statusBar_NumberOfFilesAdded;
+        internal Button importMetadataButton;
     }
 }

@@ -38,11 +38,12 @@ namespace NewspaperBatchCreation
             selectedMetadataFilePathTextBox = new TextBox();
             selectMetadataFileLabel = new Label();
             importMetadataStatusStrip = new StatusStrip();
-            numberOfMetadataImportedStatusLabel = new ToolStripStatusLabel();
-            listView1 = new ListView();
-            numberOfMetadataImported = new ToolStripStatusLabel();
             importMetadataStatus = new ToolStripStatusLabel();
             statusLabelDivider = new ToolStripStatusLabel();
+            numberOfMetadataImportedStatusLabel = new ToolStripStatusLabel();
+            numberOfMetadataImported = new ToolStripStatusLabel();
+            listView1 = new ListView();
+            viewSampleMetadataButton = new Button();
             importMetadataStatusStrip.SuspendLayout();
             SuspendLayout();
             // 
@@ -108,26 +109,6 @@ namespace NewspaperBatchCreation
             importMetadataStatusStrip.TabIndex = 45;
             importMetadataStatusStrip.Text = "statusStrip1";
             // 
-            // numberOfMetadataImportedStatusLabel
-            // 
-            numberOfMetadataImportedStatusLabel.Name = "numberOfMetadataImportedStatusLabel";
-            numberOfMetadataImportedStatusLabel.Size = new Size(218, 20);
-            numberOfMetadataImportedStatusLabel.Text = "Number of metadata imported:";
-            // 
-            // listView1
-            // 
-            listView1.Location = new Point(12, 67);
-            listView1.Name = "listView1";
-            listView1.Size = new Size(1238, 542);
-            listView1.TabIndex = 46;
-            listView1.UseCompatibleStateImageBehavior = false;
-            // 
-            // numberOfMetadataImported
-            // 
-            numberOfMetadataImported.Name = "numberOfMetadataImported";
-            numberOfMetadataImported.Size = new Size(15, 20);
-            numberOfMetadataImported.Text = "-";
-            // 
             // importMetadataStatus
             // 
             importMetadataStatus.Name = "importMetadataStatus";
@@ -140,12 +121,42 @@ namespace NewspaperBatchCreation
             statusLabelDivider.Size = new Size(21, 20);
             statusLabelDivider.Text = " | ";
             // 
+            // numberOfMetadataImportedStatusLabel
+            // 
+            numberOfMetadataImportedStatusLabel.Name = "numberOfMetadataImportedStatusLabel";
+            numberOfMetadataImportedStatusLabel.Size = new Size(218, 20);
+            numberOfMetadataImportedStatusLabel.Text = "Number of metadata imported:";
+            // 
+            // numberOfMetadataImported
+            // 
+            numberOfMetadataImported.Name = "numberOfMetadataImported";
+            numberOfMetadataImported.Size = new Size(15, 20);
+            numberOfMetadataImported.Text = "-";
+            // 
+            // listView1
+            // 
+            listView1.Location = new Point(12, 67);
+            listView1.Name = "listView1";
+            listView1.Size = new Size(1238, 542);
+            listView1.TabIndex = 46;
+            listView1.UseCompatibleStateImageBehavior = false;
+            // 
+            // viewSampleMetadataButton
+            // 
+            viewSampleMetadataButton.Location = new Point(758, 615);
+            viewSampleMetadataButton.Name = "viewSampleMetadataButton";
+            viewSampleMetadataButton.Size = new Size(240, 29);
+            viewSampleMetadataButton.TabIndex = 47;
+            viewSampleMetadataButton.Text = "View Sample Metadata";
+            viewSampleMetadataButton.UseVisualStyleBackColor = true;
+            // 
             // ImportMetadataForm
             // 
             AutoScaleDimensions = new SizeF(8F, 20F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1262, 673);
             ControlBox = false;
+            Controls.Add(viewSampleMetadataButton);
             Controls.Add(listView1);
             Controls.Add(importMetadataStatusStrip);
             Controls.Add(selectMetadataFileButton);
@@ -207,5 +218,6 @@ namespace NewspaperBatchCreation
         private ToolStripStatusLabel numberOfMetadataImported;
         private ToolStripStatusLabel importMetadataStatus;
         private ToolStripStatusLabel statusLabelDivider;
+        private Button viewSampleMetadataButton;
     }
 }
