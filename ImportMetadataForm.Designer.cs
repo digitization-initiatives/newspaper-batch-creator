@@ -1,7 +1,7 @@
-﻿using NewspaperBatchCreation.src;
+﻿using NewspaperBatchCreator.src;
 using System.Collections.Generic;
 
-namespace NewspaperBatchCreation
+namespace NewspaperBatchCreator
 {
     partial class ImportMetadataForm
     {

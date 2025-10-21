@@ -1,1 +1,1 @@
-# NewspaperBatchCreation
+# NewspaperBatchCreator

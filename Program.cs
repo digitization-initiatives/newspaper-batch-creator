@@ -1,4 +1,4 @@
-namespace NewspaperBatchCreation
+namespace NewspaperBatchCreator
 {
     internal static class Program
     {

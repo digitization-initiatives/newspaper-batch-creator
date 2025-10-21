@@ -1,10 +1,10 @@
 ﻿using DocumentFormat.OpenXml.EMMA;
 using DocumentFormat.OpenXml.Vml.Spreadsheet;
-using NewspaperBatchCreation.src;
+using NewspaperBatchCreator.src;
 using System.Diagnostics;
 using System.DirectoryServices;
 
-namespace NewspaperBatchCreation
+namespace NewspaperBatchCreator
 {
     partial class MainForm
     {

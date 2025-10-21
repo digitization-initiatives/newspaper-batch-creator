@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace NewspaperBatchCreation
+namespace NewspaperBatchCreator
 {
     partial class LogForm
     {

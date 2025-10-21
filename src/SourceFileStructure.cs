@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace NewspaperBatchCreation.src
+namespace NewspaperBatchCreator.src
 {
     public class SourceFileStructure
     {

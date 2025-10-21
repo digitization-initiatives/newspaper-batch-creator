@@ -1,6 +1,6 @@
 ﻿using ClosedXML.Excel;
 using DocumentFormat.OpenXml.Spreadsheet;
-using NewspaperBatchCreation.src;
+using NewspaperBatchCreator.src;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -11,7 +11,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 
-namespace NewspaperBatchCreation
+namespace NewspaperBatchCreator
 {
     public partial class ImportMetadataForm : Form
     {

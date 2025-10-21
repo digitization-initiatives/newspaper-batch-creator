@@ -1,7 +1,7 @@
-﻿using NewspaperBatchCreation.src;
+﻿using NewspaperBatchCreator.src;
 using System.Drawing.Interop;
 
-namespace NewspaperBatchCreation
+namespace NewspaperBatchCreator
 {
     partial class SettingsForm
     {

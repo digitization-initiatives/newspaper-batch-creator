@@ -1,14 +1,14 @@
 using DocumentFormat.OpenXml.Spreadsheet;
 using DocumentFormat.OpenXml.Wordprocessing;
 using ImageMagick;
-using NewspaperBatchCreation.src;
+using NewspaperBatchCreator.src;
 using System.Collections.Specialized;
 using System.Drawing.Imaging;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Xml;
 
-namespace NewspaperBatchCreation
+namespace NewspaperBatchCreator
 {
     public partial class MainForm : Form
     {
