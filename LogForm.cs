@@ -52,19 +52,18 @@ namespace NewspaperBatchCreator
             File.AppendAllText(logFileFullPath, messageEntry);
         }
 
-        private void logFormHideLogsButton_Click(object sender, EventArgs e)
-        {
-            this.Hide();
-            mainForm.viewLogsButton.Text = "View Logs";
-        }
-
-        private void clearLogsButton_Click(object sender, EventArgs e)
+        private void clearButton_Click(object sender, EventArgs e)
         {
             logEntryDataGridView.Rows.Clear();
             logEntryDataGridView.Refresh();
         }
 
-        private void viewLogFileButton_Click(object sender, EventArgs e)
+        private void LogForm_Click(object sender, EventArgs e)
+        {
+            logEntryDataGridView.ClearSelection();
+        }
+
+        private void viewFullLogsButton_Click(object sender, EventArgs e)
         {
             try
             {
@@ -72,13 +71,14 @@ namespace NewspaperBatchCreator
             }
             catch (Exception err)
             {
-                SendToLog(LogForm.LogType[LogForm.ERROR], err.Message);
+                SendToLog(LogType.ERROR, err.Message);
             }
         }
 
-        private void LogForm_Click(object sender, EventArgs e)
+        private void hideButton_Click(object sender, EventArgs e)
         {
-            logEntryDataGridView.ClearSelection();
+            this.Hide();
+            mainForm.viewLogsButton.Text = "View Logs";
         }
     }
 }

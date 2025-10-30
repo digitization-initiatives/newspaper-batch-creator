@@ -30,9 +30,9 @@ namespace NewspaperBatchCreator
         /// </summary>
         private void InitializeComponent()
         {
-            hideLogsButton = new Button();
-            clearLogsButton = new Button();
-            saveLogsButton = new Button();
+            hideButton = new Button();
+            clearButton = new Button();
+            viewFullLogsButton = new Button();
             pauseLogMonitoringCheckbox = new CheckBox();
             logEntryDataGridView = new DataGridView();
             logTimestampCol = new DataGridViewTextBoxColumn();
@@ -44,40 +44,46 @@ namespace NewspaperBatchCreator
             logFormStatusStrip.SuspendLayout();
             SuspendLayout();
             // 
-            // hideLogsButton
+            // hideButton
             // 
-            hideLogsButton.Location = new Point(874, 615);
-            hideLogsButton.Name = "hideLogsButton";
-            hideLogsButton.Size = new Size(120, 29);
-            hideLogsButton.TabIndex = 1;
-            hideLogsButton.Text = "Hide Logs";
-            hideLogsButton.UseVisualStyleBackColor = true;
+            hideButton.Location = new Point(765, 461);
+            hideButton.Margin = new Padding(3, 2, 3, 2);
+            hideButton.Name = "hideButton";
+            hideButton.Size = new Size(105, 22);
+            hideButton.TabIndex = 1;
+            hideButton.Text = "Hide";
+            hideButton.UseVisualStyleBackColor = true;
+            hideButton.Click += hideButton_Click;
             // 
-            // clearLogsButton
+            // clearButton
             // 
-            clearLogsButton.Location = new Point(748, 615);
-            clearLogsButton.Name = "clearLogsButton";
-            clearLogsButton.Size = new Size(120, 29);
-            clearLogsButton.TabIndex = 2;
-            clearLogsButton.Text = "Clear Logs";
-            clearLogsButton.UseVisualStyleBackColor = true;
-            clearLogsButton.Click += clearLogsButton_Click;
+            clearButton.Location = new Point(654, 461);
+            clearButton.Margin = new Padding(3, 2, 3, 2);
+            clearButton.Name = "clearButton";
+            clearButton.Size = new Size(105, 22);
+            clearButton.TabIndex = 2;
+            clearButton.Text = "Clear";
+            clearButton.UseVisualStyleBackColor = true;
+            clearButton.Click += clearButton_Click;
             // 
-            // saveLogsButton
+            // viewFullLogsButton
             // 
-            saveLogsButton.Location = new Point(622, 615);
-            saveLogsButton.Name = "saveLogsButton";
-            saveLogsButton.Size = new Size(120, 29);
-            saveLogsButton.TabIndex = 3;
-            saveLogsButton.Text = "Save Logs";
-            saveLogsButton.UseVisualStyleBackColor = true;
+            viewFullLogsButton.Location = new Point(528, 461);
+            viewFullLogsButton.Margin = new Padding(3, 2, 3, 2);
+            viewFullLogsButton.Name = "viewFullLogsButton";
+            viewFullLogsButton.Size = new Size(120, 22);
+            viewFullLogsButton.TabIndex = 3;
+            viewFullLogsButton.Text = "View Full Logs";
+            viewFullLogsButton.UseVisualStyleBackColor = true;
+            viewFullLogsButton.Click += viewFullLogsButton_Click;
             // 
             // pauseLogMonitoringCheckbox
             // 
             pauseLogMonitoringCheckbox.AutoSize = true;
-            pauseLogMonitoringCheckbox.Location = new Point(12, 615);
+            pauseLogMonitoringCheckbox.Location = new Point(10, 461);
+            pauseLogMonitoringCheckbox.Margin = new Padding(3, 2, 3, 2);
             pauseLogMonitoringCheckbox.Name = "pauseLogMonitoringCheckbox";
-            pauseLogMonitoringCheckbox.Size = new Size(175, 24);
+            pauseLogMonitoringCheckbox.Size = new Size(143, 19);
             pauseLogMonitoringCheckbox.TabIndex = 4;
             pauseLogMonitoringCheckbox.Text = "Pause Log Monitoring";
             pauseLogMonitoringCheckbox.UseVisualStyleBackColor = true;
@@ -92,10 +98,11 @@ namespace NewspaperBatchCreator
             logEntryDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             logEntryDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             logEntryDataGridView.Columns.AddRange(new DataGridViewColumn[] { logTimestampCol, logTypeCol, logMessageCol });
-            logEntryDataGridView.Location = new Point(12, 12);
+            logEntryDataGridView.Location = new Point(10, 9);
+            logEntryDataGridView.Margin = new Padding(3, 2, 3, 2);
             logEntryDataGridView.Name = "logEntryDataGridView";
             logEntryDataGridView.RowHeadersWidth = 51;
-            logEntryDataGridView.Size = new Size(982, 597);
+            logEntryDataGridView.Size = new Size(859, 448);
             logEntryDataGridView.TabIndex = 5;
             // 
             // logTimestampCol
@@ -123,32 +130,34 @@ namespace NewspaperBatchCreator
             // 
             logFormStatusStrip.ImageScalingSize = new Size(20, 20);
             logFormStatusStrip.Items.AddRange(new ToolStripItem[] { maxLogEntryStatusStripLabel });
-            logFormStatusStrip.Location = new Point(0, 647);
+            logFormStatusStrip.Location = new Point(0, 489);
             logFormStatusStrip.Name = "logFormStatusStrip";
-            logFormStatusStrip.Size = new Size(1006, 26);
+            logFormStatusStrip.Padding = new Padding(1, 0, 12, 0);
+            logFormStatusStrip.Size = new Size(882, 22);
             logFormStatusStrip.TabIndex = 6;
             logFormStatusStrip.Text = "logFormStatusStrip";
             // 
             // maxLogEntryStatusStripLabel
             // 
             maxLogEntryStatusStripLabel.Name = "maxLogEntryStatusStripLabel";
-            maxLogEntryStatusStripLabel.Size = new Size(294, 20);
-            maxLogEntryStatusStripLabel.Text = "Only the most recent log entries are shown.";
+            maxLogEntryStatusStripLabel.Size = new Size(257, 17);
+            maxLogEntryStatusStripLabel.Text = "Only the most recent 500 log entries are shown.";
             // 
             // LogForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1006, 673);
+            ClientSize = new Size(882, 511);
             ControlBox = false;
             Controls.Add(logFormStatusStrip);
             Controls.Add(logEntryDataGridView);
             Controls.Add(pauseLogMonitoringCheckbox);
-            Controls.Add(saveLogsButton);
-            Controls.Add(clearLogsButton);
-            Controls.Add(hideLogsButton);
-            MaximumSize = new Size(1024, 720);
-            MinimumSize = new Size(1024, 720);
+            Controls.Add(viewFullLogsButton);
+            Controls.Add(clearButton);
+            Controls.Add(hideButton);
+            Margin = new Padding(3, 2, 3, 2);
+            MaximumSize = new Size(898, 550);
+            MinimumSize = new Size(898, 550);
             Name = "LogForm";
             Text = "View Logs";
             ((System.ComponentModel.ISupportInitialize)logEntryDataGridView).EndInit();
@@ -172,14 +181,7 @@ namespace NewspaperBatchCreator
         internal MainForm mainForm;
 
         internal static readonly int MAX_LOG_ROWS = 500;
-        internal static readonly int INFO = 0, WARN = 1, ERROR = 2, DEBUG = 3;
-        internal static readonly Dictionary<int, string> LogType = new Dictionary<int, string>
-        {
-            { INFO, "[INFO]" },
-            { WARN, "[WARN]" },
-            { ERROR, "[ERROR]"},
-            { DEBUG, "[DEBUG]"}
-        };
+        internal static readonly (string INFO, string WARN, string ERROR, string DEBUG) LogType = ("[INFO]", "[WARN]", "[ERROR]", "[DEBUG]");
 
         internal string logFileName = String.Empty;
         internal string logFileFullPath = String.Empty;
@@ -217,9 +219,9 @@ namespace NewspaperBatchCreator
 
         #endregion
 
-        private Button hideLogsButton;
-        private Button clearLogsButton;
-        private Button saveLogsButton;
+        private Button hideButton;
+        private Button clearButton;
+        private Button viewFullLogsButton;
         private CheckBox pauseLogMonitoringCheckbox;
         private DataGridView logEntryDataGridView;
         private DataGridViewTextBoxColumn logTimestampCol;
