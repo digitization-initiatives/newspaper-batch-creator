@@ -23,7 +23,7 @@ namespace NewspaperBatchCreator
         {
             foreach (var lccn in LCCN.LCCN_ITEMS)
             {
-                settingsForm.selectLccnComboBox.Items.Add($"{lccn.Key} - {lccn.Value.TITLE}");
+                //settingsForm.selectLccnComboBox.Items.Add($"{lccn.Key} - {lccn.Value.TITLE}");
             }
         }
 
@@ -38,7 +38,7 @@ namespace NewspaperBatchCreator
 
                 destItem.SOURCE_FILE_PATH = sourceFileItem.SubItems[0].Text;
                 destItem.OUTPUT_FOLDER_PATH = Properties.Settings.Default.OutputFolder;
-                destItem.BATCH_FOLDER_NAME = batchNamePrefixTextBox.Text + batchNumberTextBox.Text;
+                //destItem.BATCH_FOLDER_NAME = batchNamePrefixTextBox.Text + batchNumberTextBox.Text;
                 destItem.DATA_FOLDER_NAME = "data";
 
                 destItem.BATCH_XML_FILE_PATH = Path.Combine(destItem.OUTPUT_FOLDER_PATH, destItem.BATCH_FOLDER_NAME, destItem.DATA_FOLDER_NAME, "batch.xml");
@@ -55,7 +55,7 @@ namespace NewspaperBatchCreator
                 }
                 else
                 {
-                    logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"{sourceFileIssueFolderName} contains illegal issue number");
+                    logForm.SendToLog(LogForm.LogType.ERROR, $"{sourceFileIssueFolderName} contains illegal issue number");
                 }
 
                 destItem.ISSUE_FOLDER_NAME = destItem.ISSUE_DATE.Replace("-", "") + Properties.Settings.Default.EditionOrder;
@@ -97,15 +97,15 @@ namespace NewspaperBatchCreator
                     if (!Directory.Exists(destinationDirectory))
                     {
                         Directory.CreateDirectory(destinationDirectory);
-                        logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"{destinationDirectory} doesn't existed, but has been created.");
+                        logForm.SendToLog(LogForm.LogType.INFO, $"{destinationDirectory} doesn't existed, but has been created.");
                     }
 
                     File.Copy(batchItem.SOURCE_FILE_PATH, batchItem.DESTINATION_FILE_PATH, overwrite: true);
-                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"File: \"{batchItem.DESTINATION_FILE_PATH}\" has been added to \"{batchItem.BATCH_FOLDER_NAME}\".");
+                    logForm.SendToLog(LogForm.LogType.INFO, $"File: \"{batchItem.DESTINATION_FILE_PATH}\" has been added to \"{batchItem.BATCH_FOLDER_NAME}\".");
                 }
                 catch (IOException ex)
                 {
-                    logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"An error occurred: {ex.Message}");
+                    logForm.SendToLog(LogForm.LogType.ERROR, $"An error occurred: {ex.Message}");
                 }
             }
         }
@@ -114,7 +114,7 @@ namespace NewspaperBatchCreator
         {
             //Set batch.xml attributes:
             Batch_XML_Attributes batch_XML_Attributes = new Batch_XML_Attributes();
-            batch_XML_Attributes.BATCH_NAME = batchNamePrefixTextBox.Text + batchNumberTextBox.Text;
+            //batch_XML_Attributes.BATCH_NAME = batchNamePrefixTextBox.Text + batchNumberTextBox.Text;
             batch_XML_Attributes.AWARDEE = Properties.Settings.Default.Awardee;
             batch_XML_Attributes.AWARD_YEAR = Properties.Settings.Default.AwardYear;
             batch_XML_Attributes.BATCH_XML_FILE_PATH = Path.Combine(Properties.Settings.Default.OutputFolder, batch_XML_Attributes.BATCH_NAME, "data", "batch.xml");
@@ -199,11 +199,11 @@ namespace NewspaperBatchCreator
                 }
 
                 batchXmlDoc.Save(batchXmlFileFullPath);
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"issue\" elements have been added to {batchXmlFileFullPath}");
+                logForm.SendToLog(LogForm.LogType.INFO, $"\"issue\" elements have been added to {batchXmlFileFullPath}");
             }
             else
             {
-                logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"{batchXmlFileFullPath} doesn't contain the \"ndnp:batch\" node");
+                logForm.SendToLog(LogForm.LogType.ERROR, $"{batchXmlFileFullPath} doesn't contain the \"ndnp:batch\" node");
             }
         }
 
@@ -294,31 +294,31 @@ namespace NewspaperBatchCreator
             foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
             {
                 string issueLogText = $"Issue {issueFileInfoItem.Key} has {issueFileInfoItem.Value.NUMBER_OF_PAGES} pages.";
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], issueLogText);
+                logForm.SendToLog(LogForm.LogType.INFO, issueLogText);
                 issueLogText = String.Empty;
                 issueLogText = $"Issue {issueFileInfoItem.Key} metadata: " +
                     $"{issueFileInfoItem.Value.ISSUE_NUMBER} - {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH} - " +
                     $"{issueFileInfoItem.Value.ISSUE_METS_LABEL} - {issueFileInfoItem.Value.ISSUE_CREATEDATE} - {issueFileInfoItem.Value.LCCN} - " +
                     $"{issueFileInfoItem.Value.ISSUE_VOLUME_METADATA_RAW} - {issueFileInfoItem.Value.ISSUE_VOLUME} - {issueFileInfoItem.Value.ISSUE_VOLUME_NUMBER} - " +
                     $"{issueFileInfoItem.Value.ISSUE_EDITION_ORDER} - {issueFileInfoItem.Value.ISSUE_DATE}";
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], issueLogText);
+                logForm.SendToLog(LogForm.LogType.INFO, issueLogText);
 
                 foreach (Jp2FileProperties jp2File in issueFileInfoItem.Value.JP2_FILES)
                 {
                     string jp2LogText = $"{issueFileInfoItem.Key} - {jp2File.JP2_FILE_PATH} .";
-                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], jp2LogText);
+                    logForm.SendToLog(LogForm.LogType.INFO, jp2LogText);
                 }
 
                 foreach (string pdfFile in issueFileInfoItem.Value.PDF_FILES)
                 {
                     string pdfLogText = $"{issueFileInfoItem.Key} - {pdfFile} .";
-                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], pdfLogText);
+                    logForm.SendToLog(LogForm.LogType.INFO, pdfLogText);
                 }
 
                 foreach (string xmlFile in issueFileInfoItem.Value.XML_FILES)
                 {
                     string xmlLogText = $"{issueFileInfoItem.Key} - {xmlFile} .";
-                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], xmlLogText);
+                    logForm.SendToLog(LogForm.LogType.INFO, xmlLogText);
                 }
             }
         }
@@ -336,13 +336,13 @@ namespace NewspaperBatchCreator
                         jp2File.IMAGE_WIDTH = image.Width.ToString();
                         jp2File.IMAGE_LENGTH = image.Height.ToString();
                     }
-                    
+
                     string jp2LogText = $"{issueFileInfoItem.Key} - {jp2File.JP2_FILE_PATH} - Width: {jp2File.IMAGE_WIDTH} - Length: {jp2File.IMAGE_LENGTH}.";
-                    logForm.SendToLog(LogForm.LogType[LogForm.INFO], jp2LogText);
+                    logForm.SendToLog(LogForm.LogType.INFO, jp2LogText);
                 }
 
                 count++;
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"{count} / {issueFilesInformation.Count} issues' image files have been processed.");
+                logForm.SendToLog(LogForm.LogType.INFO, $"{count} / {issueFilesInformation.Count} issues' image files have been processed.");
             }
         }
         private void assembleBatch_CreateIssueXMLFile_InitializeFile()
@@ -373,7 +373,7 @@ namespace NewspaperBatchCreator
 
                 File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, initialSection.ToString());
 
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"{issueFileInfoItem.Value.ISSUE_XML_FILE_PATH} has been initialized.");
+                logForm.SendToLog(LogForm.LogType.INFO, $"{issueFileInfoItem.Value.ISSUE_XML_FILE_PATH} has been initialized.");
             }
         }
         private void assembleBatch_UpdateIssueXMLFile_AddMetsHdrSection()
@@ -394,7 +394,7 @@ namespace NewspaperBatchCreator
 
                 File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
 
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"metsHdr section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
+                logForm.SendToLog(LogForm.LogType.INFO, $"metsHdr section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
             }
         }
         private void assembleBatch_UpdateIssueXMLFile_AddDmdSec()
@@ -417,7 +417,7 @@ namespace NewspaperBatchCreator
                 dmdSec.AppendLine($"\t\t\t\t\t\t<mods:number>{issueFileInfoItem.Value.ISSUE_VOLUME_NUMBER}</mods:number>");
                 dmdSec.AppendLine($"\t\t\t\t\t\t</mods:detail>");
                 dmdSec.AppendLine($"\t\t\t\t\t\t<mods:detail type=\"edition\">");
-                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:number>{issueFileInfoItem.Value.ISSUE_EDITION_ORDER.Replace("0","")}</mods:number>");
+                dmdSec.AppendLine($"\t\t\t\t\t\t<mods:number>{issueFileInfoItem.Value.ISSUE_EDITION_ORDER.Replace("0", "")}</mods:number>");
                 dmdSec.AppendLine($"\t\t\t\t\t\t<mods:caption></mods:caption>");
                 dmdSec.AppendLine($"\t\t\t\t\t\t</mods:detail>");
                 dmdSec.AppendLine($"\t\t\t\t\t</mods:part>");
@@ -464,7 +464,7 @@ namespace NewspaperBatchCreator
 
                 File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
 
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"dmdSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
+                logForm.SendToLog(LogForm.LogType.INFO, $"dmdSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
             }
         }
         private void assembleBatch_UpdateIssueXMLFile_AddAmdSec()
@@ -517,7 +517,7 @@ namespace NewspaperBatchCreator
 
                 File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
 
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"amdSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
+                logForm.SendToLog(LogForm.LogType.INFO, $"amdSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
             }
         }
         private void assembleBatch_UpdateIssueXMLFile_AddFileSec()
@@ -554,7 +554,7 @@ namespace NewspaperBatchCreator
 
                 File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
 
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"fileSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
+                logForm.SendToLog(LogForm.LogType.INFO, $"fileSec section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
             }
         }
         private void assembleBatch_UpdateIssueXMLFile_AddStructMap()
@@ -585,7 +585,7 @@ namespace NewspaperBatchCreator
 
                 File.WriteAllText(issueFileInfoItem.Value.ISSUE_XML_FILE_PATH, issueXmlFileContent);
 
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"structMap section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
+                logForm.SendToLog(LogForm.LogType.INFO, $"structMap section has been updated in {issueFileInfoItem.Value.ISSUE_XML_FILE_PATH}");
             }
         }
 
@@ -621,7 +621,7 @@ namespace NewspaperBatchCreator
                     sourceFilesListView.Items.Add(item);
                 }
 
-                relocateFilesWithNoMetadata();
+                //relocateFilesWithNoMetadata();
 
                 statusBar_NumberOfFilesAdded.Text = $"{sourceFilesListView.Items.Count} files loaded.";
 
@@ -630,64 +630,64 @@ namespace NewspaperBatchCreator
             }
         }
 
-        private void assembleBatchButton_Click(object sender, EventArgs e)
-        {
-            if (selectLccnComboBox.SelectedIndex == -1)
-            {
-                logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"No LCCN/Newspaper Selected. Please select a newspaper.");
-                MessageBox.Show($"No LCCN/Newspaper has been selected. Please select a newspaper.", $"No LCCN/Newspaper Selected");
-            }
-            else if (!validate_batchNumberTextBox())
-            {
-                logForm.SendToLog(LogForm.LogType[LogForm.ERROR], $"Invalid Batch Number. No batch number provided or batch number contains invalid characters!");
-                MessageBox.Show($"No batch number provided or batch number contains invalid characters!", $"Invalid Batch Number");
-            }
-            else
-            {
-                batchXmlFileFullPath = Path.Combine(
-                    Properties.Settings.Default.OutputFolder,
-                    batchNamePrefixTextBox.Text + batchNumberTextBox.Text,
-                    "data", "batch.xml"
-                    );
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"batch.xml for {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} is located at: {batchXmlFileFullPath}.");
+        //private void assembleBatchButton_Click(object sender, EventArgs e)
+        //{
+        //    if (selectLccnComboBox.SelectedIndex == -1)
+        //    {
+        //        logForm.SendToLog(LogForm.LogType.ERROR, $"No LCCN/Newspaper Selected. Please select a newspaper.");
+        //        MessageBox.Show($"No LCCN/Newspaper has been selected. Please select a newspaper.", $"No LCCN/Newspaper Selected");
+        //    }
+        //    else if (!validate_batchNumberTextBox())
+        //    {
+        //        logForm.SendToLog(LogForm.LogType.ERROR, $"Invalid Batch Number. No batch number provided or batch number contains invalid characters!");
+        //        MessageBox.Show($"No batch number provided or batch number contains invalid characters!", $"Invalid Batch Number");
+        //    }
+        //    else
+        //    {
+        //        batchXmlFileFullPath = Path.Combine(
+        //            Properties.Settings.Default.OutputFolder,
+        //            batchNamePrefixTextBox.Text + batchNumberTextBox.Text,
+        //            "data", "batch.xml"
+        //            );
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"batch.xml for {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} is located at: {batchXmlFileFullPath}.");
 
-                constructDestinationFileStructure();
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Destination file structure has been constructed.");
+        //        constructDestinationFileStructure();
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"Destination file structure has been constructed.");
 
-                assembleBatch_CopyFiles();
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Batch files have been copied.");
+        //        assembleBatch_CopyFiles();
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"Batch files have been copied.");
 
-                //Create batch.xml file:
-                assembleBatch_CreateBatchXMLFile();
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"batch.xml has been created.");
+        //        //Create batch.xml file:
+        //        assembleBatch_CreateBatchXMLFile();
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"batch.xml has been created.");
 
-                assembleBatch_ConstructBatchXMLIssueElements();
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"{batch_XML_Issue_Elements.Count} issue elements have been constructed.");
+        //        assembleBatch_ConstructBatchXMLIssueElements();
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"{batch_XML_Issue_Elements.Count} issue elements have been constructed.");
 
-                assembleBatch_AddIssueElementsToBatchXMLFile();
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"{batch_XML_Issue_Elements.Count} issue elements have been added to {batchXmlFileFullPath} .");
+        //        assembleBatch_AddIssueElementsToBatchXMLFile();
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"{batch_XML_Issue_Elements.Count} issue elements have been added to {batchXmlFileFullPath} .");
 
-                //Create issue xml files for each issue:
-                assembleBatch_ConstructIssueFilesInformation();
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"issueFilesInformation has been constructed and contains {issueFilesInformation.Count} issues.");
+        //        //Create issue xml files for each issue:
+        //        assembleBatch_ConstructIssueFilesInformation();
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"issueFilesInformation has been constructed and contains {issueFilesInformation.Count} issues.");
 
-                //Retrieve jp2 file attributes:
-                getJp2FileAttributes();
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Jp2 file attributes have been added to issueFilesInformation.");
+        //        //Retrieve jp2 file attributes:
+        //        getJp2FileAttributes();
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"Jp2 file attributes have been added to issueFilesInformation.");
 
-                //Create the issue xml file section by section:
-                assembleBatch_CreateIssueXMLFile_InitializeFile();
-                assembleBatch_UpdateIssueXMLFile_AddMetsHdrSection();
-                assembleBatch_UpdateIssueXMLFile_AddDmdSec();
-                assembleBatch_UpdateIssueXMLFile_AddAmdSec();
-                assembleBatch_UpdateIssueXMLFile_AddFileSec();
-                assembleBatch_UpdateIssueXMLFile_AddStructMap();
+        //        //Create the issue xml file section by section:
+        //        assembleBatch_CreateIssueXMLFile_InitializeFile();
+        //        assembleBatch_UpdateIssueXMLFile_AddMetsHdrSection();
+        //        assembleBatch_UpdateIssueXMLFile_AddDmdSec();
+        //        assembleBatch_UpdateIssueXMLFile_AddAmdSec();
+        //        assembleBatch_UpdateIssueXMLFile_AddFileSec();
+        //        assembleBatch_UpdateIssueXMLFile_AddStructMap();
 
-                //Prompt batch assembly completion message:
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Assembly of batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} has completed.");
-                logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"Batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} contains {issueFilesInformation.Count} issues.");
-            }
-        }
+        //        //Prompt batch assembly completion message:
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"Assembly of batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} has completed.");
+        //        logForm.SendToLog(LogForm.LogType.INFO, $"Batch {batchNamePrefixTextBox.Text + batchNumberTextBox.Text} contains {issueFilesInformation.Count} issues.");
+        //    }
+        //}
 
         private void startOverButton_Click(object sender, EventArgs e)
         {
@@ -695,35 +695,35 @@ namespace NewspaperBatchCreator
             //Reset settings:
             Properties.Settings.Default.SeletedLccn = String.Empty;
             Properties.Settings.Default.SourceFolder = String.Empty;
-            Properties.Settings.Default.OutputFolder = optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath;
+            //Properties.Settings.Default.OutputFolder = optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath;
             Properties.Settings.Default.Awardee = "txa";
             Properties.Settings.Default.AwardYear = String.Empty;
             Properties.Settings.Default.MetadataLoaded = false;
             Properties.Settings.Default.SourceFilesLoaded = false;
 
-            optionsForm.editionOrderComboBox.SelectedIndex = 0;
-            Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
+            //optionsForm.editionOrderComboBox.SelectedIndex = 0;
+            //Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
 
-            optionsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
-            optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
+            //optionsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
+            //optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
 
             Properties.Settings.Default.Save();
 
             //Print current default settings to logs:
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
 
             //Reset MainForm UI:
             addFilesTextBox.Text = String.Empty;
             addFiles_folderBrowserDialog.SelectedPath = String.Empty;
-            selectLccnComboBox.SelectedIndex = -1;
-            batchNamePrefixTextBox.Text = String.Empty;
-            batchNumberTextBox.Text = String.Empty;
-            sourceFilesListView.Items.Clear();
+            //selectLccnComboBox.SelectedIndex = -1;
+            //batchNamePrefixTextBox.Text = String.Empty;
+            //batchNumberTextBox.Text = String.Empty;
+            //sourceFilesListView.Items.Clear();
             //browseSourceFilesButton.Enabled = false;
             //loadSourceFilesButton.Enabled = false;
             createBatchButton.Enabled = false;
@@ -783,6 +783,11 @@ namespace NewspaperBatchCreator
         }
 
         private void browseOutputFolderButton_Click(object sender, EventArgs e)
+        {
+
+        }
+
+        private void addFilesLabel_Click(object sender, EventArgs e)
         {
 
         }

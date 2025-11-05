@@ -57,17 +57,19 @@ namespace NewspaperBatchCreator
             // 
             // addFilesTextBox
             // 
-            addFilesTextBox.Location = new Point(12, 32);
+            addFilesTextBox.Location = new Point(74, 10);
+            addFilesTextBox.Margin = new Padding(3, 2, 3, 2);
             addFilesTextBox.Name = "addFilesTextBox";
             addFilesTextBox.ReadOnly = true;
-            addFilesTextBox.Size = new Size(926, 27);
+            addFilesTextBox.Size = new Size(746, 23);
             addFilesTextBox.TabIndex = 0;
             // 
             // addFilesButton
             // 
-            addFilesButton.Location = new Point(1100, 31);
+            addFilesButton.Location = new Point(963, 11);
+            addFilesButton.Margin = new Padding(3, 2, 3, 2);
             addFilesButton.Name = "addFilesButton";
-            addFilesButton.Size = new Size(150, 29);
+            addFilesButton.Size = new Size(131, 22);
             addFilesButton.TabIndex = 1;
             addFilesButton.Text = "Add Files";
             addFilesButton.UseVisualStyleBackColor = true;
@@ -75,9 +77,10 @@ namespace NewspaperBatchCreator
             // 
             // selectFolderButton
             // 
-            selectFolderButton.Location = new Point(944, 31);
+            selectFolderButton.Location = new Point(826, 11);
+            selectFolderButton.Margin = new Padding(3, 2, 3, 2);
             selectFolderButton.Name = "selectFolderButton";
-            selectFolderButton.Size = new Size(150, 29);
+            selectFolderButton.Size = new Size(131, 22);
             selectFolderButton.TabIndex = 2;
             selectFolderButton.Text = "... Select Folder ...";
             selectFolderButton.UseVisualStyleBackColor = true;
@@ -87,9 +90,10 @@ namespace NewspaperBatchCreator
             // 
             statusBar.ImageScalingSize = new Size(20, 20);
             statusBar.Items.AddRange(new ToolStripItem[] { statusBar_NumberOfFilesAdded, statusBar_MetadataLoaded, statusBar_NumberOfCompletedFiles });
-            statusBar.Location = new Point(0, 647);
+            statusBar.Location = new Point(0, 489);
             statusBar.Name = "statusBar";
-            statusBar.Size = new Size(1262, 26);
+            statusBar.Padding = new Padding(1, 0, 12, 0);
+            statusBar.Size = new Size(1106, 22);
             statusBar.TabIndex = 7;
             statusBar.Text = "statusBar";
             // 
@@ -97,29 +101,30 @@ namespace NewspaperBatchCreator
             // 
             statusBar_NumberOfFilesAdded.Name = "statusBar_NumberOfFilesAdded";
             statusBar_NumberOfFilesAdded.Padding = new Padding(15, 0, 0, 0);
-            statusBar_NumberOfFilesAdded.Size = new Size(126, 20);
+            statusBar_NumberOfFilesAdded.Size = new Size(102, 17);
             statusBar_NumberOfFilesAdded.Text = "No Files Added";
             // 
             // statusBar_MetadataLoaded
             // 
             statusBar_MetadataLoaded.Name = "statusBar_MetadataLoaded";
             statusBar_MetadataLoaded.Padding = new Padding(15, 0, 0, 0);
-            statusBar_MetadataLoaded.Size = new Size(166, 20);
+            statusBar_MetadataLoaded.Size = new Size(133, 17);
             statusBar_MetadataLoaded.Text = "No Metadata Loaded";
             // 
             // statusBar_NumberOfCompletedFiles
             // 
             statusBar_NumberOfCompletedFiles.Name = "statusBar_NumberOfCompletedFiles";
             statusBar_NumberOfCompletedFiles.Padding = new Padding(15, 0, 0, 0);
-            statusBar_NumberOfCompletedFiles.Size = new Size(143, 20);
+            statusBar_NumberOfCompletedFiles.Size = new Size(116, 17);
             statusBar_NumberOfCompletedFiles.Text = "0 Files Completed";
             // 
             // exitButton
             // 
             exitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            exitButton.Location = new Point(1130, 608);
+            exitButton.Location = new Point(994, 465);
+            exitButton.Margin = new Padding(3, 2, 3, 2);
             exitButton.Name = "exitButton";
-            exitButton.Size = new Size(120, 29);
+            exitButton.Size = new Size(100, 22);
             exitButton.TabIndex = 10;
             exitButton.Text = "Exit";
             exitButton.UseVisualStyleBackColor = true;
@@ -128,9 +133,10 @@ namespace NewspaperBatchCreator
             // startOverButton
             // 
             startOverButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            startOverButton.Location = new Point(692, 608);
+            startOverButton.Location = new Point(676, 465);
+            startOverButton.Margin = new Padding(3, 2, 3, 2);
             startOverButton.Name = "startOverButton";
-            startOverButton.Size = new Size(150, 29);
+            startOverButton.Size = new Size(100, 22);
             startOverButton.TabIndex = 11;
             startOverButton.Text = "Start Over";
             startOverButton.UseVisualStyleBackColor = true;
@@ -140,29 +146,32 @@ namespace NewspaperBatchCreator
             // 
             createBatchButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             createBatchButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            createBatchButton.Location = new Point(216, 608);
+            createBatchButton.Location = new Point(190, 465);
+            createBatchButton.Margin = new Padding(3, 2, 3, 2);
             createBatchButton.Name = "createBatchButton";
-            createBatchButton.Size = new Size(200, 29);
+            createBatchButton.Size = new Size(175, 22);
             createBatchButton.TabIndex = 12;
             createBatchButton.Text = "Create Batch";
             createBatchButton.UseVisualStyleBackColor = true;
-            createBatchButton.Click += assembleBatchButton_Click;
+            //createBatchButton.Click += assembleBatchButton_Click;
             // 
             // addFilesLabel
             // 
             addFilesLabel.AutoSize = true;
-            addFilesLabel.Location = new Point(12, 9);
+            addFilesLabel.Location = new Point(10, 18);
             addFilesLabel.Name = "addFilesLabel";
-            addFilesLabel.Size = new Size(73, 20);
+            addFilesLabel.Size = new Size(58, 15);
             addFilesLabel.TabIndex = 13;
             addFilesLabel.Text = "Add Files:";
+            addFilesLabel.Click += addFilesLabel_Click;
             // 
             // viewLogsButton
             // 
             viewLogsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            viewLogsButton.Location = new Point(974, 608);
+            viewLogsButton.Location = new Point(888, 465);
+            viewLogsButton.Margin = new Padding(3, 2, 3, 2);
             viewLogsButton.Name = "viewLogsButton";
-            viewLogsButton.Size = new Size(150, 29);
+            viewLogsButton.Size = new Size(100, 22);
             viewLogsButton.TabIndex = 20;
             viewLogsButton.Text = "View Logs";
             viewLogsButton.UseVisualStyleBackColor = true;
@@ -171,9 +180,10 @@ namespace NewspaperBatchCreator
             // sourceFilesListView
             // 
             sourceFilesListView.Columns.AddRange(new ColumnHeader[] { sourceFilesListFilenameCol, sourceFilesListStatusCol });
-            sourceFilesListView.Location = new Point(12, 66);
+            sourceFilesListView.Location = new Point(10, 37);
+            sourceFilesListView.Margin = new Padding(3, 2, 3, 2);
             sourceFilesListView.Name = "sourceFilesListView";
-            sourceFilesListView.Size = new Size(1238, 536);
+            sourceFilesListView.Size = new Size(1084, 424);
             sourceFilesListView.TabIndex = 23;
             sourceFilesListView.UseCompatibleStateImageBehavior = false;
             sourceFilesListView.View = View.Details;
@@ -189,9 +199,10 @@ namespace NewspaperBatchCreator
             // settingsButton
             // 
             settingsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            settingsButton.Location = new Point(848, 608);
+            settingsButton.Location = new Point(782, 465);
+            settingsButton.Margin = new Padding(3, 2, 3, 2);
             settingsButton.Name = "settingsButton";
-            settingsButton.Size = new Size(120, 29);
+            settingsButton.Size = new Size(100, 22);
             settingsButton.TabIndex = 22;
             settingsButton.Text = "Settings";
             settingsButton.UseVisualStyleBackColor = true;
@@ -201,18 +212,19 @@ namespace NewspaperBatchCreator
             // 
             importMetadataButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             importMetadataButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            importMetadataButton.Location = new Point(10, 608);
+            importMetadataButton.Location = new Point(10, 465);
+            importMetadataButton.Margin = new Padding(3, 2, 3, 2);
             importMetadataButton.Name = "importMetadataButton";
-            importMetadataButton.Size = new Size(200, 29);
+            importMetadataButton.Size = new Size(175, 22);
             importMetadataButton.TabIndex = 24;
             importMetadataButton.Text = "Import Metadata";
             importMetadataButton.UseVisualStyleBackColor = true;
             // 
             // MainForm
             // 
-            AutoScaleDimensions = new SizeF(8F, 20F);
+            AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
-            ClientSize = new Size(1262, 673);
+            ClientSize = new Size(1106, 511);
             Controls.Add(importMetadataButton);
             Controls.Add(sourceFilesListView);
             Controls.Add(settingsButton);
@@ -225,8 +237,9 @@ namespace NewspaperBatchCreator
             Controls.Add(selectFolderButton);
             Controls.Add(addFilesButton);
             Controls.Add(addFilesTextBox);
-            MaximumSize = new Size(1280, 720);
-            MinimumSize = new Size(1280, 720);
+            Margin = new Padding(3, 2, 3, 2);
+            MaximumSize = new Size(1122, 550);
+            MinimumSize = new Size(1122, 550);
             Name = "MainForm";
             Text = "Newspaper Batch Creation";
             statusBar.ResumeLayout(false);
@@ -313,18 +326,18 @@ namespace NewspaperBatchCreator
             //settingsForm.editionOrderComboBox.SelectedIndex = 0;
             //Properties.Settings.Default.EditionOrder = settingsForm.editionOrderComboBox.SelectedItem?.ToString();
 
-            settingsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
+            //settingsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
             settingsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
 
             Properties.Settings.Default.Save();
 
             //Print current default settings to logs:
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
-            logForm.SendToLog(LogForm.LogType[LogForm.INFO], $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
         }
 
         #endregion
