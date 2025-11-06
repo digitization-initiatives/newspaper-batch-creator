@@ -41,17 +41,6 @@ namespace NewspaperBatchCreator
             tableLayoutPanel1 = new TableLayoutPanel();
             manageTitlesTab = new TabPage();
             manageTitlesDataGridView = new DataGridView();
-            manageTitlesDataGridView_lccnCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_titleCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_batchNamePrefixCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_awardeeShortCodeCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_awardeeFullNameCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_awardYear = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_physicalLocationShortCodeCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_physicalLocationFullAddrCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_noteAboutProductionCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_agencyResponsibleForReproductionShortCodeCol = new DataGridViewTextBoxColumn();
-            manageTitlesDataGridView_agencyResponsibleForReproductionFullAddrCol = new DataGridViewTextBoxColumn();
             selectLccnComboBox = new ComboBox();
             settingsTabControl.SuspendLayout();
             applicationAndBatchSettingsTab.SuspendLayout();
@@ -148,68 +137,12 @@ namespace NewspaperBatchCreator
             // manageTitlesDataGridView
             // 
             manageTitlesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            manageTitlesDataGridView.Columns.AddRange(new DataGridViewColumn[] { manageTitlesDataGridView_lccnCol, manageTitlesDataGridView_titleCol, manageTitlesDataGridView_batchNamePrefixCol, manageTitlesDataGridView_awardeeShortCodeCol, manageTitlesDataGridView_awardeeFullNameCol, manageTitlesDataGridView_awardYear, manageTitlesDataGridView_physicalLocationShortCodeCol, manageTitlesDataGridView_physicalLocationFullAddrCol, manageTitlesDataGridView_noteAboutProductionCol, manageTitlesDataGridView_agencyResponsibleForReproductionShortCodeCol, manageTitlesDataGridView_agencyResponsibleForReproductionFullAddrCol });
             manageTitlesDataGridView.Location = new Point(6, 34);
             manageTitlesDataGridView.Margin = new Padding(3, 2, 3, 2);
             manageTitlesDataGridView.Name = "manageTitlesDataGridView";
             manageTitlesDataGridView.RowHeadersWidth = 51;
             manageTitlesDataGridView.Size = new Size(1062, 380);
             manageTitlesDataGridView.TabIndex = 56;
-            // 
-            // manageTitlesDataGridView_lccnCol
-            // 
-            manageTitlesDataGridView_lccnCol.HeaderText = "LCCN";
-            manageTitlesDataGridView_lccnCol.Name = "manageTitlesDataGridView_lccnCol";
-            // 
-            // manageTitlesDataGridView_titleCol
-            // 
-            manageTitlesDataGridView_titleCol.HeaderText = "Title";
-            manageTitlesDataGridView_titleCol.Name = "manageTitlesDataGridView_titleCol";
-            // 
-            // manageTitlesDataGridView_batchNamePrefixCol
-            // 
-            manageTitlesDataGridView_batchNamePrefixCol.HeaderText = "Batch Name Prefix";
-            manageTitlesDataGridView_batchNamePrefixCol.Name = "manageTitlesDataGridView_batchNamePrefixCol";
-            // 
-            // manageTitlesDataGridView_awardeeShortCodeCol
-            // 
-            manageTitlesDataGridView_awardeeShortCodeCol.HeaderText = "Awardee (Short Code)";
-            manageTitlesDataGridView_awardeeShortCodeCol.Name = "manageTitlesDataGridView_awardeeShortCodeCol";
-            // 
-            // manageTitlesDataGridView_awardeeFullNameCol
-            // 
-            manageTitlesDataGridView_awardeeFullNameCol.HeaderText = "Awardee (Full Name)";
-            manageTitlesDataGridView_awardeeFullNameCol.Name = "manageTitlesDataGridView_awardeeFullNameCol";
-            // 
-            // manageTitlesDataGridView_awardYear
-            // 
-            manageTitlesDataGridView_awardYear.HeaderText = "Award Year";
-            manageTitlesDataGridView_awardYear.Name = "manageTitlesDataGridView_awardYear";
-            // 
-            // manageTitlesDataGridView_physicalLocationShortCodeCol
-            // 
-            manageTitlesDataGridView_physicalLocationShortCodeCol.HeaderText = "Physical Location (Short Code)";
-            manageTitlesDataGridView_physicalLocationShortCodeCol.Name = "manageTitlesDataGridView_physicalLocationShortCodeCol";
-            // 
-            // manageTitlesDataGridView_physicalLocationFullAddrCol
-            // 
-            manageTitlesDataGridView_physicalLocationFullAddrCol.HeaderText = "Physical Location (Full Addr)";
-            manageTitlesDataGridView_physicalLocationFullAddrCol.Name = "manageTitlesDataGridView_physicalLocationFullAddrCol";
-            // 
-            // manageTitlesDataGridView_noteAboutProductionCol
-            // 
-            manageTitlesDataGridView_noteAboutProductionCol.HeaderText = "Note About Production";
-            manageTitlesDataGridView_noteAboutProductionCol.Name = "manageTitlesDataGridView_noteAboutProductionCol";
-            // 
-            // manageTitlesDataGridView_agencyResponsibleForReproductionShortCodeCol
-            // 
-            manageTitlesDataGridView_agencyResponsibleForReproductionShortCodeCol.HeaderText = "Agency Responsible for Reproduction (Short Code)";
-            manageTitlesDataGridView_agencyResponsibleForReproductionShortCodeCol.Name = "manageTitlesDataGridView_agencyResponsibleForReproductionShortCodeCol";
-            // 
-            // manageTitlesDataGridView_agencyResponsibleForReproductionFullAddrCol
-            // 
-            manageTitlesDataGridView_agencyResponsibleForReproductionFullAddrCol.HeaderText = "Agency Responsible for Reproduction (Full Addr)";
-            manageTitlesDataGridView_agencyResponsibleForReproductionFullAddrCol.Name = "manageTitlesDataGridView_agencyResponsibleForReproductionFullAddrCol";
             // 
             // selectLccnComboBox
             // 
@@ -277,17 +210,6 @@ namespace NewspaperBatchCreator
         private TabPage manageTitlesTab;
         private DataGridView manageTitlesDataGridView;
         private TableLayoutPanel tableLayoutPanel1;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_lccnCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_titleCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_batchNamePrefixCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_awardeeShortCodeCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_awardeeFullNameCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_awardYear;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_physicalLocationShortCodeCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_physicalLocationFullAddrCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_noteAboutProductionCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_agencyResponsibleForReproductionShortCodeCol;
-        private DataGridViewTextBoxColumn manageTitlesDataGridView_agencyResponsibleForReproductionFullAddrCol;
         private ComboBox selectLccnComboBox;
     }
 }
