@@ -1,0 +1,16 @@
+﻿[
+	{
+		"organizationName": "My Organization",
+		"awardeeShortCode": "abc",
+		"awardYear": "2025",
+		"noteAboutReproduction": "Present",
+		"physicalLocation": "USA",
+		"physicalLocationDisplayLabel": "",
+		"agencyResponsibleForReproduction": "abc",
+		"agencyResponsibleForReproductionDisplayLabel": "My Organization",
+		"CompressionScheme": "7",
+		"SamplingFrequencyUnit": "2",
+		"XSamplingFrequency": "400",
+		"YSamplingFrequency": "400"
+	}
+]

@@ -37,20 +37,19 @@ namespace NewspaperBatchCreator
             settingsStatusStrip = new StatusStrip();
             saveButton = new Button();
             settingsTabControl = new TabControl();
-            applicationAndBatchSettingsTab = new TabPage();
-            tableLayoutPanel1 = new TableLayoutPanel();
-            manageTitlesTab = new TabPage();
-            manageTitlesDataGridView = new DataGridView();
-            selectLccnComboBox = new ComboBox();
+            tabPage1 = new TabPage();
+            tabPage2 = new TabPage();
+            splitContainer1 = new SplitContainer();
             settingsTabControl.SuspendLayout();
-            applicationAndBatchSettingsTab.SuspendLayout();
-            manageTitlesTab.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)manageTitlesDataGridView).BeginInit();
+            tabPage1.SuspendLayout();
+            tabPage2.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).BeginInit();
+            splitContainer1.SuspendLayout();
             SuspendLayout();
             // 
             // closeButton
             // 
-            closeButton.Location = new Point(989, 464);
+            closeButton.Location = new Point(963, 419);
             closeButton.Margin = new Padding(3, 2, 3, 2);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(105, 22);
@@ -71,7 +70,7 @@ namespace NewspaperBatchCreator
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(878, 464);
+            saveButton.Location = new Point(811, 383);
             saveButton.Margin = new Padding(3, 2, 3, 2);
             saveButton.Name = "saveButton";
             saveButton.Size = new Size(105, 22);
@@ -82,77 +81,45 @@ namespace NewspaperBatchCreator
             // 
             // settingsTabControl
             // 
-            settingsTabControl.Controls.Add(applicationAndBatchSettingsTab);
-            settingsTabControl.Controls.Add(manageTitlesTab);
+            settingsTabControl.Controls.Add(tabPage1);
+            settingsTabControl.Controls.Add(tabPage2);
             settingsTabControl.Location = new Point(12, 12);
             settingsTabControl.Name = "settingsTabControl";
             settingsTabControl.SelectedIndex = 0;
-            settingsTabControl.Size = new Size(1082, 447);
+            settingsTabControl.Size = new Size(1082, 474);
             settingsTabControl.TabIndex = 55;
             // 
-            // applicationAndBatchSettingsTab
+            // tabPage1
             // 
-            applicationAndBatchSettingsTab.Controls.Add(tableLayoutPanel1);
-            applicationAndBatchSettingsTab.Location = new Point(4, 24);
-            applicationAndBatchSettingsTab.Name = "applicationAndBatchSettingsTab";
-            applicationAndBatchSettingsTab.Padding = new Padding(3);
-            applicationAndBatchSettingsTab.Size = new Size(1074, 419);
-            applicationAndBatchSettingsTab.TabIndex = 0;
-            applicationAndBatchSettingsTab.Text = "Application and Batch Settings";
-            applicationAndBatchSettingsTab.UseVisualStyleBackColor = true;
+            tabPage1.Controls.Add(saveButton);
+            tabPage1.Controls.Add(closeButton);
+            tabPage1.Location = new Point(4, 24);
+            tabPage1.Name = "tabPage1";
+            tabPage1.Padding = new Padding(3);
+            tabPage1.Size = new Size(1074, 446);
+            tabPage1.TabIndex = 0;
+            tabPage1.Text = "Organizations";
+            tabPage1.UseVisualStyleBackColor = true;
             // 
-            // tableLayoutPanel1
+            // tabPage2
             // 
-            tableLayoutPanel1.ColumnCount = 3;
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 15F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 75F));
-            tableLayoutPanel1.ColumnStyles.Add(new ColumnStyle(SizeType.Percent, 10F));
-            tableLayoutPanel1.Location = new Point(6, 6);
-            tableLayoutPanel1.Name = "tableLayoutPanel1";
-            tableLayoutPanel1.RowCount = 10;
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.RowStyles.Add(new RowStyle(SizeType.Absolute, 25F));
-            tableLayoutPanel1.Size = new Size(1062, 407);
-            tableLayoutPanel1.TabIndex = 0;
+            tabPage2.Controls.Add(splitContainer1);
+            tabPage2.Location = new Point(4, 24);
+            tabPage2.Name = "tabPage2";
+            tabPage2.Padding = new Padding(3);
+            tabPage2.Size = new Size(1074, 419);
+            tabPage2.TabIndex = 1;
+            tabPage2.Text = "Titles";
+            tabPage2.UseVisualStyleBackColor = true;
             // 
-            // manageTitlesTab
+            // splitContainer1
             // 
-            manageTitlesTab.Controls.Add(manageTitlesDataGridView);
-            manageTitlesTab.Location = new Point(4, 24);
-            manageTitlesTab.Name = "manageTitlesTab";
-            manageTitlesTab.Padding = new Padding(3);
-            manageTitlesTab.Size = new Size(1074, 419);
-            manageTitlesTab.TabIndex = 1;
-            manageTitlesTab.Text = "Manage Titles";
-            manageTitlesTab.UseVisualStyleBackColor = true;
-            // 
-            // manageTitlesDataGridView
-            // 
-            manageTitlesDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            manageTitlesDataGridView.Location = new Point(6, 34);
-            manageTitlesDataGridView.Margin = new Padding(3, 2, 3, 2);
-            manageTitlesDataGridView.Name = "manageTitlesDataGridView";
-            manageTitlesDataGridView.RowHeadersWidth = 51;
-            manageTitlesDataGridView.Size = new Size(1062, 380);
-            manageTitlesDataGridView.TabIndex = 56;
-            // 
-            // selectLccnComboBox
-            // 
-            selectLccnComboBox.DropDownStyle = ComboBoxStyle.DropDownList;
-            selectLccnComboBox.FormattingEnabled = true;
-            selectLccnComboBox.Items.AddRange(new object[] { "Select LCCN ..." });
-            selectLccnComboBox.Location = new Point(940, 7);
-            selectLccnComboBox.Name = "selectLccnComboBox";
-            selectLccnComboBox.Size = new Size(150, 23);
-            selectLccnComboBox.TabIndex = 57;
+            splitContainer1.Dock = DockStyle.Fill;
+            splitContainer1.Location = new Point(3, 3);
+            splitContainer1.Name = "splitContainer1";
+            splitContainer1.Size = new Size(1068, 413);
+            splitContainer1.SplitterDistance = 356;
+            splitContainer1.TabIndex = 0;
             // 
             // SettingsForm
             // 
@@ -160,20 +127,18 @@ namespace NewspaperBatchCreator
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1106, 511);
             ControlBox = false;
-            Controls.Add(selectLccnComboBox);
             Controls.Add(settingsTabControl);
-            Controls.Add(saveButton);
             Controls.Add(settingsStatusStrip);
-            Controls.Add(closeButton);
             Margin = new Padding(3, 2, 3, 2);
             MaximumSize = new Size(1122, 550);
             MinimumSize = new Size(1122, 550);
             Name = "SettingsForm";
             Text = "Settings";
             settingsTabControl.ResumeLayout(false);
-            applicationAndBatchSettingsTab.ResumeLayout(false);
-            manageTitlesTab.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)manageTitlesDataGridView).EndInit();
+            tabPage1.ResumeLayout(false);
+            tabPage2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)splitContainer1).EndInit();
+            splitContainer1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -206,10 +171,8 @@ namespace NewspaperBatchCreator
         private StatusStrip settingsStatusStrip;
         private Button saveButton;
         private TabControl settingsTabControl;
-        private TabPage applicationAndBatchSettingsTab;
-        private TabPage manageTitlesTab;
-        private DataGridView manageTitlesDataGridView;
-        private TableLayoutPanel tableLayoutPanel1;
-        private ComboBox selectLccnComboBox;
+        private TabPage tabPage1;
+        private TabPage tabPage2;
+        private SplitContainer splitContainer1;
     }
 }

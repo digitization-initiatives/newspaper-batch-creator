@@ -20,7 +20,7 @@
     <Content Include="resources\images\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="settings\.keep">
+    <Content Include="organizations\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="titles\.keep">
@@ -30,7 +30,7 @@
 
   <ItemGroup>
     <PackageReference Include="ClosedXML" Version="0.105.0" />
-    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.9.0" />
+    <PackageReference Include="Magick.NET-Q16-AnyCPU" Version="14.10.1" />
   </ItemGroup>
 
   <ItemGroup>

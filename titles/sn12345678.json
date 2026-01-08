@@ -2,23 +2,6 @@
 	{
 		"lccn": "sn12345678",
 		"title" : "Sample Nespaper Title 1",
-		"batchNamePrefix" : "batch_abc_abcd_ver",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : "",
-		"" : ""
+		"batchNamePrefix" : "batch_abc_abcd_ver"
 	}
 ]
