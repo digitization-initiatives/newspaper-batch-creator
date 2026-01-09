@@ -214,7 +214,7 @@ namespace NewspaperBatchCreator
                 if (!issueFilesInformation.ContainsKey(destFileItem.ISSUE_NUMBER))
                 {
                     IssueFilesInformation newIssueFilesInfoItem = new IssueFilesInformation();
-                    newIssueFilesInfoItem.JP2_FILES = new List<Jp2FileProperties>();
+                    newIssueFilesInfoItem.JP2_FILES = new List<Jp2FileAttributes>();
                     newIssueFilesInfoItem.PDF_FILES = new List<string>();
                     newIssueFilesInfoItem.XML_FILES = new List<string>();
                     newIssueFilesInfoItem.NUMBER_OF_PAGES = 0;
@@ -222,7 +222,7 @@ namespace NewspaperBatchCreator
                     switch (Path.GetExtension(destFileItem.DESTINATION_FILE_PATH))
                     {
                         case ".jp2":
-                            Jp2FileProperties newJp2FilePropertyItem = new Jp2FileProperties();
+                            Jp2FileAttributes newJp2FilePropertyItem = new Jp2FileAttributes();
                             newJp2FilePropertyItem.JP2_FILE_PATH = destFileItem.DESTINATION_FILE_PATH;
                             newIssueFilesInfoItem.JP2_FILES.Add(newJp2FilePropertyItem);
                             break;
@@ -270,7 +270,7 @@ namespace NewspaperBatchCreator
                     switch (Path.GetExtension(destFileItem.DESTINATION_FILE_PATH))
                     {
                         case ".jp2":
-                            Jp2FileProperties newJp2FilePropertyItem = new Jp2FileProperties();
+                            Jp2FileAttributes newJp2FilePropertyItem = new Jp2FileAttributes();
                             newJp2FilePropertyItem.JP2_FILE_PATH = destFileItem.DESTINATION_FILE_PATH;
                             issueFilesInformation[destFileItem.ISSUE_NUMBER].JP2_FILES.Add(newJp2FilePropertyItem);
                             break;
@@ -303,7 +303,7 @@ namespace NewspaperBatchCreator
                     $"{issueFileInfoItem.Value.ISSUE_EDITION_ORDER} - {issueFileInfoItem.Value.ISSUE_DATE}";
                 logForm.SendToLog(LogForm.LogType.INFO, issueLogText);
 
-                foreach (Jp2FileProperties jp2File in issueFileInfoItem.Value.JP2_FILES)
+                foreach (Jp2FileAttributes jp2File in issueFileInfoItem.Value.JP2_FILES)
                 {
                     string jp2LogText = $"{issueFileInfoItem.Key} - {jp2File.JP2_FILE_PATH} .";
                     logForm.SendToLog(LogForm.LogType.INFO, jp2LogText);
@@ -329,7 +329,7 @@ namespace NewspaperBatchCreator
 
             foreach (KeyValuePair<string, IssueFilesInformation> issueFileInfoItem in issueFilesInformation)
             {
-                foreach (Jp2FileProperties jp2File in issueFileInfoItem.Value.JP2_FILES)
+                foreach (Jp2FileAttributes jp2File in issueFileInfoItem.Value.JP2_FILES)
                 {
                     using (var image = new MagickImage(jp2File.JP2_FILE_PATH))
                     {

@@ -229,7 +229,7 @@ namespace NewspaperBatchCreator
         public OpenFileDialog selectMetadataFile_openFileDialog;
 
         public Dictionary<string, string> mappedColumnsDict;
-        public Dictionary<string, IssueMetadata> issueMetadata;
+        public Dictionary<string, Issue> issueMetadata;
 
         private void CustomInitialization()
         {
@@ -249,7 +249,7 @@ namespace NewspaperBatchCreator
 
             //Initialize other resources:
             mappedColumnsDict = new Dictionary<string, string>();
-            issueMetadata = new Dictionary<string, IssueMetadata>();
+            issueMetadata = new Dictionary<string, Issue>();
         }
 
         #endregion Custom Initialization

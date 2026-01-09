@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace NewspaperBatchCreator.src
 {
-    public class Jp2FileProperties
+    public class Jp2FileAttributes
     {
         public string JP2_FILE_PATH { get; set; }
         public string IMAGE_WIDTH { get; set; }

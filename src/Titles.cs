@@ -6,9 +6,11 @@ using System.Threading.Tasks;
 
 namespace NewspaperBatchCreator.src
 {
-    public class LCCN_PROPERTIES
+    public class Titles
     {
+        public string LCCN {  get; set; }
         public string TITLE { get; set; }
-        public string BATCH_PREFIX { get; set; }
+        public string BATCH_NAME_PREFIX { get; set; }
+        public string BATCH_NUMBER {  get; set; }
     }
 }
