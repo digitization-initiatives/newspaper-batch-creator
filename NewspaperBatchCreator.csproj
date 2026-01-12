@@ -32,9 +32,6 @@
     <Content Include="organizations\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
-    <Content Include="settings\.keep">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
-    </Content>
     <Content Include="titles\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
