@@ -284,13 +284,13 @@ namespace NewspaperBatchCreator
             saveColumnMappings();
             //loadIssueMetadata();
 
-            Properties.Settings.Default.MetadataLoaded = true;
+            //Properties.Settings.Default.LogFolder = true;
             Properties.Settings.Default.Save();
 
             mainForm.statusBar_MetadataLoaded.Text = $"Metadata loaded.";
 
             //Enable load source files function:
-            mainForm.selectFolderButton.Enabled = true;
+            //mainForm.browseButton.Enabled = true;
 
             this.Hide();
         }

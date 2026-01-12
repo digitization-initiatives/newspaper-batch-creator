@@ -1,0 +1,18 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="NewspaperBatchCreator.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="OutputFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">".\output"</Value>
+    </Setting>
+    <Setting Name="LogFolder" Type="System.String" Scope="User">
+      <Value Profile="(Default)">".\log"</Value>
+    </Setting>
+    <Setting Name="SourceFilesLoaded" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+    <Setting Name="MetadataLoaded" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

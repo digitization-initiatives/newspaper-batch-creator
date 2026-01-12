@@ -1,6 +1,6 @@
 ﻿[
 	{
-		"sourceFolder": ".\source",
+		"sourceFolder": "",
 		"outputFolder": ".\output",
 		"logFileLocation": ".\log",
 		"metadataLoaded": false,

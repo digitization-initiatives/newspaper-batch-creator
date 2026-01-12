@@ -161,8 +161,8 @@ namespace NewspaperBatchCreator
             //Custom form start location:
             this.StartPosition = FormStartPosition.Manual;
 
-            selectLccnComboBox.SelectedIndex = 0;
-            selectLccnComboBox.Visible = false;
+            //selectLccnComboBox.SelectedIndex = 0;
+            //selectLccnComboBox.Visible = false;
             settingsTabControl.SelectedIndexChanged += settingsTabControl_SelectedIndexChanged;
 
             //outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;

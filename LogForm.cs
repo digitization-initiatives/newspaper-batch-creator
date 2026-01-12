@@ -26,6 +26,32 @@ namespace NewspaperBatchCreator
             return DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss");
         }
 
+        public void Logger(string logType, string logMessage)
+        {
+            if (InvokeRequired)
+            {
+                Invoke(new Action(() => Logger(logType, logMessage)));
+                return;
+            }
+
+            // Handle log monitoring UI:
+            if (!pauseLogMonitoringCheckbox.Checked)
+            {
+                int rowIndex = logEntryDataGridView.Rows.Add(GetTimestamp(), logType, logMessage);
+                logEntryDataGridView.FirstDisplayedScrollingRowIndex = logEntryDataGridView.Rows.Count - 1;
+            }
+
+            if (logEntryDataGridView.Rows.Count > MAX_LOG_ROWS)
+            {
+                logEntryDataGridView.Rows.RemoveAt(0);
+            }
+
+            // Handle writing to log file:
+            string messageEntry = $"{GetTimestamp()} - {logType} - {logMessage}" + Environment.NewLine;
+
+            //File.AppendAllText(logFileFullPath, messageEntry);
+        }
+
         public void SendToLog(string logType, string logMessage)
         {
             if (InvokeRequired)
@@ -49,7 +75,7 @@ namespace NewspaperBatchCreator
             // Handle writing to log file:
             string messageEntry = $"{GetTimestamp()} - {logType} - {logMessage}" + Environment.NewLine;
 
-            File.AppendAllText(logFileFullPath, messageEntry);
+            //File.AppendAllText(logFileFullPath, messageEntry);
         }
 
         private void clearButton_Click(object sender, EventArgs e)
@@ -78,7 +104,7 @@ namespace NewspaperBatchCreator
         private void hideButton_Click(object sender, EventArgs e)
         {
             this.Hide();
-            mainForm.viewLogsButton.Text = "View Logs";
+            //mainForm.viewLogsButton.Text = "View Logs";
         }
     }
 }

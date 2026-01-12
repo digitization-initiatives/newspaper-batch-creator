@@ -34,62 +34,34 @@ namespace NewspaperBatchCreator
         /// </summary>
         private void InitializeComponent()
         {
-            addFilesTextBox = new TextBox();
-            addFilesButton = new Button();
-            selectFolderButton = new Button();
             statusBar = new StatusStrip();
-            statusBar_NumberOfFilesAdded = new ToolStripStatusLabel();
+            statusBar_NumberOfFilesAddedFrom = new ToolStripStatusLabel();
             statusBar_MetadataLoaded = new ToolStripStatusLabel();
             statusBar_NumberOfCompletedFiles = new ToolStripStatusLabel();
-            exitButton = new Button();
-            startOverButton = new Button();
             createBatchButton = new Button();
-            addFilesLabel = new Label();
-            addFiles_folderBrowserDialog = new FolderBrowserDialog();
-            viewLogsButton = new Button();
+            from_folderBrowserDialog = new FolderBrowserDialog();
             sourceFilesListView = new ListView();
             sourceFilesListFilenameCol = new ColumnHeader();
             sourceFilesListStatusCol = new ColumnHeader();
-            settingsButton = new Button();
             importMetadataButton = new Button();
+            menuStrip = new MenuStrip();
+            filesToolStripMenuItem = new ToolStripMenuItem();
+            browseMenuItem = new ToolStripMenuItem();
+            settingsMenuItem = new ToolStripMenuItem();
+            viewLogsMenuItem = new ToolStripMenuItem();
+            resetToolStripMenuItem = new ToolStripMenuItem();
+            exitMenuItem = new ToolStripMenuItem();
+            helpToolStripMenuItem = new ToolStripMenuItem();
+            documentationToolStripMenuItem = new ToolStripMenuItem();
+            aboutToolStripMenuItem = new ToolStripMenuItem();
             statusBar.SuspendLayout();
+            menuStrip.SuspendLayout();
             SuspendLayout();
-            // 
-            // addFilesTextBox
-            // 
-            addFilesTextBox.Location = new Point(74, 10);
-            addFilesTextBox.Margin = new Padding(3, 2, 3, 2);
-            addFilesTextBox.Name = "addFilesTextBox";
-            addFilesTextBox.ReadOnly = true;
-            addFilesTextBox.Size = new Size(746, 23);
-            addFilesTextBox.TabIndex = 0;
-            // 
-            // addFilesButton
-            // 
-            addFilesButton.Location = new Point(963, 11);
-            addFilesButton.Margin = new Padding(3, 2, 3, 2);
-            addFilesButton.Name = "addFilesButton";
-            addFilesButton.Size = new Size(131, 22);
-            addFilesButton.TabIndex = 1;
-            addFilesButton.Text = "Add Files";
-            addFilesButton.UseVisualStyleBackColor = true;
-            addFilesButton.Click += loadSourceFilesButton_Click;
-            // 
-            // selectFolderButton
-            // 
-            selectFolderButton.Location = new Point(826, 11);
-            selectFolderButton.Margin = new Padding(3, 2, 3, 2);
-            selectFolderButton.Name = "selectFolderButton";
-            selectFolderButton.Size = new Size(131, 22);
-            selectFolderButton.TabIndex = 2;
-            selectFolderButton.Text = "... Select Folder ...";
-            selectFolderButton.UseVisualStyleBackColor = true;
-            selectFolderButton.Click += browseSourceFilesButton_Click;
             // 
             // statusBar
             // 
             statusBar.ImageScalingSize = new Size(20, 20);
-            statusBar.Items.AddRange(new ToolStripItem[] { statusBar_NumberOfFilesAdded, statusBar_MetadataLoaded, statusBar_NumberOfCompletedFiles });
+            statusBar.Items.AddRange(new ToolStripItem[] { statusBar_NumberOfFilesAddedFrom, statusBar_MetadataLoaded, statusBar_NumberOfCompletedFiles });
             statusBar.Location = new Point(0, 489);
             statusBar.Name = "statusBar";
             statusBar.Padding = new Padding(1, 0, 12, 0);
@@ -97,12 +69,12 @@ namespace NewspaperBatchCreator
             statusBar.TabIndex = 7;
             statusBar.Text = "statusBar";
             // 
-            // statusBar_NumberOfFilesAdded
+            // statusBar_NumberOfFilesAddedFrom
             // 
-            statusBar_NumberOfFilesAdded.Name = "statusBar_NumberOfFilesAdded";
-            statusBar_NumberOfFilesAdded.Padding = new Padding(15, 0, 0, 0);
-            statusBar_NumberOfFilesAdded.Size = new Size(102, 17);
-            statusBar_NumberOfFilesAdded.Text = "No Files Added";
+            statusBar_NumberOfFilesAddedFrom.Name = "statusBar_NumberOfFilesAddedFrom";
+            statusBar_NumberOfFilesAddedFrom.Padding = new Padding(15, 0, 0, 0);
+            statusBar_NumberOfFilesAddedFrom.Size = new Size(102, 17);
+            statusBar_NumberOfFilesAddedFrom.Text = "No Files Added";
             // 
             // statusBar_MetadataLoaded
             // 
@@ -118,72 +90,25 @@ namespace NewspaperBatchCreator
             statusBar_NumberOfCompletedFiles.Size = new Size(116, 17);
             statusBar_NumberOfCompletedFiles.Text = "0 Files Completed";
             // 
-            // exitButton
-            // 
-            exitButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            exitButton.Location = new Point(994, 465);
-            exitButton.Margin = new Padding(3, 2, 3, 2);
-            exitButton.Name = "exitButton";
-            exitButton.Size = new Size(100, 22);
-            exitButton.TabIndex = 10;
-            exitButton.Text = "Exit";
-            exitButton.UseVisualStyleBackColor = true;
-            exitButton.Click += exitButton_Click;
-            // 
-            // startOverButton
-            // 
-            startOverButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            startOverButton.Location = new Point(676, 465);
-            startOverButton.Margin = new Padding(3, 2, 3, 2);
-            startOverButton.Name = "startOverButton";
-            startOverButton.Size = new Size(100, 22);
-            startOverButton.TabIndex = 11;
-            startOverButton.Text = "Start Over";
-            startOverButton.UseVisualStyleBackColor = true;
-            startOverButton.Click += startOverButton_Click;
-            // 
             // createBatchButton
             // 
             createBatchButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             createBatchButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            createBatchButton.Location = new Point(190, 465);
+            createBatchButton.Location = new Point(944, 2);
             createBatchButton.Margin = new Padding(3, 2, 3, 2);
             createBatchButton.Name = "createBatchButton";
-            createBatchButton.Size = new Size(175, 22);
+            createBatchButton.Size = new Size(150, 22);
             createBatchButton.TabIndex = 12;
             createBatchButton.Text = "Create Batch";
             createBatchButton.UseVisualStyleBackColor = true;
-            //createBatchButton.Click += assembleBatchButton_Click;
-            // 
-            // addFilesLabel
-            // 
-            addFilesLabel.AutoSize = true;
-            addFilesLabel.Location = new Point(10, 18);
-            addFilesLabel.Name = "addFilesLabel";
-            addFilesLabel.Size = new Size(58, 15);
-            addFilesLabel.TabIndex = 13;
-            addFilesLabel.Text = "Add Files:";
-            addFilesLabel.Click += addFilesLabel_Click;
-            // 
-            // viewLogsButton
-            // 
-            viewLogsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            viewLogsButton.Location = new Point(888, 465);
-            viewLogsButton.Margin = new Padding(3, 2, 3, 2);
-            viewLogsButton.Name = "viewLogsButton";
-            viewLogsButton.Size = new Size(100, 22);
-            viewLogsButton.TabIndex = 20;
-            viewLogsButton.Text = "View Logs";
-            viewLogsButton.UseVisualStyleBackColor = true;
-            viewLogsButton.Click += viewLogsButton_Click;
             // 
             // sourceFilesListView
             // 
             sourceFilesListView.Columns.AddRange(new ColumnHeader[] { sourceFilesListFilenameCol, sourceFilesListStatusCol });
-            sourceFilesListView.Location = new Point(10, 37);
+            sourceFilesListView.Location = new Point(10, 28);
             sourceFilesListView.Margin = new Padding(3, 2, 3, 2);
             sourceFilesListView.Name = "sourceFilesListView";
-            sourceFilesListView.Size = new Size(1084, 424);
+            sourceFilesListView.Size = new Size(1084, 450);
             sourceFilesListView.TabIndex = 23;
             sourceFilesListView.UseCompatibleStateImageBehavior = false;
             sourceFilesListView.View = View.Details;
@@ -196,29 +121,90 @@ namespace NewspaperBatchCreator
             // 
             sourceFilesListStatusCol.Text = "Status";
             // 
-            // settingsButton
-            // 
-            settingsButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            settingsButton.Location = new Point(782, 465);
-            settingsButton.Margin = new Padding(3, 2, 3, 2);
-            settingsButton.Name = "settingsButton";
-            settingsButton.Size = new Size(100, 22);
-            settingsButton.TabIndex = 22;
-            settingsButton.Text = "Settings";
-            settingsButton.UseVisualStyleBackColor = true;
-            settingsButton.Click += optionsButton_Click;
-            // 
             // importMetadataButton
             // 
             importMetadataButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             importMetadataButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            importMetadataButton.Location = new Point(10, 465);
+            importMetadataButton.Location = new Point(788, 2);
             importMetadataButton.Margin = new Padding(3, 2, 3, 2);
             importMetadataButton.Name = "importMetadataButton";
-            importMetadataButton.Size = new Size(175, 22);
+            importMetadataButton.Size = new Size(150, 22);
             importMetadataButton.TabIndex = 24;
             importMetadataButton.Text = "Import Metadata";
             importMetadataButton.UseVisualStyleBackColor = true;
+            // 
+            // menuStrip
+            // 
+            menuStrip.AutoSize = false;
+            menuStrip.BackColor = SystemColors.Control;
+            menuStrip.Dock = DockStyle.None;
+            menuStrip.Items.AddRange(new ToolStripItem[] { filesToolStripMenuItem, helpToolStripMenuItem });
+            menuStrip.Location = new Point(0, 0);
+            menuStrip.Name = "menuStrip";
+            menuStrip.Size = new Size(785, 24);
+            menuStrip.TabIndex = 25;
+            menuStrip.Text = "menuStrip";
+            // 
+            // filesToolStripMenuItem
+            // 
+            filesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { browseMenuItem, settingsMenuItem, viewLogsMenuItem, resetToolStripMenuItem, exitMenuItem });
+            filesToolStripMenuItem.Name = "filesToolStripMenuItem";
+            filesToolStripMenuItem.Size = new Size(42, 20);
+            filesToolStripMenuItem.Text = "Files";
+            // 
+            // browseMenuItem
+            // 
+            browseMenuItem.Name = "browseMenuItem";
+            browseMenuItem.Size = new Size(127, 22);
+            browseMenuItem.Text = "Browse ...";
+            browseMenuItem.Click += browseMenuItem_Click;
+            // 
+            // settingsMenuItem
+            // 
+            settingsMenuItem.Name = "settingsMenuItem";
+            settingsMenuItem.Size = new Size(127, 22);
+            settingsMenuItem.Text = "Settings";
+            settingsMenuItem.Click += settingsMenuItem_Click;
+            // 
+            // viewLogsMenuItem
+            // 
+            viewLogsMenuItem.Name = "viewLogsMenuItem";
+            viewLogsMenuItem.Size = new Size(127, 22);
+            viewLogsMenuItem.Text = "View Logs";
+            viewLogsMenuItem.Click += viewLogsMenuItem_Click;
+            // 
+            // resetToolStripMenuItem
+            // 
+            resetToolStripMenuItem.Name = "resetToolStripMenuItem";
+            resetToolStripMenuItem.Size = new Size(127, 22);
+            resetToolStripMenuItem.Text = "Reset";
+            resetToolStripMenuItem.Click += resetToolStripMenuItem_Click;
+            // 
+            // exitMenuItem
+            // 
+            exitMenuItem.Name = "exitMenuItem";
+            exitMenuItem.Size = new Size(127, 22);
+            exitMenuItem.Text = "Exit";
+            exitMenuItem.Click += exitMenuItem_Click;
+            // 
+            // helpToolStripMenuItem
+            // 
+            helpToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { documentationToolStripMenuItem, aboutToolStripMenuItem });
+            helpToolStripMenuItem.Name = "helpToolStripMenuItem";
+            helpToolStripMenuItem.Size = new Size(44, 20);
+            helpToolStripMenuItem.Text = "Help";
+            // 
+            // documentationToolStripMenuItem
+            // 
+            documentationToolStripMenuItem.Name = "documentationToolStripMenuItem";
+            documentationToolStripMenuItem.Size = new Size(157, 22);
+            documentationToolStripMenuItem.Text = "Documentation";
+            // 
+            // aboutToolStripMenuItem
+            // 
+            aboutToolStripMenuItem.Name = "aboutToolStripMenuItem";
+            aboutToolStripMenuItem.Size = new Size(157, 22);
+            aboutToolStripMenuItem.Text = "About";
             // 
             // MainForm
             // 
@@ -227,23 +213,19 @@ namespace NewspaperBatchCreator
             ClientSize = new Size(1106, 511);
             Controls.Add(importMetadataButton);
             Controls.Add(sourceFilesListView);
-            Controls.Add(settingsButton);
-            Controls.Add(viewLogsButton);
-            Controls.Add(addFilesLabel);
             Controls.Add(createBatchButton);
-            Controls.Add(startOverButton);
-            Controls.Add(exitButton);
             Controls.Add(statusBar);
-            Controls.Add(selectFolderButton);
-            Controls.Add(addFilesButton);
-            Controls.Add(addFilesTextBox);
+            Controls.Add(menuStrip);
+            MainMenuStrip = menuStrip;
             Margin = new Padding(3, 2, 3, 2);
             MaximumSize = new Size(1122, 550);
             MinimumSize = new Size(1122, 550);
             Name = "MainForm";
-            Text = "Newspaper Batch Creation";
+            Text = "Newspaper Batch Creator";
             statusBar.ResumeLayout(false);
             statusBar.PerformLayout();
+            menuStrip.ResumeLayout(false);
+            menuStrip.PerformLayout();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -252,16 +234,15 @@ namespace NewspaperBatchCreator
 
         #region Custom Initializations
 
-        //Item status definitions:
-        internal static readonly int LOADED = 0, COMPLETED = 1, SKIPPED = 2;
-        internal static readonly Dictionary<int, string> STATUS = new Dictionary<int, string>
+        //Override default OnShown behavior:
+        protected override void OnShown(EventArgs e)
         {
-            { LOADED, "LOADED" },
-            { COMPLETED, "COMPLETED" },
-            { SKIPPED, "SKIPPED"}
-        };
+            base.OnShown(e);
+            this.ActiveControl = null;
+        }
 
-        internal Button selectFolderButton;
+        //Item status definitions:
+        internal static readonly (string ADDED, string PROCESSED, string SKIPPED) STATUS = ("ADDED", "PROCESSED", "SKIPPED");
         internal Button createBatchButton;
         internal ToolStripStatusLabel statusBar_MetadataLoaded;
         internal ToolStripStatusLabel statusBar_NumberOfCompletedFiles;
@@ -270,12 +251,11 @@ namespace NewspaperBatchCreator
         SettingsForm settingsForm;
         ImportMetadataForm importMetadataForm;
 
-
-        List<DestinationFilesStructure> destinationFileStructure;
-        Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
+        //List<DestinationFilesStructure> destinationFileStructure;
+        //Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
         string batchXmlFileFullPath = String.Empty;
 
-        Dictionary<string, IssueFilesInformation> issueFilesInformation;
+        //Dictionary<string, IssueFilesInformation> issueFilesInformation;
 
         private void CustomInitialization()
         {
@@ -293,12 +273,12 @@ namespace NewspaperBatchCreator
             settingsForm.logForm = logForm;
 
             //Disable buttons upon application startup:
-            selectFolderButton.Enabled = false;
-            addFilesButton.Enabled = false;
+            //browseButton.Enabled = true;
+            //addFilesButton.Enabled = false;
             createBatchButton.Enabled = false;
 
             //Load LCCN selection ComboBox items:
-            loadLccnComboBoxItems();
+            //loadLccnComboBoxItems();
             //selectLccnComboBox.SelectedIndexChanged += lccnComboBox_SelectedIndexChanged;
 
             //Set ListView properties:
@@ -306,56 +286,57 @@ namespace NewspaperBatchCreator
             sourceFilesListStatusCol.Width = 100;
 
             //Initialize other resources:
-            destinationFileStructure = new List<DestinationFilesStructure>();
-            batch_XML_Issue_Elements = new Dictionary<string, Batch_XML_Issue_Element>();
-            issueFilesInformation = new Dictionary<string, IssueFilesInformation>();
+            //destinationFileStructure = new List<DestinationFilesStructure>();
+            //batch_XML_Issue_Elements = new Dictionary<string, Batch_XML_Issue_Element>();
+            //issueFilesInformation = new Dictionary<string, IssueFilesInformation>();
 
             InitializeSettings();
         }
 
         private void InitializeSettings()
         {
-            Properties.Settings.Default.SeletedLccn = String.Empty;
-            Properties.Settings.Default.OutputFolder = Environment.CurrentDirectory;
-            Properties.Settings.Default.SourceFolder = String.Empty;
-            Properties.Settings.Default.Awardee = "txa";
-            Properties.Settings.Default.AwardYear = String.Empty;
-            Properties.Settings.Default.MetadataLoaded = false;
+            //Properties.Settings.Default.SeletedLccn = String.Empty;
+            //Properties.Settings.Default.SourceFolder = Environment.CurrentDirectory;
+            Properties.Settings.Default.OutputFolder = String.Empty;
+            //Properties.Settings.Default.Awardee = "txa";
+            //Properties.Settings.Default.AwardYear = String.Empty;
+            //Properties.Settings.Default.LogFolder = false;
             Properties.Settings.Default.SourceFilesLoaded = false;
 
             //settingsForm.editionOrderComboBox.SelectedIndex = 0;
             //Properties.Settings.Default.EditionOrder = settingsForm.editionOrderComboBox.SelectedItem?.ToString();
 
             //settingsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
-            settingsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
+            //settingsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.SourceFolder;
 
             Properties.Settings.Default.Save();
 
             //Print current default settings to logs:
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"SourceFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
+            //logForm.SendToLog(LogForm.LogType.INFO, $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
+            //logForm.SendToLog(LogForm.LogType.INFO, $"\"OutputFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
+            logForm.SendToLog(LogForm.LogType.INFO, $"\"SourceFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
+            //logForm.SendToLog(LogForm.LogType.INFO, $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
+            //logForm.SendToLog(LogForm.LogType.INFO, $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
+            //logForm.SendToLog(LogForm.LogType.INFO, $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
         }
 
         #endregion
-
-        private TextBox addFilesTextBox;
-        private Button addFilesButton;
-        private Label label3;
         private StatusStrip statusBar;
-        private Button exitButton;
-        private Button startOverButton;
-        private Label addFilesLabel;
-        private FolderBrowserDialog addFiles_folderBrowserDialog;
-        internal Button viewLogsButton;
-        private Button settingsButton;
+        private FolderBrowserDialog from_folderBrowserDialog;
         internal ListView sourceFilesListView;
         private ColumnHeader sourceFilesListFilenameCol;
         private ColumnHeader sourceFilesListStatusCol;
-        private ToolStripStatusLabel statusBar_NumberOfFilesAdded;
+        private ToolStripStatusLabel statusBar_NumberOfFilesAddedFrom;
         internal Button importMetadataButton;
+        private MenuStrip menuStrip;
+        private ToolStripMenuItem filesToolStripMenuItem;
+        private ToolStripMenuItem helpToolStripMenuItem;
+        private ToolStripMenuItem browseMenuItem;
+        private ToolStripMenuItem settingsMenuItem;
+        private ToolStripMenuItem viewLogsMenuItem;
+        private ToolStripMenuItem exitMenuItem;
+        private ToolStripMenuItem documentationToolStripMenuItem;
+        private ToolStripMenuItem aboutToolStripMenuItem;
+        private ToolStripMenuItem resetToolStripMenuItem;
     }
 }

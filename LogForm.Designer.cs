@@ -204,17 +204,17 @@ namespace NewspaperBatchCreator
             maxLogEntryStatusStripLabel.Text = $"Only the most recent {MAX_LOG_ROWS} log entries are shown.";
 
             // Initialize log file:
-            Properties.Settings.Default.LogLocation = Path.GetFullPath(".") + "\\logs";
+            //Properties.Settings.Default.MetadataLoaded = Path.GetFullPath(".") + "\\logs";
 
             logFileName = $"ocr_{DateTime.Now:yyyyMMdd_HHmmss}.log";
-            logFileFullPath = Path.Combine(Properties.Settings.Default.LogLocation, logFileName);
+            //logFileFullPath = Path.Combine(Properties.Settings.Default.MetadataLoaded, logFileName);
 
-            if (!Directory.Exists(Properties.Settings.Default.LogLocation))
+            //if (!Directory.Exists(Properties.Settings.Default.MetadataLoaded))
             {
-                Directory.CreateDirectory(Properties.Settings.Default.LogLocation);
+                //Directory.CreateDirectory(Properties.Settings.Default.MetadataLoaded);
             }
 
-            File.WriteAllText(logFileFullPath, String.Empty);
+            //File.WriteAllText(logFileFullPath, String.Empty);
         }
 
         #endregion
