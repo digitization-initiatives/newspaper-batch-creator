@@ -13,9 +13,9 @@ using System.Windows.Forms;
 
 namespace NewspaperBatchCreator
 {
-    public partial class ImportMetadataForm : Form
+    public partial class ImportEditMetadataForm : Form
     {
-        public ImportMetadataForm(MainForm mainFormRef)
+        public ImportEditMetadataForm(MainForm mainFormRef)
         {
             InitializeComponent();
             CustomInitialization();

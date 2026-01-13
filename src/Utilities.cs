@@ -19,6 +19,30 @@ namespace NewspaperBatchCreator.src
             settingsForm = _SettingsForm;
         }
 
+        // Export Metadata Template:
+        public void ExportMetadataTemplate(string filePath)
+        {
+            List<string> csv = new List<string>();
+            csv.Add("item,date,volume,issue,edition,pages");
+            csv.Add("newspapertitle_1900-01-01,1900-01-01,1,1,01,1");
+
+            try
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None))
+                {
+                    // Testing if file is open by another process.
+                }
+
+                File.WriteAllLines(filePath, csv);
+                logForm.Logger(LogForm.LogType.INFO, $"Metadata Template exported to {filePath}.");
+            }
+            catch (IOException)
+            {
+                MessageBox.Show($"{filePath} is being used by another process. Metadata Template is not exported.", "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                logForm.Logger(LogForm.LogType.WARN, $"{filePath} is being used by another process. Metadata Template is not exported.");
+            }
+        }
+
         //Validate if there is metadata for all the source files:
         //private void HaveMetadata()
         //{
@@ -44,7 +68,7 @@ namespace NewspaperBatchCreator.src
         //            logForm.SendToLog(LogForm.LogType.ERROR, $"{sourceFileParentFolderName} contains illegal issue number in the folder name.");
         //        }
 
-        //        if (!importMetadataForm.issueMetadata.ContainsKey(sourceFileIssueNumber))
+        //        if (!importEditMetadataForm.issueMetadata.ContainsKey(sourceFileIssueNumber))
         //        {
         //            string sourceFileName = Path.GetFileName(sourceFilePath);
 

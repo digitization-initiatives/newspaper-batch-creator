@@ -43,10 +43,12 @@ namespace NewspaperBatchCreator
             sourceFilesListView = new ListView();
             sourceFilesListFilenameCol = new ColumnHeader();
             sourceFilesListStatusCol = new ColumnHeader();
-            importMetadataButton = new Button();
             menuStrip = new MenuStrip();
             filesToolStripMenuItem = new ToolStripMenuItem();
             browseMenuItem = new ToolStripMenuItem();
+            metadataMenuItem = new ToolStripMenuItem();
+            exportTemplate_MetadataSubMenuItem = new ToolStripMenuItem();
+            importEditMetadata_MetadataSubMenuItem = new ToolStripMenuItem();
             settingsMenuItem = new ToolStripMenuItem();
             viewLogsMenuItem = new ToolStripMenuItem();
             resetToolStripMenuItem = new ToolStripMenuItem();
@@ -54,6 +56,8 @@ namespace NewspaperBatchCreator
             helpToolStripMenuItem = new ToolStripMenuItem();
             documentationToolStripMenuItem = new ToolStripMenuItem();
             aboutToolStripMenuItem = new ToolStripMenuItem();
+            metadataFile_folderBrowserDialog = new FolderBrowserDialog();
+            exportMetadataTemplate_saveFileDialog = new SaveFileDialog();
             statusBar.SuspendLayout();
             menuStrip.SuspendLayout();
             SuspendLayout();
@@ -94,7 +98,7 @@ namespace NewspaperBatchCreator
             // 
             createBatchButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
             createBatchButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            createBatchButton.Location = new Point(944, 2);
+            createBatchButton.Location = new Point(944, 4);
             createBatchButton.Margin = new Padding(3, 2, 3, 2);
             createBatchButton.Name = "createBatchButton";
             createBatchButton.Size = new Size(150, 22);
@@ -105,10 +109,10 @@ namespace NewspaperBatchCreator
             // sourceFilesListView
             // 
             sourceFilesListView.Columns.AddRange(new ColumnHeader[] { sourceFilesListFilenameCol, sourceFilesListStatusCol });
-            sourceFilesListView.Location = new Point(10, 28);
+            sourceFilesListView.Location = new Point(10, 30);
             sourceFilesListView.Margin = new Padding(3, 2, 3, 2);
             sourceFilesListView.Name = "sourceFilesListView";
-            sourceFilesListView.Size = new Size(1084, 450);
+            sourceFilesListView.Size = new Size(1084, 448);
             sourceFilesListView.TabIndex = 23;
             sourceFilesListView.UseCompatibleStateImageBehavior = false;
             sourceFilesListView.View = View.Details;
@@ -121,18 +125,6 @@ namespace NewspaperBatchCreator
             // 
             sourceFilesListStatusCol.Text = "Status";
             // 
-            // importMetadataButton
-            // 
-            importMetadataButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            importMetadataButton.Font = new Font("Segoe UI", 9F, FontStyle.Regular, GraphicsUnit.Point, 0);
-            importMetadataButton.Location = new Point(788, 2);
-            importMetadataButton.Margin = new Padding(3, 2, 3, 2);
-            importMetadataButton.Name = "importMetadataButton";
-            importMetadataButton.Size = new Size(150, 22);
-            importMetadataButton.TabIndex = 24;
-            importMetadataButton.Text = "Import Metadata";
-            importMetadataButton.UseVisualStyleBackColor = true;
-            // 
             // menuStrip
             // 
             menuStrip.AutoSize = false;
@@ -141,13 +133,13 @@ namespace NewspaperBatchCreator
             menuStrip.Items.AddRange(new ToolStripItem[] { filesToolStripMenuItem, helpToolStripMenuItem });
             menuStrip.Location = new Point(0, 0);
             menuStrip.Name = "menuStrip";
-            menuStrip.Size = new Size(785, 24);
+            menuStrip.Size = new Size(941, 24);
             menuStrip.TabIndex = 25;
             menuStrip.Text = "menuStrip";
             // 
             // filesToolStripMenuItem
             // 
-            filesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { browseMenuItem, settingsMenuItem, viewLogsMenuItem, resetToolStripMenuItem, exitMenuItem });
+            filesToolStripMenuItem.DropDownItems.AddRange(new ToolStripItem[] { browseMenuItem, metadataMenuItem, settingsMenuItem, viewLogsMenuItem, resetToolStripMenuItem, exitMenuItem });
             filesToolStripMenuItem.Name = "filesToolStripMenuItem";
             filesToolStripMenuItem.Size = new Size(42, 20);
             filesToolStripMenuItem.Text = "Files";
@@ -155,35 +147,56 @@ namespace NewspaperBatchCreator
             // browseMenuItem
             // 
             browseMenuItem.Name = "browseMenuItem";
-            browseMenuItem.Size = new Size(127, 22);
+            browseMenuItem.Size = new Size(180, 22);
             browseMenuItem.Text = "Browse ...";
             browseMenuItem.Click += browseMenuItem_Click;
+            // 
+            // metadataMenuItem
+            // 
+            metadataMenuItem.DropDownItems.AddRange(new ToolStripItem[] { exportTemplate_MetadataSubMenuItem, importEditMetadata_MetadataSubMenuItem });
+            metadataMenuItem.Name = "metadataMenuItem";
+            metadataMenuItem.Size = new Size(180, 22);
+            metadataMenuItem.Text = "Metadata";
+            // 
+            // exportTemplate_MetadataSubMenuItem
+            // 
+            exportTemplate_MetadataSubMenuItem.Name = "exportTemplate_MetadataSubMenuItem";
+            exportTemplate_MetadataSubMenuItem.Size = new Size(190, 22);
+            exportTemplate_MetadataSubMenuItem.Text = "Export Template (.csv)";
+            exportTemplate_MetadataSubMenuItem.Click += exportTemplate_MetadataSubMenuItem_Click;
+            // 
+            // importEditMetadata_MetadataSubMenuItem
+            // 
+            importEditMetadata_MetadataSubMenuItem.Name = "importEditMetadata_MetadataSubMenuItem";
+            importEditMetadata_MetadataSubMenuItem.Size = new Size(190, 22);
+            importEditMetadata_MetadataSubMenuItem.Text = "Import/Edit Metadata";
+            importEditMetadata_MetadataSubMenuItem.Click += importEditMetadata_MetadataSubMenuItem_Click;
             // 
             // settingsMenuItem
             // 
             settingsMenuItem.Name = "settingsMenuItem";
-            settingsMenuItem.Size = new Size(127, 22);
+            settingsMenuItem.Size = new Size(180, 22);
             settingsMenuItem.Text = "Settings";
             settingsMenuItem.Click += settingsMenuItem_Click;
             // 
             // viewLogsMenuItem
             // 
             viewLogsMenuItem.Name = "viewLogsMenuItem";
-            viewLogsMenuItem.Size = new Size(127, 22);
+            viewLogsMenuItem.Size = new Size(180, 22);
             viewLogsMenuItem.Text = "View Logs";
             viewLogsMenuItem.Click += viewLogsMenuItem_Click;
             // 
             // resetToolStripMenuItem
             // 
             resetToolStripMenuItem.Name = "resetToolStripMenuItem";
-            resetToolStripMenuItem.Size = new Size(127, 22);
+            resetToolStripMenuItem.Size = new Size(180, 22);
             resetToolStripMenuItem.Text = "Reset";
             resetToolStripMenuItem.Click += resetToolStripMenuItem_Click;
             // 
             // exitMenuItem
             // 
             exitMenuItem.Name = "exitMenuItem";
-            exitMenuItem.Size = new Size(127, 22);
+            exitMenuItem.Size = new Size(180, 22);
             exitMenuItem.Text = "Exit";
             exitMenuItem.Click += exitMenuItem_Click;
             // 
@@ -211,7 +224,6 @@ namespace NewspaperBatchCreator
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1106, 511);
-            Controls.Add(importMetadataButton);
             Controls.Add(sourceFilesListView);
             Controls.Add(createBatchButton);
             Controls.Add(statusBar);
@@ -249,11 +261,16 @@ namespace NewspaperBatchCreator
 
         LogForm logForm;
         SettingsForm settingsForm;
-        ImportMetadataForm importMetadataForm;
+        ImportEditMetadataForm importEditMetadataForm;
+        Utilities utilities;
 
         //List<DestinationFilesStructure> destinationFileStructure;
         //Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
-        string batchXmlFileFullPath = String.Empty;
+        //string batchXmlFileFullPath = String.Empty;
+
+        string selectedPath = String.Empty;
+        Boolean sourceFilesLoaded = false;
+        Boolean metadataLoaded = false;
 
         //Dictionary<string, IssueFilesInformation> issueFilesInformation;
 
@@ -265,11 +282,14 @@ namespace NewspaperBatchCreator
 
             //Initialize forms:
             logForm = new LogForm(this);
-            importMetadataForm = new ImportMetadataForm(this);
+            importEditMetadataForm = new ImportEditMetadataForm(this);
             settingsForm = new SettingsForm(this);
 
+            //Initialize utilities:
+            utilities = new Utilities(this, logForm, settingsForm);
+
             //Pass along the logForm instance:
-            importMetadataForm.logForm = logForm;
+            importEditMetadataForm.logForm = logForm;
             settingsForm.logForm = logForm;
 
             //Disable buttons upon application startup:
@@ -301,7 +321,7 @@ namespace NewspaperBatchCreator
             //Properties.Settings.Default.Awardee = "txa";
             //Properties.Settings.Default.AwardYear = String.Empty;
             //Properties.Settings.Default.LogFolder = false;
-            Properties.Settings.Default.SourceFilesLoaded = false;
+            //Properties.Settings.Default.SourceFilesLoaded = false;
 
             //settingsForm.editionOrderComboBox.SelectedIndex = 0;
             //Properties.Settings.Default.EditionOrder = settingsForm.editionOrderComboBox.SelectedItem?.ToString();
@@ -327,7 +347,6 @@ namespace NewspaperBatchCreator
         private ColumnHeader sourceFilesListFilenameCol;
         private ColumnHeader sourceFilesListStatusCol;
         private ToolStripStatusLabel statusBar_NumberOfFilesAddedFrom;
-        internal Button importMetadataButton;
         private MenuStrip menuStrip;
         private ToolStripMenuItem filesToolStripMenuItem;
         private ToolStripMenuItem helpToolStripMenuItem;
@@ -338,5 +357,10 @@ namespace NewspaperBatchCreator
         private ToolStripMenuItem documentationToolStripMenuItem;
         private ToolStripMenuItem aboutToolStripMenuItem;
         private ToolStripMenuItem resetToolStripMenuItem;
+        private FolderBrowserDialog metadataFile_folderBrowserDialog;
+        private ToolStripMenuItem metadataMenuItem;
+        private ToolStripMenuItem exportTemplate_MetadataSubMenuItem;
+        private ToolStripMenuItem importEditMetadata_MetadataSubMenuItem;
+        private SaveFileDialog exportMetadataTemplate_saveFileDialog;
     }
 }

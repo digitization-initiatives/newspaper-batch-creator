@@ -245,7 +245,7 @@ namespace NewspaperBatchCreator
         //            newIssueFilesInfoItem.ISSUE_CREATEDATE = DateTime.UtcNow.ToString("yyyy-MM-ddTHH:mm:ssZ");
         //            newIssueFilesInfoItem.LCCN = destFileItem.LCCN;
 
-        //            newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW = importMetadataForm.issueMetadata[newIssueFilesInfoItem.ISSUE_NUMBER].VOLUME;
+        //            newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW = importEditMetadataForm.issueMetadata[newIssueFilesInfoItem.ISSUE_NUMBER].VOLUME;
         //            MatchCollection volInfoMatches = Regex.Matches(newIssueFilesInfoItem.ISSUE_VOLUME_METADATA_RAW, @"\d+(?:/\d+)?");
         //            if (volInfoMatches.Count != 2)
         //            {
@@ -653,11 +653,12 @@ namespace NewspaperBatchCreator
             this.Close();
         }
 
-        private void importMetadataButton_Click(object sender, EventArgs e)
-        {
-            importMetadataForm.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
-            importMetadataForm.Show();
-        }
+        // ToBeDeleted.
+        //private void importMetadataButton_Click(object sender, EventArgs e)
+        //{
+        //    importEditMetadataForm.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+        //    importEditMetadataForm.Show();
+        //}
 
         private void browseMenuItem_Click(object sender, EventArgs e)
         {
@@ -707,55 +708,16 @@ namespace NewspaperBatchCreator
 
         private void resetToolStripMenuItem_Click(object sender, EventArgs e)
         {
-            //Reset settings:
-            //Properties.Settings.Default.SeletedLccn = String.Empty;
-            Properties.Settings.Default.OutputFolder = String.Empty;
-            //Properties.Settings.Default.OutputFolder = optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath;
-            //Properties.Settings.Default.Awardee = "txa";
-            //Properties.Settings.Default.AwardYear = String.Empty;
-            //Properties.Settings.Default.LogFolder = false;
-            Properties.Settings.Default.SourceFilesLoaded = false;
-
-            //optionsForm.editionOrderComboBox.SelectedIndex = 0;
-            //Properties.Settings.Default.EditionOrder = optionsForm.editionOrderComboBox.SelectedItem?.ToString();
-
-            //optionsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
-            //optionsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.OutputFolder;
-
-            Properties.Settings.Default.Save();
-
-            //Print current default settings to logs:
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"OutputFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"SourceFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
-
-            //Reset MainForm UI:
+            selectedPath = String.Empty;
             from_folderBrowserDialog.SelectedPath = String.Empty;
-            //selectLccnComboBox.SelectedIndex = -1;
-            //batchNamePrefixTextBox.Text = String.Empty;
-            //batchNumberTextBox.Text = String.Empty;
-            //sourceFilesListView.Items.Clear();
-            //browseSourceFilesButton.Enabled = false;
-            //loadSourceFilesButton.Enabled = false;
+
+            sourceFilesLoaded = false;
+            metadataLoaded = false;
+
+            sourceFilesListView.Items.Clear();
+            
             createBatchButton.Enabled = false;
             statusBar_NumberOfFilesAddedFrom.Text = $"{sourceFilesListView.Items.Count} files loaded.";
-            //statusBarMetadataFileLoadedLabel.Text = $"Metadata not loaded.";
-
-            //Reset ImportMetadataForm:
-            //importMetadataForm.issueMetadata.Clear();
-            //importMetadataForm.mappedColumnsDict.Clear();
-            //importMetadataForm.selectMetadataFileTextBox.Text = String.Empty;
-            //importMetadataForm.selectMetadataFile_openFileDialog.FileName = String.Empty;
-            //importMetadataForm.columnMappingDataGridView.Rows.Clear();
-
-            //Reset variables and data structures:
-            batchXmlFileFullPath = String.Empty;
-            //destinationFileStructure.Clear();
-            //batch_XML_Issue_Elements.Clear();
-            //issueFilesInformation.Clear();
         }
 
         private void viewLogsMenuItem_Click(object sender, EventArgs e)
@@ -774,6 +736,28 @@ namespace NewspaperBatchCreator
         private void exitMenuItem_Click(object sender, EventArgs e)
         {
             this.Close();
+        }
+
+        private void importEditMetadata_MetadataSubMenuItem_Click(object sender, EventArgs e)
+        {
+            importEditMetadataForm.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+            importEditMetadataForm.Show();
+        }
+
+        private void exportTemplate_MetadataSubMenuItem_Click(object sender, EventArgs e)
+        {
+            exportMetadataTemplate_saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
+            exportMetadataTemplate_saveFileDialog.Title = "Export Metadata Template";
+            exportMetadataTemplate_saveFileDialog.FileName = "template.csv";
+
+            if (exportMetadataTemplate_saveFileDialog.ShowDialog() != DialogResult.OK)
+            {
+                logForm.Logger(LogForm.LogType.INFO, $"Export Metadata Template cancelled.");
+                return;
+
+            }
+
+            utilities.ExportMetadataTemplate(exportMetadataTemplate_saveFileDialog.FileName);
         }
     }
 }

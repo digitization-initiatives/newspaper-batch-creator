@@ -46,29 +46,5 @@ namespace NewspaperBatchCreator.Properties {
                 this["LogFolder"] = value;
             }
         }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool SourceFilesLoaded {
-            get {
-                return ((bool)(this["SourceFilesLoaded"]));
-            }
-            set {
-                this["SourceFilesLoaded"] = value;
-            }
-        }
-        
-        [global::System.Configuration.UserScopedSettingAttribute()]
-        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("False")]
-        public bool MetadataLoaded {
-            get {
-                return ((bool)(this["MetadataLoaded"]));
-            }
-            set {
-                this["MetadataLoaded"] = value;
-            }
-        }
     }
 }

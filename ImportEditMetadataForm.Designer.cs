@@ -3,7 +3,7 @@ using System.Collections.Generic;
 
 namespace NewspaperBatchCreator
 {
-    partial class ImportMetadataForm
+    partial class ImportEditMetadataForm
     {
         /// <summary>
         /// Required designer variable.
@@ -41,7 +41,6 @@ namespace NewspaperBatchCreator
             statusLabelDivider = new ToolStripStatusLabel();
             numberOfMetadataImportedStatusLabel = new ToolStripStatusLabel();
             numberOfMetadataImported = new ToolStripStatusLabel();
-            viewMetadataTemplateButton = new Button();
             selectMetadataFileButton = new Button();
             importMetadataDataGridView = new DataGridView();
             importMetadataDataGridView_itemCol = new DataGridViewTextBoxColumn();
@@ -57,7 +56,7 @@ namespace NewspaperBatchCreator
             // resetButton
             // 
             resetButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            resetButton.Location = new Point(878, 461);
+            resetButton.Location = new Point(878, 438);
             resetButton.Margin = new Padding(3, 2, 3, 2);
             resetButton.Name = "resetButton";
             resetButton.Size = new Size(105, 22);
@@ -73,7 +72,7 @@ namespace NewspaperBatchCreator
             // closeButton
             // 
             closeButton.Anchor = AnchorStyles.Bottom | AnchorStyles.Right;
-            closeButton.Location = new Point(989, 461);
+            closeButton.Location = new Point(989, 438);
             closeButton.Margin = new Padding(3, 2, 3, 2);
             closeButton.Name = "closeButton";
             closeButton.Size = new Size(105, 22);
@@ -135,16 +134,6 @@ namespace NewspaperBatchCreator
             numberOfMetadataImported.Size = new Size(12, 17);
             numberOfMetadataImported.Text = "-";
             // 
-            // viewMetadataTemplateButton
-            // 
-            viewMetadataTemplateButton.Location = new Point(663, 461);
-            viewMetadataTemplateButton.Margin = new Padding(3, 2, 3, 2);
-            viewMetadataTemplateButton.Name = "viewMetadataTemplateButton";
-            viewMetadataTemplateButton.Size = new Size(210, 22);
-            viewMetadataTemplateButton.TabIndex = 47;
-            viewMetadataTemplateButton.Text = "View Metadata Template";
-            viewMetadataTemplateButton.UseVisualStyleBackColor = true;
-            // 
             // selectMetadataFileButton
             // 
             selectMetadataFileButton.Location = new Point(875, 24);
@@ -161,7 +150,7 @@ namespace NewspaperBatchCreator
             importMetadataDataGridView.Columns.AddRange(new DataGridViewColumn[] { importMetadataDataGridView_itemCol, importMetadataDataGridView_dateCol, importMetadataDataGridView_volumeCol, importMetadataDataGridView_issueCol, importMetadataDataGridView_editionCol, importMetadataDataGridView_pagesCol });
             importMetadataDataGridView.Location = new Point(10, 52);
             importMetadataDataGridView.Name = "importMetadataDataGridView";
-            importMetadataDataGridView.Size = new Size(1084, 404);
+            importMetadataDataGridView.Size = new Size(1084, 364);
             importMetadataDataGridView.TabIndex = 48;
             // 
             // importMetadataDataGridView_itemCol
@@ -194,14 +183,13 @@ namespace NewspaperBatchCreator
             importMetadataDataGridView_pagesCol.HeaderText = "pages";
             importMetadataDataGridView_pagesCol.Name = "importMetadataDataGridView_pagesCol";
             // 
-            // ImportMetadataForm
+            // ImportEditMetadataForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1106, 511);
             ControlBox = false;
             Controls.Add(importMetadataDataGridView);
-            Controls.Add(viewMetadataTemplateButton);
             Controls.Add(importMetadataStatusStrip);
             Controls.Add(selectMetadataFileButton);
             Controls.Add(selectedMetadataFilePathTextBox);
@@ -211,7 +199,7 @@ namespace NewspaperBatchCreator
             Margin = new Padding(3, 2, 3, 2);
             MaximumSize = new Size(1122, 550);
             MinimumSize = new Size(1122, 550);
-            Name = "ImportMetadataForm";
+            Name = "ImportEditMetadataForm";
             Text = "Import Metadata";
             importMetadataStatusStrip.ResumeLayout(false);
             importMetadataStatusStrip.PerformLayout();
@@ -262,7 +250,6 @@ namespace NewspaperBatchCreator
         private ToolStripStatusLabel numberOfMetadataImported;
         private ToolStripStatusLabel importMetadataStatus;
         private ToolStripStatusLabel statusLabelDivider;
-        private Button viewMetadataTemplateButton;
         private Button selectMetadataFileButton;
         private DataGridView importMetadataDataGridView;
         private DataGridViewTextBoxColumn importMetadataDataGridView_itemCol;
