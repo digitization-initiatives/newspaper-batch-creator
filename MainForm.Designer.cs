@@ -259,10 +259,13 @@ namespace NewspaperBatchCreator
         internal ToolStripStatusLabel statusBar_MetadataLoaded;
         internal ToolStripStatusLabel statusBar_NumberOfCompletedFiles;
 
-        LogForm logForm;
-        SettingsForm settingsForm;
-        ImportEditMetadataForm importEditMetadataForm;
-        Utilities utilities;
+        private LogForm logForm;
+        private SettingsForm settingsForm;
+        private ImportEditMetadataForm importEditMetadataForm;
+
+        internal Utilities utilities;
+
+        internal Dictionary<string, Issue> metadata;
 
         //List<DestinationFilesStructure> destinationFileStructure;
         //Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
@@ -276,21 +279,26 @@ namespace NewspaperBatchCreator
 
         private void CustomInitialization()
         {
+            //Initialize forms:
+
             //Custom form start location:
             this.StartPosition = FormStartPosition.Manual;
             this.Location = new Point(200, (Screen.PrimaryScreen.Bounds.Height - this.Height) / 2 - 50);
 
-            //Initialize forms:
+            //Initialize LogForm:
             logForm = new LogForm(this);
-            importEditMetadataForm = new ImportEditMetadataForm(this);
+
+            //Initialize ImportEditMetadataForm:
+            importEditMetadataForm = new ImportEditMetadataForm(this, this.logForm);
+
+            //Initialize SettingsForm:
             settingsForm = new SettingsForm(this);
 
-            //Initialize utilities:
-            utilities = new Utilities(this, logForm, settingsForm);
 
-            //Pass along the logForm instance:
-            importEditMetadataForm.logForm = logForm;
-            settingsForm.logForm = logForm;
+            //Initialize components:
+
+            //Initialize utilities:
+            utilities = new Utilities(this.logForm);
 
             //Disable buttons upon application startup:
             //browseButton.Enabled = true;

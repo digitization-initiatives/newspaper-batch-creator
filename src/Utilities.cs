@@ -3,20 +3,17 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.VisualBasic.FileIO;
 
 namespace NewspaperBatchCreator.src
 {
     internal class Utilities
     {
-        private MainForm mainForm;
         private LogForm logForm;
-        private SettingsForm settingsForm;
 
-        internal Utilities(MainForm _mainForm, LogForm _logForm, SettingsForm _SettingsForm)
+        internal Utilities(LogForm _logForm)
         {
-            mainForm = _mainForm;
             logForm = _logForm;
-            settingsForm = _SettingsForm;
         }
 
         // Export Metadata Template:
@@ -42,6 +39,72 @@ namespace NewspaperBatchCreator.src
                 logForm.Logger(LogForm.LogType.WARN, $"{filePath} is being used by another process. Metadata Template is not exported.");
             }
         }
+
+        // Load metadata from CSV file:
+        private bool IsFileReadable(string filePath)
+        {
+            try
+            {
+                using (FileStream fs = new FileStream(filePath, FileMode.Open, FileAccess.Read, FileShare.None))
+                {
+                    // Test if file is in-use by another process.
+                }
+
+                logForm.Logger(LogForm.LogType.INFO, $"${filePath} is accessible.");
+                return false;
+            }
+            catch (IOException)
+            {
+                MessageBox.Show($"{filePath} is being used by another process.", "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                logForm.Logger(LogForm.LogType.WARN, $"{filePath} is being used by another process.");
+                return true;
+            }
+        }
+
+        public void ImportMetadataViaCSV(DataGridView viewOrEditMetadataDataGridView, string metadataCsvFilePath)
+        {
+            if (IsFileReadable(metadataCsvFilePath))
+            {
+                return;
+            }
+
+            viewOrEditMetadataDataGridView.Rows.Clear();
+
+            using (TextFieldParser csvParser = new TextFieldParser(metadataCsvFilePath))
+            {
+                csvParser.TextFieldType = FieldType.Delimited;
+                csvParser.SetDelimiters(",");
+                csvParser.HasFieldsEnclosedInQuotes = Properties.Settings.Default.MetadataHasQuotes;
+
+                logForm.Logger(LogForm.LogType.INFO, $"CSV parser is set to comma delimited with \"HasFieldsEnclosedInQuotes\" set to {Properties.Settings.Default.MetadataHasQuotes}");
+
+                if (csvParser.EndOfData)
+                {
+                    MessageBox.Show($"{metadataCsvFilePath} is empty, import cancelled.", "File Is Empty", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    logForm.Logger(LogForm.LogType.WARN, $"{metadataCsvFilePath} is empty, import cancelled.");
+                    return;
+                }
+
+                string[] csvHeaders = csvParser.ReadFields();
+                string[] columnHeaders = viewOrEditMetadataDataGridView.Columns.Cast<DataGridViewColumn>().Select(col => col.HeaderText).ToArray();
+
+                if (!csvHeaders.SequenceEqual(columnHeaders))
+                {
+                    MessageBox.Show($"CSV headers/columns mismatch, import cancelled.", "Column/Header Mismatch", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    logForm.Logger(LogForm.LogType.WARN, $"CSV headers/columns mismatch, import cancelled.");
+                    return;
+                }
+
+                while (!csvParser.EndOfData)
+                {
+                    string[] rowValues = csvParser.ReadFields();
+                    viewOrEditMetadataDataGridView.Rows.Add(rowValues);
+                }
+
+                logForm.Logger(LogForm.LogType.INFO, $"Metadata imported via CSV.");
+            }
+        }
+
 
         //Validate if there is metadata for all the source files:
         //private void HaveMetadata()

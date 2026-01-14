@@ -31,7 +31,7 @@ namespace NewspaperBatchCreator
         /// </summary>
         private void InitializeComponent()
         {
-            selectOutputFolder_folderBrowserDialog = new FolderBrowserDialog();
+            //selectOutputFolder_folderBrowserDialog = new FolderBrowserDialog();
             closeButton = new Button();
             selectMetadataFile_folderBrowserDialog = new FolderBrowserDialog();
             settingsStatusStrip = new StatusStrip();
@@ -153,8 +153,9 @@ namespace NewspaperBatchCreator
         #region Custom Initializations
 
         private MainForm mainForm;
-        public LogForm logForm;
-        public FolderBrowserDialog selectOutputFolder_folderBrowserDialog;
+        private LogForm logForm;
+
+        //public FolderBrowserDialog selectOutputFolder_folderBrowserDialog;
 
         private void CustomInitialization()
         {

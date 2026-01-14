@@ -3,10 +3,13 @@
   <Profiles />
   <Settings>
     <Setting Name="OutputFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">".\output"</Value>
+      <Value Profile="(Default)" />
     </Setting>
     <Setting Name="LogFolder" Type="System.String" Scope="User">
-      <Value Profile="(Default)">".\log"</Value>
+      <Value Profile="(Default)" />
+    </Setting>
+    <Setting Name="MetadataHasQuotes" Type="System.Boolean" Scope="User">
+      <Value Profile="(Default)">False</Value>
     </Setting>
   </Settings>
 </SettingsFile>

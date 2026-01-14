@@ -1,5 +1,4 @@
-﻿using ClosedXML.Excel;
-using DocumentFormat.OpenXml.Spreadsheet;
+﻿using DocumentFormat.OpenXml.Spreadsheet;
 using NewspaperBatchCreator.src;
 using System;
 using System.Collections.Generic;
@@ -15,105 +14,20 @@ namespace NewspaperBatchCreator
 {
     public partial class ImportEditMetadataForm : Form
     {
-        public ImportEditMetadataForm(MainForm mainFormRef)
+        public ImportEditMetadataForm(MainForm mainFormRef, LogForm logFormRef)
         {
+            mainForm = mainFormRef;
+            logForm = logFormRef;
+
             InitializeComponent();
             CustomInitialization();
-
-            mainForm = mainFormRef;
         }
 
         #region Custom Methods
 
-        private void loadColumnMappingSampleData()
-        {
-            string selectedMetadataFile = selectMetadataFile_openFileDialog.FileName;
-
-            if (selectedMetadataFile == String.Empty || selectedMetadataFile == "")
-            {
-                logForm.SendToLog(LogForm.LogType.WARN, $"No metadata file selected. Please select an metadata file to continue.");
-                MessageBox.Show($"No metadata file selected. Please select an metadata file to continue.", "No Metadata File Selected");
-            }
-            else
-            {
-                try
-                {
-                    logForm.SendToLog(LogForm.LogType.INFO, $"Begin loading {selectMetadataFile_openFileDialog.FileName}, please wait ... ");
-                    //statusText.Text = "Loading sample metadata for column mapping, please wait ... ";
-
-                    using (var workbook = new XLWorkbook(selectMetadataFile_openFileDialog.FileName))
-                    {
-                        var worksheet = workbook.Worksheet(1);
-                        var headerRow = worksheet.FirstRowUsed();
-                        var sampleDataRow = headerRow.RowBelow();
-                        int columnCount = worksheet.RangeUsed().ColumnCount();
-
-                        //for (int i = 1; i <= columnCount; i++)
-                        //{
-                        //    int rowId = columnMappingDataGridView.Rows.Add();
-                        //    columnMappingDataGridView.Rows[rowId].Cells[columnNumberCol.Index].Value = i;
-                        //    columnMappingDataGridView.Rows[rowId].Cells[columnHeaderCol.Index].Value = headerRow.Cell(i).Value;
-
-                        //    var valueCell = sampleDataRow.Cell(i);
-                        //    columnMappingDataGridView.Rows[rowId].Cells[sampleDataCol.Index].Value = valueCell.GetFormattedString();
-                        //}
-                    }
-
-                    logForm.SendToLog(LogForm.LogType.INFO, $"Finished loading {selectMetadataFile_openFileDialog.FileName} .");
-                    //statusText.Text = "Sample metadata loaded.";
-                }
-                catch (IOException e)
-                {
-                    int errorCode = System.Runtime.InteropServices.Marshal.GetHRForException(e) & ((1 << 16) - 1);
-                    bool isFileLocked = (errorCode == 32 || errorCode == 33);
-
-                    if (isFileLocked)
-                    {
-                        logForm.SendToLog(LogForm.LogType.ERROR, $"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.");
-                        MessageBox.Show($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.",
-                                        "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-
-                        //selectMetadataFileTextBox.Text = String.Empty;
-                        selectMetadataFile_openFileDialog.FileName = String.Empty;
-                    }
-                    else
-                    {
-                        logForm.SendToLog(LogForm.LogType.ERROR, $"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.");
-                        MessageBox.Show("An I/O error occurred: " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
-
-                        //selectMetadataFileTextBox.Text = String.Empty;
-                        selectMetadataFile_openFileDialog.FileName = String.Empty;
-                    }
-                }
-
-            }
-
-        }
-
-        private void saveColumnMappings()
-        {
-            //foreach (DataGridViewRow row in columnMappingDataGridView.Rows)
-            //{
-            //    string key = row.Cells[0].Value?.ToString();
-            //    string value = row.Cells[3].Value?.ToString();
-
-            //    if (key != null && value != null)
-            //    {
-            //        mappedColumnsDict[key] = value;
-            //    }
-            //}
-
-            logForm.SendToLog(LogForm.LogType.INFO, $"Column mapping completed, the mapped columns are: ");
-
-            foreach (var dict in mappedColumnsDict)
-            {
-                logForm.SendToLog(LogForm.LogType.INFO, $"Column {dict.Key} is mapped to: {dict.Value} .");
-            }
-        }
-
         //private void loadIssueMetadata()
         //{
-        //    string selectedFileName = selectMetadataFile_openFileDialog.FileName;
+        //    string selectedFileName = importViaCSV_openFileDialog.FileName;
 
         //    if (selectedFileName == String.Empty || selectedFileName == "")
         //    {
@@ -124,9 +38,9 @@ namespace NewspaperBatchCreator
         //    {
         //        try
         //        {
-        //            logForm.SendToLog(LogForm.LogType.INFO, $"Begin loading all metadata from {selectMetadataFile_openFileDialog.FileName}, please wait ... ");
+        //            logForm.SendToLog(LogForm.LogType.INFO, $"Begin loading all metadata from {importViaCSV_openFileDialog.FileName}, please wait ... ");
 
-        //            using (var workbook = new XLWorkbook(selectMetadataFile_openFileDialog.FileName))
+        //            using (var workbook = new XLWorkbook(importViaCSV_openFileDialog.FileName))
         //            {
         //                var worksheet = workbook.Worksheet(1);
         //                var headerRow = worksheet.FirstRowUsed();
@@ -222,7 +136,7 @@ namespace NewspaperBatchCreator
         //                }
         //            }
 
-        //            logForm.SendToLog(LogForm.LogType.INFO, $"Finished loading metadata from {selectMetadataFile_openFileDialog.FileName} .");
+        //            logForm.SendToLog(LogForm.LogType.INFO, $"Finished loading metadata from {importViaCSV_openFileDialog.FileName} .");
         //        }
         //        catch (IOException e)
         //        {
@@ -231,20 +145,20 @@ namespace NewspaperBatchCreator
 
         //            if (isFileLocked)
         //            {
-        //                logForm.SendToLog(LogForm.LogType.ERROR, $"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.");
-        //                MessageBox.Show($"File {selectMetadataFile_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.",
+        //                logForm.SendToLog(LogForm.LogType.ERROR, $"File {importViaCSV_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.");
+        //                MessageBox.Show($"File {importViaCSV_openFileDialog.FileName} is currently in use. Please close any other applications that are using it and try again.",
         //                                "File In Use", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
-        //                selectMetadataFile_openFileDialog.FileName = String.Empty;
+        //                importViaCSV_openFileDialog.FileName = String.Empty;
         //                //selectMetadataFileTextBox.Text = "Sanity Test";
         //                MessageBox.Show("Does this not execute?");
         //            }
         //            else
         //            {
-        //                logForm.SendToLog(LogForm.LogType.ERROR, $"An I/O error occurred while opening file: {selectMetadataFile_openFileDialog.FileName}.");
+        //                logForm.SendToLog(LogForm.LogType.ERROR, $"An I/O error occurred while opening file: {importViaCSV_openFileDialog.FileName}.");
         //                MessageBox.Show("An I/O error occurred: " + e.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
 
-        //                selectMetadataFile_openFileDialog.FileName = String.Empty;
+        //                importViaCSV_openFileDialog.FileName = String.Empty;
         //                selectMetadataFileTextBox.Text = String.Empty;
         //            }
         //        }
@@ -279,45 +193,48 @@ namespace NewspaperBatchCreator
 
         #endregion
 
-        private void importAndCloseButton_Click(object sender, EventArgs e)
+        private void importViaCSVButton_Click(object sender, EventArgs e)
         {
-            saveColumnMappings();
-            //loadIssueMetadata();
-
-            //Properties.Settings.Default.LogFolder = true;
-            Properties.Settings.Default.Save();
-
-            mainForm.statusBar_MetadataLoaded.Text = $"Metadata loaded.";
-
-            //Enable load source files function:
-            //mainForm.browseButton.Enabled = true;
-
-            this.Hide();
-        }
-
-        private void selectMetadataFileButton_Click(object sender, EventArgs e)
-        {
-            if (selectMetadataFile_openFileDialog.ShowDialog() == DialogResult.OK)
+            if (importViaCSV_openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                //selectMetadataFileTextBox.Text = selectMetadataFile_openFileDialog.FileName;
-                loadColumnMappingSampleData();
+                metadataCsvFilePath = importViaCSV_openFileDialog.FileName;
+                utilities.ImportMetadataViaCSV(viewOrEditMetadataDataGridView, metadataCsvFilePath);
             }
             else
             {
-                //selectMetadataFileTextBox.Text = String.Empty;
+                metadataCsvFilePath = String.Empty;
+                importViaCSV_openFileDialog.FileName = String.Empty;
+                logForm.Logger(LogForm.LogType.WARN, $"No metadata CSV file selected.");
             }
         }
-
-        private void startOverButton_Click(object sender, EventArgs e)
+        private void resetButton_Click(object sender, EventArgs e)
         {
-            //columnMappingDataGridView.Rows.Clear();
-            //selectMetadataFileTextBox.Text = String.Empty;
-            selectMetadataFile_openFileDialog.FileName = String.Empty;
-        }
+            importViaCSV_openFileDialog.FileName = String.Empty;
+            viewOrEditMetadataDataGridView.Rows.Clear();
 
+        }
+        private void saveButton_Click(object sender, EventArgs e)
+        {
+
+        }
         private void closeButton_Click(object sender, EventArgs e)
         {
             this.Hide();
         }
+        private void ImportEditMetadataForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            viewOrEditMetadataDataGridView.ClearSelection();
+        }
+
+        private void viewOrEditMetadataDataGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            DataGridView.HitTestInfo clickLocation = viewOrEditMetadataDataGridView.HitTest(e.X, e.Y);
+
+            if (clickLocation.Type == DataGridViewHitTestType.None)
+            {
+                viewOrEditMetadataDataGridView.ClearSelection();
+            }
+        }
     }
 }
+

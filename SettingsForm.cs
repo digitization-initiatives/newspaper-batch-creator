@@ -34,22 +34,22 @@ namespace NewspaperBatchCreator
 
         private void browseOutputFolderButton_Click(object sender, EventArgs e)
         {
-            if (selectOutputFolder_folderBrowserDialog.ShowDialog() == DialogResult.OK)
-            {
+            //if (selectOutputFolder_folderBrowserDialog.ShowDialog() == DialogResult.OK)
+            //{
                 //outputFolderTextBox.Text = selectOutputFolder_folderBrowserDialog.SelectedPath;
                 //Properties.Settings.Default.SourceFolder = selectOutputFolder_folderBrowserDialog.SelectedPath;
-                Properties.Settings.Default.Save();
+                //Properties.Settings.Default.Save();
 
                 //logForm.SendToLog(LogForm.LogType.INFO, $"Output folder set to: {Properties.Settings.Default.SourceFolder}.");
-            }
-            else
-            {
+            //}
+            //else
+            //{
                 //outputFolderTextBox.Text = Environment.CurrentDirectory;
                 //Properties.Settings.Default.SourceFolder = Environment.CurrentDirectory;
-                Properties.Settings.Default.Save();
+                //Properties.Settings.Default.Save();
 
                 //logForm.SendToLog(LogForm.LogType.INFO, $"Output folder set to: {Properties.Settings.Default.SourceFolder}.");
-            }
+            //}
         }
 
         private void saveAndCloseButton_Click(object sender, EventArgs e)

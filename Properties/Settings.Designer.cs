@@ -25,7 +25,7 @@ namespace NewspaperBatchCreator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\".\\output\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string OutputFolder {
             get {
                 return ((string)(this["OutputFolder"]));
@@ -37,13 +37,25 @@ namespace NewspaperBatchCreator.Properties {
         
         [global::System.Configuration.UserScopedSettingAttribute()]
         [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
-        [global::System.Configuration.DefaultSettingValueAttribute("\".\\log\"")]
+        [global::System.Configuration.DefaultSettingValueAttribute("")]
         public string LogFolder {
             get {
                 return ((string)(this["LogFolder"]));
             }
             set {
                 this["LogFolder"] = value;
+            }
+        }
+        
+        [global::System.Configuration.UserScopedSettingAttribute()]
+        [global::System.Diagnostics.DebuggerNonUserCodeAttribute()]
+        [global::System.Configuration.DefaultSettingValueAttribute("False")]
+        public bool MetadataHasQuotes {
+            get {
+                return ((bool)(this["MetadataHasQuotes"]));
+            }
+            set {
+                this["MetadataHasQuotes"] = value;
             }
         }
     }
