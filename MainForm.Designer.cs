@@ -314,51 +314,27 @@ namespace NewspaperBatchCreator
             issueMetadata = new Dictionary<string, Issue>();
 
             //Disable buttons upon application startup:
-            //browseButton.Enabled = true;
-            //addFilesButton.Enabled = false;
             createBatchButton.Enabled = false;
-
-            //Load LCCN selection ComboBox items:
-            //loadLccnComboBoxItems();
-            //selectLccnComboBox.SelectedIndexChanged += lccnComboBox_SelectedIndexChanged;
 
             //Set ListView properties:
             sourceFilesListFilenameCol.Width = sourceFilesListView.Width - 150;
             sourceFilesListStatusCol.Width = 100;
 
-            //Initialize other resources:
-            //destinationFileStructure = new List<DestinationFilesStructure>();
-            //batch_XML_Issue_Elements = new Dictionary<string, Batch_XML_Issue_Element>();
-            //issueFilesInformation = new Dictionary<string, IssueFilesInformation>();
-
-            InitializeSettings();
+            SetDefaultSettings();
         }
 
-        private void InitializeSettings()
+        private void SetDefaultSettings()
         {
-            //Properties.Settings.Default.SeletedLccn = String.Empty;
-            //Properties.Settings.Default.SourceFolder = Environment.CurrentDirectory;
-            Properties.Settings.Default.OutputFolder = String.Empty;
-            //Properties.Settings.Default.Awardee = "txa";
-            //Properties.Settings.Default.AwardYear = String.Empty;
-            //Properties.Settings.Default.LogFolder = false;
-            //Properties.Settings.Default.SourceFilesLoaded = false;
-
-            //settingsForm.editionOrderComboBox.SelectedIndex = 0;
-            //Properties.Settings.Default.EditionOrder = settingsForm.editionOrderComboBox.SelectedItem?.ToString();
-
-            //settingsForm.outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
-            //settingsForm.selectOutputFolder_folderBrowserDialog.SelectedPath = Properties.Settings.Default.SourceFolder;
-
+            Properties.Settings.Default.OutputFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "output");
+            Properties.Settings.Default.LogFolder = Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "log");
+            Properties.Settings.Default.MetadataHasQuotes = false;
+            
             Properties.Settings.Default.Save();
 
             //Print current default settings to logs:
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"SelectedLccn\" is set to: {Properties.Settings.Default.SeletedLccn}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"OutputFolder\" is set to: {Properties.Settings.Default.SourceFolder}");
-            logForm.SendToLog(LogForm.LogType.INFO, $"\"SourceFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"Awardee\" is set to: {Properties.Settings.Default.Awardee}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"AwardYear\" is set to: {Properties.Settings.Default.AwardYear}");
-            //logForm.SendToLog(LogForm.LogType.INFO, $"\"EditionOrder\" is set to: {Properties.Settings.Default.EditionOrder}");
+            logForm.Logger(LogForm.LogType.INFO, $"\"OutputFolder\" is set to: {Properties.Settings.Default.OutputFolder}");
+            logForm.Logger(LogForm.LogType.INFO, $"\"LogFolder\" is set to: {Properties.Settings.Default.LogFolder}");
+            logForm.Logger(LogForm.LogType.INFO, $"\"MetadataHasQuotes\" is set to: {Properties.Settings.Default.MetadataHasQuotes}");
         }
 
         #endregion

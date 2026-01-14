@@ -1,5 +1,6 @@
 ﻿using NewspaperBatchCreator.src;
 using System.Drawing.Interop;
+using System.Windows.Forms;
 
 namespace NewspaperBatchCreator
 {
@@ -31,17 +32,18 @@ namespace NewspaperBatchCreator
         /// </summary>
         private void InitializeComponent()
         {
-            //selectOutputFolder_folderBrowserDialog = new FolderBrowserDialog();
             closeButton = new Button();
             selectMetadataFile_folderBrowserDialog = new FolderBrowserDialog();
             settingsStatusStrip = new StatusStrip();
             saveButton = new Button();
             settingsTabControl = new TabControl();
             tabPage1 = new TabPage();
+            settingsPropertyGrid = new PropertyGrid();
             tabPage2 = new TabPage();
             tabPage3 = new TabPage();
             resetToDefaultButton = new Button();
             settingsTabControl.SuspendLayout();
+            tabPage1.SuspendLayout();
             SuspendLayout();
             // 
             // closeButton
@@ -89,6 +91,7 @@ namespace NewspaperBatchCreator
             // 
             // tabPage1
             // 
+            tabPage1.Controls.Add(settingsPropertyGrid);
             tabPage1.Location = new Point(4, 24);
             tabPage1.Name = "tabPage1";
             tabPage1.Padding = new Padding(3);
@@ -96,6 +99,19 @@ namespace NewspaperBatchCreator
             tabPage1.TabIndex = 0;
             tabPage1.Text = "Settings";
             tabPage1.UseVisualStyleBackColor = true;
+            // 
+            // settingsPropertyGrid
+            // 
+            settingsPropertyGrid.BackColor = SystemColors.Control;
+            settingsPropertyGrid.CategoryForeColor = SystemColors.ButtonFace;
+            settingsPropertyGrid.CommandsBorderColor = SystemColors.ControlLight;
+            settingsPropertyGrid.DisabledItemForeColor = SystemColors.Control;
+            settingsPropertyGrid.LineColor = SystemColors.ControlLight;
+            settingsPropertyGrid.Location = new Point(6, 6);
+            settingsPropertyGrid.Name = "settingsPropertyGrid";
+            settingsPropertyGrid.Size = new Size(1062, 408);
+            settingsPropertyGrid.TabIndex = 0;
+            settingsPropertyGrid.ViewBackColor = SystemColors.ControlLightLight;
             // 
             // tabPage2
             // 
@@ -144,6 +160,7 @@ namespace NewspaperBatchCreator
             Name = "SettingsForm";
             Text = "Settings";
             settingsTabControl.ResumeLayout(false);
+            tabPage1.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -151,6 +168,11 @@ namespace NewspaperBatchCreator
         #endregion
 
         #region Custom Initializations
+        protected override void OnShown(EventArgs e)
+        {
+            base.OnShown(e);
+            this.ActiveControl = null;
+        }
 
         private MainForm mainForm;
         private LogForm logForm;
@@ -162,12 +184,11 @@ namespace NewspaperBatchCreator
             //Custom form start location:
             this.StartPosition = FormStartPosition.Manual;
 
-            //selectLccnComboBox.SelectedIndex = 0;
-            //selectLccnComboBox.Visible = false;
-            settingsTabControl.SelectedIndexChanged += settingsTabControl_SelectedIndexChanged;
+            settingsPropertyGrid.SelectedObject = Properties.Settings.Default;
 
-            //outputFolderTextBox.Text = Properties.Settings.Default.OutputFolder;
-            //batchTypeComboBox.SelectedIndex = 0;
+            PropertyGridSplitter.SetSplitterByRatio(settingsPropertyGrid, 0.30);
+
+            settingsTabControl.SelectedIndexChanged += settingsTabControl_SelectedIndexChanged;
         }
 
         #endregion Custom Initializations
@@ -181,5 +202,6 @@ namespace NewspaperBatchCreator
         private TabPage tabPage2;
         private TabPage tabPage3;
         private Button resetToDefaultButton;
+        private PropertyGrid settingsPropertyGrid;
     }
 }

@@ -224,6 +224,7 @@ namespace NewspaperBatchCreator
         }
         private void closeButton_Click(object sender, EventArgs e)
         {
+            utilities.UpdateMetadata_Items(viewOrEditMetadataDataGridView);
             this.Hide();
         }
         private void ImportEditMetadataForm_MouseDown(object sender, MouseEventArgs e)
