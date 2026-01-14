@@ -33,10 +33,10 @@ namespace NewspaperBatchCreator
         {
             importViaCSV_openFileDialog = new OpenFileDialog();
             importEditMetadataStatusStrip = new StatusStrip();
-            importMetadataStatus = new ToolStripStatusLabel();
+            metadataCsvFilePathStatus = new ToolStripStatusLabel();
             statusLabelDivider = new ToolStripStatusLabel();
-            numberOfMetadataImportedStatusLabel = new ToolStripStatusLabel();
-            numberOfMetadataImported = new ToolStripStatusLabel();
+            numberOfItemsAddedStatusLabel = new ToolStripStatusLabel();
+            numberOfItemsAdded = new ToolStripStatusLabel();
             importViaCSVButton = new Button();
             viewOrEditMetadataDataGridView = new DataGridView();
             viewOrEditMetadataDataGridView_itemCol = new DataGridViewTextBoxColumn();
@@ -60,7 +60,7 @@ namespace NewspaperBatchCreator
             // importEditMetadataStatusStrip
             // 
             importEditMetadataStatusStrip.ImageScalingSize = new Size(20, 20);
-            importEditMetadataStatusStrip.Items.AddRange(new ToolStripItem[] { importMetadataStatus, statusLabelDivider, numberOfMetadataImportedStatusLabel, numberOfMetadataImported });
+            importEditMetadataStatusStrip.Items.AddRange(new ToolStripItem[] { metadataCsvFilePathStatus, statusLabelDivider, numberOfItemsAddedStatusLabel, numberOfItemsAdded });
             importEditMetadataStatusStrip.Location = new Point(0, 489);
             importEditMetadataStatusStrip.Name = "importEditMetadataStatusStrip";
             importEditMetadataStatusStrip.Padding = new Padding(1, 0, 12, 0);
@@ -68,11 +68,11 @@ namespace NewspaperBatchCreator
             importEditMetadataStatusStrip.TabIndex = 45;
             importEditMetadataStatusStrip.Text = "statusStrip1";
             // 
-            // importMetadataStatus
+            // metadataCsvFilePathStatus
             // 
-            importMetadataStatus.Name = "importMetadataStatus";
-            importMetadataStatus.Size = new Size(144, 17);
-            importMetadataStatus.Text = "No metadata file selected.";
+            metadataCsvFilePathStatus.Name = "metadataCsvFilePathStatus";
+            metadataCsvFilePathStatus.Size = new Size(144, 17);
+            metadataCsvFilePathStatus.Text = "No metadata file selected.";
             // 
             // statusLabelDivider
             // 
@@ -80,17 +80,17 @@ namespace NewspaperBatchCreator
             statusLabelDivider.Size = new Size(16, 17);
             statusLabelDivider.Text = " | ";
             // 
-            // numberOfMetadataImportedStatusLabel
+            // numberOfItemsAddedStatusLabel
             // 
-            numberOfMetadataImportedStatusLabel.Name = "numberOfMetadataImportedStatusLabel";
-            numberOfMetadataImportedStatusLabel.Size = new Size(173, 17);
-            numberOfMetadataImportedStatusLabel.Text = "Number of metadata imported:";
+            numberOfItemsAddedStatusLabel.Name = "numberOfItemsAddedStatusLabel";
+            numberOfItemsAddedStatusLabel.Size = new Size(173, 17);
+            numberOfItemsAddedStatusLabel.Text = "Number of metadata imported:";
             // 
-            // numberOfMetadataImported
+            // numberOfItemsAdded
             // 
-            numberOfMetadataImported.Name = "numberOfMetadataImported";
-            numberOfMetadataImported.Size = new Size(12, 17);
-            numberOfMetadataImported.Text = "-";
+            numberOfItemsAdded.Name = "numberOfItemsAdded";
+            numberOfItemsAdded.Size = new Size(12, 17);
+            numberOfItemsAdded.Text = "-";
             // 
             // importViaCSVButton
             // 
@@ -253,13 +253,17 @@ namespace NewspaperBatchCreator
             viewOrEditMetadataDataGridView.Columns[5].Width = lastFourColumnsWidth; //pages
 
             viewOrEditMetadataDataGridView.MouseDown += viewOrEditMetadataDataGridView_MouseDown;
+            viewOrEditMetadataDataGridView.RowsAdded += viewOrEditMetadataDataGridView_RowsChanged;
+            viewOrEditMetadataDataGridView.RowsRemoved += viewOrEditMetadataDataGridView_RowsChanged;
+            viewOrEditMetadataDataGridView.CellValueChanged += viewOrEditMetadataDataGridView_RowsChanged;
+            viewOrEditMetadataDataGridView.CurrentCellDirtyStateChanged += viewOrEditMetadataDataGridView_CurrentCellDirtyStateChanged;
         }
 
         #endregion Custom Initialization
         private StatusStrip importEditMetadataStatusStrip;
-        private ToolStripStatusLabel numberOfMetadataImportedStatusLabel;
-        private ToolStripStatusLabel numberOfMetadataImported;
-        private ToolStripStatusLabel importMetadataStatus;
+        private ToolStripStatusLabel numberOfItemsAddedStatusLabel;
+        private ToolStripStatusLabel numberOfItemsAdded;
+        private ToolStripStatusLabel metadataCsvFilePathStatus;
         private ToolStripStatusLabel statusLabelDivider;
         private Button importViaCSVButton;
         private DataGridView viewOrEditMetadataDataGridView;

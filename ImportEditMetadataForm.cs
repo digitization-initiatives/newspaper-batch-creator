@@ -198,7 +198,12 @@ namespace NewspaperBatchCreator
             if (importViaCSV_openFileDialog.ShowDialog() == DialogResult.OK)
             {
                 metadataCsvFilePath = importViaCSV_openFileDialog.FileName;
+                metadataCsvFilePathStatus.Text = metadataCsvFilePath;
+
                 utilities.ImportMetadataViaCSV(viewOrEditMetadataDataGridView, metadataCsvFilePath);
+
+                int numberOfItemsAddedCount = viewOrEditMetadataDataGridView.Rows.Cast<DataGridViewRow>().Count(row => !row.IsNewRow);
+                numberOfItemsAdded.Text = numberOfItemsAddedCount.ToString();
             }
             else
             {
@@ -233,6 +238,20 @@ namespace NewspaperBatchCreator
             if (clickLocation.Type == DataGridViewHitTestType.None)
             {
                 viewOrEditMetadataDataGridView.ClearSelection();
+            }
+        }
+
+        private void viewOrEditMetadataDataGridView_RowsChanged(object sender, EventArgs e)
+        {
+            int numberOfItemsAddedCount = viewOrEditMetadataDataGridView.Rows.Cast<DataGridViewRow>().Count(row => !row.IsNewRow);
+            numberOfItemsAdded.Text = numberOfItemsAddedCount.ToString();
+        }
+
+        private void viewOrEditMetadataDataGridView_CurrentCellDirtyStateChanged(object sender, EventArgs e)
+        {
+            if (viewOrEditMetadataDataGridView.IsCurrentCellDirty)
+            {
+                viewOrEditMetadataDataGridView.CommitEdit(DataGridViewDataErrorContexts.Commit);
             }
         }
     }

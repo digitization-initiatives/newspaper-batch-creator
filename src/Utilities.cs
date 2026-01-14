@@ -60,7 +60,6 @@ namespace NewspaperBatchCreator.src
                 return true;
             }
         }
-
         public void ImportMetadataViaCSV(DataGridView viewOrEditMetadataDataGridView, string metadataCsvFilePath)
         {
             if (IsFileReadable(metadataCsvFilePath))
