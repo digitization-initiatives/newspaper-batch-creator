@@ -30,18 +30,19 @@ namespace NewspaperBatchCreator
         /// </summary>
         private void InitializeComponent()
         {
+            DataGridViewCellStyle dataGridViewCellStyle1 = new DataGridViewCellStyle();
             hideButton = new Button();
             clearButton = new Button();
             viewFullLogsButton = new Button();
             pauseLogMonitoringCheckbox = new CheckBox();
+            logFormStatusStrip = new StatusStrip();
+            maxLogEntryStatusStripLabel = new ToolStripStatusLabel();
             logEntryDataGridView = new DataGridView();
             logTimestampCol = new DataGridViewTextBoxColumn();
             logTypeCol = new DataGridViewTextBoxColumn();
             logMessageCol = new DataGridViewTextBoxColumn();
-            logFormStatusStrip = new StatusStrip();
-            maxLogEntryStatusStripLabel = new ToolStripStatusLabel();
-            ((System.ComponentModel.ISupportInitialize)logEntryDataGridView).BeginInit();
             logFormStatusStrip.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)logEntryDataGridView).BeginInit();
             SuspendLayout();
             // 
             // hideButton
@@ -88,44 +89,6 @@ namespace NewspaperBatchCreator
             pauseLogMonitoringCheckbox.Text = "Pause Log Monitoring";
             pauseLogMonitoringCheckbox.UseVisualStyleBackColor = true;
             // 
-            // logEntryDataGridView
-            // 
-            logEntryDataGridView.AllowUserToAddRows = false;
-            logEntryDataGridView.AllowUserToDeleteRows = false;
-            logEntryDataGridView.AllowUserToResizeColumns = false;
-            logEntryDataGridView.AllowUserToResizeRows = false;
-            logEntryDataGridView.Anchor = AnchorStyles.Top | AnchorStyles.Bottom | AnchorStyles.Left | AnchorStyles.Right;
-            logEntryDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            logEntryDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            logEntryDataGridView.Columns.AddRange(new DataGridViewColumn[] { logTimestampCol, logTypeCol, logMessageCol });
-            logEntryDataGridView.Location = new Point(10, 9);
-            logEntryDataGridView.Margin = new Padding(3, 2, 3, 2);
-            logEntryDataGridView.Name = "logEntryDataGridView";
-            logEntryDataGridView.RowHeadersWidth = 51;
-            logEntryDataGridView.Size = new Size(859, 448);
-            logEntryDataGridView.TabIndex = 5;
-            // 
-            // logTimestampCol
-            // 
-            logTimestampCol.HeaderText = "Timestamp";
-            logTimestampCol.MinimumWidth = 6;
-            logTimestampCol.Name = "logTimestampCol";
-            logTimestampCol.Width = 125;
-            // 
-            // logTypeCol
-            // 
-            logTypeCol.HeaderText = "Type";
-            logTypeCol.MinimumWidth = 6;
-            logTypeCol.Name = "logTypeCol";
-            logTypeCol.Width = 125;
-            // 
-            // logMessageCol
-            // 
-            logMessageCol.HeaderText = "Log Message";
-            logMessageCol.MinimumWidth = 6;
-            logMessageCol.Name = "logMessageCol";
-            logMessageCol.Width = 125;
-            // 
             // logFormStatusStrip
             // 
             logFormStatusStrip.ImageScalingSize = new Size(20, 20);
@@ -143,14 +106,57 @@ namespace NewspaperBatchCreator
             maxLogEntryStatusStripLabel.Size = new Size(257, 17);
             maxLogEntryStatusStripLabel.Text = "Only the most recent 500 log entries are shown.";
             // 
+            // logEntryDataGridView
+            // 
+            logEntryDataGridView.AllowUserToAddRows = false;
+            logEntryDataGridView.AllowUserToDeleteRows = false;
+            logEntryDataGridView.AllowUserToResizeColumns = false;
+            logEntryDataGridView.AllowUserToResizeRows = false;
+            logEntryDataGridView.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            logEntryDataGridView.BackgroundColor = Color.White;
+            logEntryDataGridView.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            logEntryDataGridView.Columns.AddRange(new DataGridViewColumn[] { logTimestampCol, logTypeCol, logMessageCol });
+            dataGridViewCellStyle1.Alignment = DataGridViewContentAlignment.TopLeft;
+            dataGridViewCellStyle1.BackColor = SystemColors.Window;
+            dataGridViewCellStyle1.Font = new Font("Segoe UI", 9F);
+            dataGridViewCellStyle1.ForeColor = SystemColors.ControlText;
+            dataGridViewCellStyle1.SelectionBackColor = SystemColors.Highlight;
+            dataGridViewCellStyle1.SelectionForeColor = SystemColors.HighlightText;
+            dataGridViewCellStyle1.WrapMode = DataGridViewTriState.True;
+            logEntryDataGridView.DefaultCellStyle = dataGridViewCellStyle1;
+            logEntryDataGridView.Location = new Point(10, 12);
+            logEntryDataGridView.Name = "logEntryDataGridView";
+            logEntryDataGridView.ReadOnly = true;
+            logEntryDataGridView.ScrollBars = ScrollBars.Vertical;
+            logEntryDataGridView.Size = new Size(860, 444);
+            logEntryDataGridView.TabIndex = 7;
+            // 
+            // logTimestampCol
+            // 
+            logTimestampCol.HeaderText = "Timestamp";
+            logTimestampCol.Name = "logTimestampCol";
+            logTimestampCol.ReadOnly = true;
+            // 
+            // logTypeCol
+            // 
+            logTypeCol.HeaderText = "Type";
+            logTypeCol.Name = "logTypeCol";
+            logTypeCol.ReadOnly = true;
+            // 
+            // logMessageCol
+            // 
+            logMessageCol.HeaderText = "Log Message";
+            logMessageCol.Name = "logMessageCol";
+            logMessageCol.ReadOnly = true;
+            // 
             // LogForm
             // 
             AutoScaleDimensions = new SizeF(7F, 15F);
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(882, 511);
             ControlBox = false;
-            Controls.Add(logFormStatusStrip);
             Controls.Add(logEntryDataGridView);
+            Controls.Add(logFormStatusStrip);
             Controls.Add(pauseLogMonitoringCheckbox);
             Controls.Add(viewFullLogsButton);
             Controls.Add(clearButton);
@@ -160,9 +166,9 @@ namespace NewspaperBatchCreator
             MinimumSize = new Size(898, 550);
             Name = "LogForm";
             Text = "View Logs";
-            ((System.ComponentModel.ISupportInitialize)logEntryDataGridView).EndInit();
             logFormStatusStrip.ResumeLayout(false);
             logFormStatusStrip.PerformLayout();
+            ((System.ComponentModel.ISupportInitialize)logEntryDataGridView).EndInit();
             ResumeLayout(false);
             PerformLayout();
         }
@@ -193,29 +199,32 @@ namespace NewspaperBatchCreator
 
             this.Click += LogForm_Click;
 
-            // Set log monitoring window column size:
+            //Clear selection when MouseDown:
+            this.MouseDown += LogForm_MouseDown;
+
+            //Customize logEntryDataGridView:
+            logEntryDataGridView.MouseDown += LogEntryDataGridView_MouseDown;
             logTimestampCol.Width = 150;
             logTypeCol.Width = 60;
-            logMessageCol.Width = logEntryDataGridView.Width - logTimestampCol.Width - logTypeCol.Width - 3;
+            logMessageCol.Width = logEntryDataGridView.Width - logTimestampCol.Width - logTypeCol.Width - 40;
 
             // Define cell text alignment:
             logTimestampCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopLeft;
             logTypeCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopCenter;
             logMessageCol.DefaultCellStyle.Alignment = DataGridViewContentAlignment.TopLeft;
 
-
             maxLogEntryStatusStripLabel.Text = $"Only the most recent {MAX_LOG_ROWS} log entries are shown.";
 
             // Initialize log file:
-            //Properties.Settings.Default.MetadataLoaded = Path.GetFullPath(".") + "\\logs";
+            //Properties.Settings.Default.LogFolder = Path.GetFullPath(".") + "\\logs";
 
-            logFileName = $"ocr_{DateTime.Now:yyyyMMdd_HHmmss}.log";
-            //logFileFullPath = Path.Combine(Properties.Settings.Default.MetadataLoaded, logFileName);
+            //logFileName = $"batch_{DateTime.Now:yyyyMMdd_HHmmss}.log";
+            //logFileFullPath = Path.Combine(Properties.Settings.Default.LogFolder, logFileName);
 
-            //if (!Directory.Exists(Properties.Settings.Default.MetadataLoaded))
-            {
-                //Directory.CreateDirectory(Properties.Settings.Default.MetadataLoaded);
-            }
+            //if (!Directory.Exists(Properties.Settings.Default.LogFolder))
+            //{
+            //    Directory.CreateDirectory(Properties.Settings.Default.LogFolder);
+            //}
 
             //File.WriteAllText(logFileFullPath, String.Empty);
         }
@@ -226,11 +235,11 @@ namespace NewspaperBatchCreator
         private Button clearButton;
         private Button viewFullLogsButton;
         private CheckBox pauseLogMonitoringCheckbox;
+        private StatusStrip logFormStatusStrip;
+        private ToolStripStatusLabel maxLogEntryStatusStripLabel;
         private DataGridView logEntryDataGridView;
         private DataGridViewTextBoxColumn logTimestampCol;
         private DataGridViewTextBoxColumn logTypeCol;
         private DataGridViewTextBoxColumn logMessageCol;
-        private StatusStrip logFormStatusStrip;
-        private ToolStripStatusLabel maxLogEntryStatusStripLabel;
     }
 }

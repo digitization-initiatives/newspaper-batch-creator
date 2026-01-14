@@ -230,7 +230,7 @@ namespace NewspaperBatchCreator
             //Custom form start location:
             this.StartPosition = FormStartPosition.Manual;
 
-            //Add clear selection when MouseDown:
+            //Clear selection when MouseDown:
             this.MouseDown += ImportEditMetadataForm_MouseDown;
 
             //Initialize openFileDialog:

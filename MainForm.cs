@@ -17,7 +17,7 @@ namespace NewspaperBatchCreator
             InitializeComponent();
             CustomInitialization();
         }
-
+        
         #region Custom Methods
         //private void loadLccnComboBoxItems()
         //{
@@ -715,7 +715,7 @@ namespace NewspaperBatchCreator
             metadataLoaded = false;
 
             sourceFilesListView.Items.Clear();
-            
+
             createBatchButton.Enabled = false;
             statusBar_NumberOfFilesAddedFrom.Text = $"{sourceFilesListView.Items.Count} files loaded.";
         }
@@ -758,6 +758,11 @@ namespace NewspaperBatchCreator
             }
 
             utilities.ExportMetadataTemplate(exportMetadataTemplate_saveFileDialog.FileName);
+        }
+
+        private void createBatchButton_Click(object sender, EventArgs e)
+        {
+
         }
     }
 }

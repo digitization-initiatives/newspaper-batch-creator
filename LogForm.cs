@@ -51,44 +51,12 @@ namespace NewspaperBatchCreator
 
             //File.AppendAllText(logFileFullPath, messageEntry);
         }
-
-        public void SendToLog(string logType, string logMessage)
-        {
-            if (InvokeRequired)
-            {
-                Invoke(new Action(() => SendToLog(logType, logMessage)));
-                return;
-            }
-
-            // Handle log monitoring UI:
-            if (!pauseLogMonitoringCheckbox.Checked)
-            {
-                int rowIndex = logEntryDataGridView.Rows.Add(GetTimestamp(), logType, logMessage);
-                logEntryDataGridView.FirstDisplayedScrollingRowIndex = logEntryDataGridView.Rows.Count - 1;
-            }
-
-            if (logEntryDataGridView.Rows.Count > MAX_LOG_ROWS)
-            {
-                logEntryDataGridView.Rows.RemoveAt(0);
-            }
-
-            // Handle writing to log file:
-            string messageEntry = $"{GetTimestamp()} - {logType} - {logMessage}" + Environment.NewLine;
-
-            //File.AppendAllText(logFileFullPath, messageEntry);
-        }
-
+        
         private void clearButton_Click(object sender, EventArgs e)
         {
             logEntryDataGridView.Rows.Clear();
             logEntryDataGridView.Refresh();
         }
-
-        private void LogForm_Click(object sender, EventArgs e)
-        {
-            logEntryDataGridView.ClearSelection();
-        }
-
         private void viewFullLogsButton_Click(object sender, EventArgs e)
         {
             try
@@ -97,14 +65,29 @@ namespace NewspaperBatchCreator
             }
             catch (Exception err)
             {
-                SendToLog(LogType.ERROR, err.Message);
+                Logger(LogType.ERROR, err.Message);
             }
         }
-
         private void hideButton_Click(object sender, EventArgs e)
         {
             this.Hide();
-            //mainForm.viewLogsButton.Text = "View Logs";
+        }
+        private void LogForm_Click(object sender, EventArgs e)
+        {
+            logEntryDataGridView.ClearSelection();
+        }
+        private void LogForm_MouseDown(object sender, MouseEventArgs e)
+        {
+            logEntryDataGridView.ClearSelection();
+        }
+        private void LogEntryDataGridView_MouseDown(object sender, MouseEventArgs e)
+        {
+            DataGridView.HitTestInfo clickLocation = logEntryDataGridView.HitTest(e.X, e.Y);
+
+            if (clickLocation.Type == DataGridViewHitTestType.None)
+            {
+                logEntryDataGridView.ClearSelection();
+            }
         }
     }
 }

@@ -131,7 +131,10 @@ namespace NewspaperBatchCreator.src
                     newIssue.PAGES = 0;
                 }
 
-                mainForm.issueMetadata.Add(item, newIssue);
+                if (!mainForm.issueMetadata.ContainsKey(item))
+                {
+                    mainForm.issueMetadata.Add(item, newIssue);
+                }
 
                 logForm.Logger(LogForm.LogType.INFO, $"Item \"{item} -->" +
                     $"{newIssue.ITEM} - {newIssue.DATE_ISSUED} - Vol. {newIssue.VOLUME} - No. {newIssue.ISSUE} - Edition {newIssue.EDITION} - {newIssue.PAGES} pages\" loaded.");

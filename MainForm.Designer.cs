@@ -105,6 +105,7 @@ namespace NewspaperBatchCreator
             createBatchButton.TabIndex = 12;
             createBatchButton.Text = "Create Batch";
             createBatchButton.UseVisualStyleBackColor = true;
+            createBatchButton.Click += createBatchButton_Click;
             // 
             // sourceFilesListView
             // 
@@ -245,12 +246,21 @@ namespace NewspaperBatchCreator
         #endregion
 
         #region Custom Initializations
-
+        
         //Override default OnShown behavior:
         protected override void OnShown(EventArgs e)
         {
             base.OnShown(e);
             this.ActiveControl = null;
+        }
+        protected override void WndProc(ref Message m)
+        {
+            int WM_PARENTNOTIFY = 0x0210;
+            if (!this.Focused && m.Msg == WM_PARENTNOTIFY)
+            {
+                this.Activate();
+            }
+            base.WndProc(ref m);
         }
 
         //Item status definitions:
