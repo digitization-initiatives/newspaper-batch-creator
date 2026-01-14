@@ -265,7 +265,7 @@ namespace NewspaperBatchCreator
 
         internal Utilities utilities;
 
-        internal Dictionary<string, Issue> metadata;
+        internal Dictionary<string, Issue> issueMetadata;
 
         //List<DestinationFilesStructure> destinationFileStructure;
         //Dictionary<string, Batch_XML_Issue_Element> batch_XML_Issue_Elements;
@@ -298,7 +298,10 @@ namespace NewspaperBatchCreator
             //Initialize components:
 
             //Initialize utilities:
-            utilities = new Utilities(this.logForm);
+            utilities = new Utilities(this, logForm);
+
+            //Initialize issueMetadata:
+            issueMetadata = new Dictionary<string, Issue>();
 
             //Disable buttons upon application startup:
             //browseButton.Enabled = true;

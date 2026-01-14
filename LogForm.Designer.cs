@@ -188,6 +188,9 @@ namespace NewspaperBatchCreator
 
         private void CustomInitialization()
         {
+            //Custom form start location:
+            this.StartPosition = FormStartPosition.Manual;
+
             this.Click += LogForm_Click;
 
             // Set log monitoring window column size:

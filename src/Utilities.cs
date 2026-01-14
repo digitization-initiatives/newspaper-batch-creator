@@ -9,10 +9,12 @@ namespace NewspaperBatchCreator.src
 {
     internal class Utilities
     {
+        private MainForm mainForm;
         private LogForm logForm;
 
-        internal Utilities(LogForm _logForm)
+        internal Utilities(MainForm _mainForm, LogForm _logForm)
         {
+            mainForm = _mainForm;
             logForm = _logForm;
         }
 
@@ -50,7 +52,7 @@ namespace NewspaperBatchCreator.src
                     // Test if file is in-use by another process.
                 }
 
-                logForm.Logger(LogForm.LogType.INFO, $"${filePath} is accessible.");
+                logForm.Logger(LogForm.LogType.INFO, $"{filePath} is accessible.");
                 return false;
             }
             catch (IOException)
@@ -104,6 +106,37 @@ namespace NewspaperBatchCreator.src
             }
         }
 
+        // Ingest item information from DataGridView to issueMetadata :
+        public void UpdateMetadata_Items(DataGridView viewOrEditMetadataDataGridView)
+        {
+            foreach (DataGridViewRow row in viewOrEditMetadataDataGridView.Rows)
+            {
+                if (row.IsNewRow) continue;
+
+                string item = row.Cells[0].Value?.ToString() ?? String.Empty;
+                Issue newIssue = new Issue();
+                newIssue.ITEM = item;
+                newIssue.DATE_ISSUED = row.Cells[1].Value?.ToString() ?? String.Empty;
+                newIssue.VOLUME = row.Cells[2].Value?.ToString() ?? String.Empty;
+                newIssue.ISSUE = row.Cells[3].Value?.ToString() ?? String.Empty;
+                newIssue.EDITION = row.Cells[4].Value?.ToString() ?? String.Empty;
+
+                int pages = 0;
+                if (int.TryParse(row.Cells[5].Value?.ToString() ?? String.Empty, out pages))
+                {
+                    newIssue.PAGES = pages;
+                }
+                else
+                {
+                    newIssue.PAGES = 0;
+                }
+
+                mainForm.issueMetadata.Add(item, newIssue);
+
+                logForm.Logger(LogForm.LogType.INFO, $"Item \"{item} -->" +
+                    $"{newIssue.ITEM} - {newIssue.DATE_ISSUED} - Vol. {newIssue.VOLUME} - No. {newIssue.ISSUE} - Edition {newIssue.EDITION} - {newIssue.PAGES} pages\" loaded.");
+            }
+        }
 
         //Validate if there is metadata for all the source files:
         //private void HaveMetadata()

@@ -220,7 +220,7 @@ namespace NewspaperBatchCreator
         }
         private void saveButton_Click(object sender, EventArgs e)
         {
-
+            utilities.UpdateMetadata_Items(viewOrEditMetadataDataGridView);
         }
         private void closeButton_Click(object sender, EventArgs e)
         {

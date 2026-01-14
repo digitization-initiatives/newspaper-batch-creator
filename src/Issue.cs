@@ -33,18 +33,14 @@ namespace NewspaperBatchCreator.src
         public string AGENCY_RESPONSIBLE_FOR_PRODUCTION { get; set; }
         public string AGENCY_RESPONSIBLE_FOR_PRODUCTION_DISPLAY_LABEL { get; set; }
 
-        // mixserviceFile :
+        // mixserviceFile and pageFileGrp :
         public string COMPRESSION_SCHEME { get; set; }
         public string SAMPLING_FREQUENCY_UNIT { get; set; }
         public int X_SAMPLING_FREQUENCY { get; set; }
         public int Y_SAMPLING_FREQUENCY { get; set; }
-
-        //
         public List<Jp2FileAttributes> JP2_FILES { get; set; }
         public List<string> PDF_FILES { get; set; }
         public List<string> XML_FILES { get; set; }
-
-
 
         public Issue()
         {

@@ -240,7 +240,7 @@ namespace NewspaperBatchCreator
             metadataCsvFilePath = String.Empty;
 
             //Initialize Utilities:
-            utilities = new Utilities(this.logForm);
+            utilities = new Utilities(mainForm, logForm);
 
             //Initialize viewOrEditMetadataDataGridView:
             viewOrEditMetadataDataGridView.Columns[0].Width = 450; //item
