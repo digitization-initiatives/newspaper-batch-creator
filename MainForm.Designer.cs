@@ -275,6 +275,8 @@ namespace NewspaperBatchCreator
 
         internal Utilities utilities;
 
+        internal Organizations selectedOrganization;
+        internal Titles selectedTitle;
         internal Dictionary<string, Issue> issueMetadata;
 
         //List<DestinationFilesStructure> destinationFileStructure;

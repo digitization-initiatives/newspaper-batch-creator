@@ -692,58 +692,6 @@ namespace NewspaperBatchCreator
                 logForm.Logger(LogForm.LogType.INFO, $"No folder is selected.");
             }
         }
-
-        private void settingsMenuItem_Click(object sender, EventArgs e)
-        {
-            if (settingsForm.Visible)
-            {
-                settingsForm.BringToFront();
-            }
-            else
-            {
-                settingsForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
-                settingsForm.Show();
-            }
-        }
-
-        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
-        {
-            selectedPath = String.Empty;
-            from_folderBrowserDialog.SelectedPath = String.Empty;
-
-            sourceFilesLoaded = false;
-            metadataLoaded = false;
-
-            sourceFilesListView.Items.Clear();
-
-            createBatchButton.Enabled = false;
-            statusBar_NumberOfFilesAddedFrom.Text = $"{sourceFilesListView.Items.Count} files loaded.";
-        }
-
-        private void viewLogsMenuItem_Click(object sender, EventArgs e)
-        {
-            if (logForm.Visible)
-            {
-                logForm.BringToFront();
-            }
-            else
-            {
-                logForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
-                logForm.Show();
-            }
-        }
-
-        private void exitMenuItem_Click(object sender, EventArgs e)
-        {
-            this.Close();
-        }
-
-        private void importEditMetadata_MetadataSubMenuItem_Click(object sender, EventArgs e)
-        {
-            importEditMetadataForm.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
-            importEditMetadataForm.Show();
-        }
-
         private void exportTemplate_MetadataSubMenuItem_Click(object sender, EventArgs e)
         {
             exportMetadataTemplate_saveFileDialog.Filter = "CSV files (*.csv)|*.csv";
@@ -758,6 +706,52 @@ namespace NewspaperBatchCreator
             }
 
             utilities.ExportMetadataTemplate(exportMetadataTemplate_saveFileDialog.FileName);
+        }
+        private void importEditMetadata_MetadataSubMenuItem_Click(object sender, EventArgs e)
+        {
+            importEditMetadataForm.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+            importEditMetadataForm.Show();
+        }
+        private void settingsMenuItem_Click(object sender, EventArgs e)
+        {
+            if (settingsForm.Visible)
+            {
+                settingsForm.BringToFront();
+            }
+            else
+            {
+                settingsForm.Location = new Point(this.Location.X + 20, this.Location.Y + 20);
+                settingsForm.Show();
+            }
+        }
+        private void viewLogsMenuItem_Click(object sender, EventArgs e)
+        {
+            if (logForm.Visible)
+            {
+                logForm.BringToFront();
+            }
+            else
+            {
+                logForm.Location = new Point(this.Location.X + this.Width + 10, this.Location.Y);
+                logForm.Show();
+            }
+        }
+        private void resetToolStripMenuItem_Click(object sender, EventArgs e)
+        {
+            selectedPath = String.Empty;
+            from_folderBrowserDialog.SelectedPath = String.Empty;
+
+            sourceFilesLoaded = false;
+            metadataLoaded = false;
+
+            sourceFilesListView.Items.Clear();
+
+            createBatchButton.Enabled = false;
+            statusBar_NumberOfFilesAddedFrom.Text = $"{sourceFilesListView.Items.Count} files loaded.";
+        }
+        private void exitMenuItem_Click(object sender, EventArgs e)
+        {
+            this.Close();
         }
 
         private void createBatchButton_Click(object sender, EventArgs e)
