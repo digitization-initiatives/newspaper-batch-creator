@@ -10,11 +10,25 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <None Remove="log\.gitignore" />
+    <None Remove="organizations\.gitignore" />
+    <None Remove="organizations\sample-org.json" />
     <None Remove="resources\.keep" />
+    <None Remove="titles\.gitignore" />
+    <None Remove="titles\sn12345678.json" />
   </ItemGroup>
 
   <ItemGroup>
+    <Content Include="log\.gitignore">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="log\.keep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="organizations\.gitignore">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="organizations\sample-org.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
     <Content Include="output\.keep">
@@ -32,7 +46,13 @@
     <Content Include="organizations\.keep">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
+    <Content Include="titles\.gitignore">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
     <Content Include="titles\.keep">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </Content>
+    <Content Include="titles\sn12345678.json">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </Content>
   </ItemGroup>

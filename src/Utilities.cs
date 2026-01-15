@@ -141,6 +141,20 @@ namespace NewspaperBatchCreator.src
             }
         }
 
+        // Load JSON settings into ListBox:
+        public void LoadJSONFilesIntoListBox(ListBox listBox, string folderPath)
+        {
+            string[] jsonFiles = Directory.GetFiles(folderPath, "*.json");
+
+            listBox.Items.Clear();
+
+            foreach (string jsonFile in jsonFiles)
+            {
+                logForm.Logger(LogForm.LogType.INFO, $"{jsonFile}");
+                listBox.Items.Add(new JsonFileItem(jsonFile));
+            }
+        }
+
         //Validate if there is metadata for all the source files:
         //private void HaveMetadata()
         //{

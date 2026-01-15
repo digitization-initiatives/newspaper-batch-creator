@@ -37,21 +37,34 @@ namespace NewspaperBatchCreator
             settingsStatusStrip = new StatusStrip();
             saveButton = new Button();
             settingsTabControl = new TabControl();
-            tabPage1 = new TabPage();
+            settingsTabPage = new TabPage();
             settingsPropertyGrid = new PropertyGrid();
-            tabPage2 = new TabPage();
-            tabPage3 = new TabPage();
+            organizationsTabPage = new TabPage();
+            organizationsSplitContainer = new SplitContainer();
+            organizationsListBox = new ListBox();
+            organizationsPropertyGrid = new PropertyGrid();
+            titlesTabPage = new TabPage();
+            titlesSplitContainer = new SplitContainer();
             resetToDefaultButton = new Button();
+            refreshButton = new Button();
             settingsTabControl.SuspendLayout();
-            tabPage1.SuspendLayout();
+            settingsTabPage.SuspendLayout();
+            organizationsTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)organizationsSplitContainer).BeginInit();
+            organizationsSplitContainer.Panel1.SuspendLayout();
+            organizationsSplitContainer.Panel2.SuspendLayout();
+            organizationsSplitContainer.SuspendLayout();
+            titlesTabPage.SuspendLayout();
+            ((System.ComponentModel.ISupportInitialize)titlesSplitContainer).BeginInit();
+            titlesSplitContainer.SuspendLayout();
             SuspendLayout();
             // 
             // closeButton
             // 
-            closeButton.Location = new Point(985, 465);
+            closeButton.Location = new Point(989, 463);
             closeButton.Margin = new Padding(3, 2, 3, 2);
             closeButton.Name = "closeButton";
-            closeButton.Size = new Size(105, 22);
+            closeButton.Size = new Size(105, 23);
             closeButton.TabIndex = 33;
             closeButton.Text = "Close";
             closeButton.UseVisualStyleBackColor = true;
@@ -69,10 +82,10 @@ namespace NewspaperBatchCreator
             // 
             // saveButton
             // 
-            saveButton.Location = new Point(874, 465);
+            saveButton.Location = new Point(878, 463);
             saveButton.Margin = new Padding(3, 2, 3, 2);
             saveButton.Name = "saveButton";
-            saveButton.Size = new Size(105, 22);
+            saveButton.Size = new Size(105, 23);
             saveButton.TabIndex = 54;
             saveButton.Text = "Save";
             saveButton.UseVisualStyleBackColor = true;
@@ -80,25 +93,25 @@ namespace NewspaperBatchCreator
             // 
             // settingsTabControl
             // 
-            settingsTabControl.Controls.Add(tabPage1);
-            settingsTabControl.Controls.Add(tabPage2);
-            settingsTabControl.Controls.Add(tabPage3);
+            settingsTabControl.Controls.Add(settingsTabPage);
+            settingsTabControl.Controls.Add(organizationsTabPage);
+            settingsTabControl.Controls.Add(titlesTabPage);
             settingsTabControl.Location = new Point(12, 12);
             settingsTabControl.Name = "settingsTabControl";
             settingsTabControl.SelectedIndex = 0;
             settingsTabControl.Size = new Size(1082, 448);
             settingsTabControl.TabIndex = 55;
             // 
-            // tabPage1
+            // settingsTabPage
             // 
-            tabPage1.Controls.Add(settingsPropertyGrid);
-            tabPage1.Location = new Point(4, 24);
-            tabPage1.Name = "tabPage1";
-            tabPage1.Padding = new Padding(3);
-            tabPage1.Size = new Size(1074, 420);
-            tabPage1.TabIndex = 0;
-            tabPage1.Text = "Settings";
-            tabPage1.UseVisualStyleBackColor = true;
+            settingsTabPage.Controls.Add(settingsPropertyGrid);
+            settingsTabPage.Location = new Point(4, 24);
+            settingsTabPage.Name = "settingsTabPage";
+            settingsTabPage.Padding = new Padding(3);
+            settingsTabPage.Size = new Size(1074, 420);
+            settingsTabPage.TabIndex = 0;
+            settingsTabPage.Text = "Settings";
+            settingsTabPage.UseVisualStyleBackColor = true;
             // 
             // settingsPropertyGrid
             // 
@@ -113,35 +126,91 @@ namespace NewspaperBatchCreator
             settingsPropertyGrid.TabIndex = 0;
             settingsPropertyGrid.ViewBackColor = SystemColors.ControlLightLight;
             // 
-            // tabPage2
+            // organizationsTabPage
             // 
-            tabPage2.Location = new Point(4, 24);
-            tabPage2.Name = "tabPage2";
-            tabPage2.Padding = new Padding(3);
-            tabPage2.Size = new Size(1074, 420);
-            tabPage2.TabIndex = 1;
-            tabPage2.Text = "Organizations";
-            tabPage2.UseVisualStyleBackColor = true;
+            organizationsTabPage.Controls.Add(organizationsSplitContainer);
+            organizationsTabPage.Location = new Point(4, 24);
+            organizationsTabPage.Name = "organizationsTabPage";
+            organizationsTabPage.Padding = new Padding(3);
+            organizationsTabPage.Size = new Size(1074, 420);
+            organizationsTabPage.TabIndex = 1;
+            organizationsTabPage.Text = "Organizations";
+            organizationsTabPage.UseVisualStyleBackColor = true;
             // 
-            // tabPage3
+            // organizationsSplitContainer
             // 
-            tabPage3.Location = new Point(4, 24);
-            tabPage3.Name = "tabPage3";
-            tabPage3.Padding = new Padding(3);
-            tabPage3.Size = new Size(1074, 420);
-            tabPage3.TabIndex = 2;
-            tabPage3.Text = "Titles";
-            tabPage3.UseVisualStyleBackColor = true;
+            organizationsSplitContainer.Dock = DockStyle.Fill;
+            organizationsSplitContainer.Location = new Point(3, 3);
+            organizationsSplitContainer.Name = "organizationsSplitContainer";
+            // 
+            // organizationsSplitContainer.Panel1
+            // 
+            organizationsSplitContainer.Panel1.Controls.Add(organizationsListBox);
+            organizationsSplitContainer.Panel1.Cursor = Cursors.SizeAll;
+            // 
+            // organizationsSplitContainer.Panel2
+            // 
+            organizationsSplitContainer.Panel2.Controls.Add(organizationsPropertyGrid);
+            organizationsSplitContainer.Size = new Size(1068, 414);
+            organizationsSplitContainer.SplitterDistance = 200;
+            organizationsSplitContainer.TabIndex = 0;
+            // 
+            // organizationsListBox
+            // 
+            organizationsListBox.Cursor = Cursors.Default;
+            organizationsListBox.FormattingEnabled = true;
+            organizationsListBox.ItemHeight = 15;
+            organizationsListBox.Location = new Point(3, 3);
+            organizationsListBox.Name = "organizationsListBox";
+            organizationsListBox.Size = new Size(194, 409);
+            organizationsListBox.TabIndex = 0;
+            // 
+            // organizationsPropertyGrid
+            // 
+            organizationsPropertyGrid.Location = new Point(3, 3);
+            organizationsPropertyGrid.Name = "organizationsPropertyGrid";
+            organizationsPropertyGrid.Size = new Size(858, 408);
+            organizationsPropertyGrid.TabIndex = 1;
+            // 
+            // titlesTabPage
+            // 
+            titlesTabPage.Controls.Add(titlesSplitContainer);
+            titlesTabPage.Location = new Point(4, 24);
+            titlesTabPage.Name = "titlesTabPage";
+            titlesTabPage.Padding = new Padding(3);
+            titlesTabPage.Size = new Size(1074, 420);
+            titlesTabPage.TabIndex = 2;
+            titlesTabPage.Text = "Titles";
+            titlesTabPage.UseVisualStyleBackColor = true;
+            // 
+            // titlesSplitContainer
+            // 
+            titlesSplitContainer.Dock = DockStyle.Fill;
+            titlesSplitContainer.Location = new Point(3, 3);
+            titlesSplitContainer.Name = "titlesSplitContainer";
+            titlesSplitContainer.Size = new Size(1068, 414);
+            titlesSplitContainer.SplitterDistance = 200;
+            titlesSplitContainer.TabIndex = 0;
             // 
             // resetToDefaultButton
             // 
-            resetToDefaultButton.Location = new Point(16, 465);
+            resetToDefaultButton.Location = new Point(12, 463);
             resetToDefaultButton.Margin = new Padding(3, 2, 3, 2);
             resetToDefaultButton.Name = "resetToDefaultButton";
-            resetToDefaultButton.Size = new Size(130, 22);
+            resetToDefaultButton.Size = new Size(130, 23);
             resetToDefaultButton.TabIndex = 56;
             resetToDefaultButton.Text = "Reset to Default";
             resetToDefaultButton.UseVisualStyleBackColor = true;
+            // 
+            // refreshButton
+            // 
+            refreshButton.Location = new Point(148, 463);
+            refreshButton.Name = "refreshButton";
+            refreshButton.Size = new Size(130, 23);
+            refreshButton.TabIndex = 1;
+            refreshButton.Text = "Refresh";
+            refreshButton.UseVisualStyleBackColor = true;
+            refreshButton.Click += refreshButton_Click;
             // 
             // SettingsForm
             // 
@@ -149,6 +218,7 @@ namespace NewspaperBatchCreator
             AutoScaleMode = AutoScaleMode.Font;
             ClientSize = new Size(1106, 511);
             ControlBox = false;
+            Controls.Add(refreshButton);
             Controls.Add(resetToDefaultButton);
             Controls.Add(saveButton);
             Controls.Add(settingsTabControl);
@@ -160,7 +230,15 @@ namespace NewspaperBatchCreator
             Name = "SettingsForm";
             Text = "Settings";
             settingsTabControl.ResumeLayout(false);
-            tabPage1.ResumeLayout(false);
+            settingsTabPage.ResumeLayout(false);
+            organizationsTabPage.ResumeLayout(false);
+            organizationsSplitContainer.Panel1.ResumeLayout(false);
+            organizationsSplitContainer.Panel2.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)organizationsSplitContainer).EndInit();
+            organizationsSplitContainer.ResumeLayout(false);
+            titlesTabPage.ResumeLayout(false);
+            ((System.ComponentModel.ISupportInitialize)titlesSplitContainer).EndInit();
+            titlesSplitContainer.ResumeLayout(false);
             ResumeLayout(false);
             PerformLayout();
         }
@@ -177,6 +255,8 @@ namespace NewspaperBatchCreator
         private MainForm mainForm;
         private LogForm logForm;
 
+        private Utilities utilities;
+
         //public FolderBrowserDialog selectOutputFolder_folderBrowserDialog;
 
         private void CustomInitialization()
@@ -184,11 +264,14 @@ namespace NewspaperBatchCreator
             //Custom form start location:
             this.StartPosition = FormStartPosition.Manual;
 
-            settingsPropertyGrid.SelectedObject = Properties.Settings.Default;
+            //Initialize or load components:
+            utilities = new Utilities(mainForm, logForm);
 
+            settingsPropertyGrid.SelectedObject = Properties.Settings.Default;
             PropertyGridSplitter.SetSplitterByRatio(settingsPropertyGrid, 0.30);
 
-            settingsTabControl.SelectedIndexChanged += settingsTabControl_SelectedIndexChanged;
+            utilities.LoadJSONFilesIntoListBox(organizationsListBox, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "organizations"));
+            organizationsListBox.SelectedIndexChanged += organizationsListBox_SelectedIndexChanged;
         }
 
         #endregion Custom Initializations
@@ -198,10 +281,15 @@ namespace NewspaperBatchCreator
         private StatusStrip settingsStatusStrip;
         private Button saveButton;
         private TabControl settingsTabControl;
-        private TabPage tabPage1;
-        private TabPage tabPage2;
-        private TabPage tabPage3;
+        private TabPage settingsTabPage;
+        private TabPage organizationsTabPage;
+        private TabPage titlesTabPage;
         private Button resetToDefaultButton;
         private PropertyGrid settingsPropertyGrid;
+        private SplitContainer organizationsSplitContainer;
+        private ListBox organizationsListBox;
+        private PropertyGrid organizationsPropertyGrid;
+        private SplitContainer titlesSplitContainer;
+        private Button refreshButton;
     }
 }

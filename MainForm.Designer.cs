@@ -299,10 +299,10 @@ namespace NewspaperBatchCreator
             logForm = new LogForm(this);
 
             //Initialize ImportEditMetadataForm:
-            importEditMetadataForm = new ImportEditMetadataForm(this, this.logForm);
+            importEditMetadataForm = new ImportEditMetadataForm(this, logForm);
 
             //Initialize SettingsForm:
-            settingsForm = new SettingsForm(this);
+            settingsForm = new SettingsForm(this, logForm);
 
 
             //Initialize components:
