@@ -47,6 +47,8 @@ namespace NewspaperBatchCreator
             titlesSplitContainer = new SplitContainer();
             resetToDefaultButton = new Button();
             refreshButton = new Button();
+            titlesListBox = new ListBox();
+            titlesPropertyGrid = new PropertyGrid();
             settingsTabControl.SuspendLayout();
             settingsTabPage.SuspendLayout();
             organizationsTabPage.SuspendLayout();
@@ -56,6 +58,8 @@ namespace NewspaperBatchCreator
             organizationsSplitContainer.SuspendLayout();
             titlesTabPage.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)titlesSplitContainer).BeginInit();
+            titlesSplitContainer.Panel1.SuspendLayout();
+            titlesSplitContainer.Panel2.SuspendLayout();
             titlesSplitContainer.SuspendLayout();
             SuspendLayout();
             // 
@@ -157,7 +161,6 @@ namespace NewspaperBatchCreator
             // 
             // organizationsListBox
             // 
-            organizationsListBox.Cursor = Cursors.Default;
             organizationsListBox.FormattingEnabled = true;
             organizationsListBox.ItemHeight = 15;
             organizationsListBox.Location = new Point(3, 3);
@@ -188,6 +191,14 @@ namespace NewspaperBatchCreator
             titlesSplitContainer.Dock = DockStyle.Fill;
             titlesSplitContainer.Location = new Point(3, 3);
             titlesSplitContainer.Name = "titlesSplitContainer";
+            // 
+            // titlesSplitContainer.Panel1
+            // 
+            titlesSplitContainer.Panel1.Controls.Add(titlesListBox);
+            // 
+            // titlesSplitContainer.Panel2
+            // 
+            titlesSplitContainer.Panel2.Controls.Add(titlesPropertyGrid);
             titlesSplitContainer.Size = new Size(1068, 414);
             titlesSplitContainer.SplitterDistance = 200;
             titlesSplitContainer.TabIndex = 0;
@@ -211,6 +222,22 @@ namespace NewspaperBatchCreator
             refreshButton.Text = "Refresh";
             refreshButton.UseVisualStyleBackColor = true;
             refreshButton.Click += refreshButton_Click;
+            // 
+            // titlesListBox
+            // 
+            titlesListBox.FormattingEnabled = true;
+            titlesListBox.ItemHeight = 15;
+            titlesListBox.Location = new Point(3, 3);
+            titlesListBox.Name = "titlesListBox";
+            titlesListBox.Size = new Size(194, 409);
+            titlesListBox.TabIndex = 0;
+            // 
+            // titlesPropertyGrid
+            // 
+            titlesPropertyGrid.Location = new Point(0, 0);
+            titlesPropertyGrid.Name = "titlesPropertyGrid";
+            titlesPropertyGrid.Size = new Size(864, 411);
+            titlesPropertyGrid.TabIndex = 0;
             // 
             // SettingsForm
             // 
@@ -237,6 +264,8 @@ namespace NewspaperBatchCreator
             ((System.ComponentModel.ISupportInitialize)organizationsSplitContainer).EndInit();
             organizationsSplitContainer.ResumeLayout(false);
             titlesTabPage.ResumeLayout(false);
+            titlesSplitContainer.Panel1.ResumeLayout(false);
+            titlesSplitContainer.Panel2.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)titlesSplitContainer).EndInit();
             titlesSplitContainer.ResumeLayout(false);
             ResumeLayout(false);
@@ -257,8 +286,6 @@ namespace NewspaperBatchCreator
 
         private Utilities utilities;
 
-        //public FolderBrowserDialog selectOutputFolder_folderBrowserDialog;
-
         private void CustomInitialization()
         {
             //Custom form start location:
@@ -268,7 +295,12 @@ namespace NewspaperBatchCreator
             utilities = new Utilities(mainForm, logForm);
 
             settingsPropertyGrid.SelectedObject = Properties.Settings.Default;
+            organizationsPropertyGrid.SelectedObject = Properties.Settings.Default;
+            titlesPropertyGrid.SelectedObject= Properties.Settings.Default;
+
             PropertyGridSplitter.SetSplitterByRatio(settingsPropertyGrid, 0.30);
+            PropertyGridSplitter.SetSplitterByRatio(organizationsPropertyGrid, 0.30);
+            PropertyGridSplitter.SetSplitterByRatio(titlesPropertyGrid, 0.30);
 
             utilities.LoadJSONFilesIntoListBox(organizationsListBox, Path.Combine(AppDomain.CurrentDomain.BaseDirectory, "organizations"));
             organizationsListBox.SelectedIndexChanged += organizationsListBox_SelectedIndexChanged;
@@ -291,5 +323,7 @@ namespace NewspaperBatchCreator
         private PropertyGrid organizationsPropertyGrid;
         private SplitContainer titlesSplitContainer;
         private Button refreshButton;
+        private ListBox titlesListBox;
+        private PropertyGrid titlesPropertyGrid;
     }
 }
